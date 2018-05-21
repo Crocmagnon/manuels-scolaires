@@ -12,8 +12,12 @@ class Teacher(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField('prénom', max_length=100)
     last_name = models.CharField('nom', max_length=100)
-    phone_number = models.CharField('numéro de téléphone', max_length=10)
-    email = models.EmailField('adresse email')
+    phone_number = models.CharField('numéro de téléphone', help_text="En cas d'urgence", max_length=10)
+    email = models.EmailField(
+        'adresse email',
+        help_text='Utilisée pour vous transmettre votre lien personnel',
+        unique=True
+    )
 
     def get_absolute_url(self):
         from django.urls import reverse

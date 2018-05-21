@@ -6,12 +6,15 @@
     <div class="row">
         <div class="col-12">
             <h1>Bienvenue {{ teacher.full_name }}</h1>
-            <h2>{% block title %}Ajouter un livre{% endblock %}</h2>
+            <h2>
+                {% block title %}Ajouter un livre{% endblock %}
+                <a href="{% url 'list_books' teacher.pk %}" class="btn btn-secondary">Retour à la liste</a>
+            </h2>
             <form action="" method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 {% buttons %}
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Valider</button>
                 {% endbuttons %}
             </form>
         </div>
