@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import CreateView
 
-# Create your views here.
+from manuels.models import Teacher
+
+
+class HomePageView(CreateView):
+    model = Teacher
+    fields = []
+    template_name = 'manuels/home_page.html'
