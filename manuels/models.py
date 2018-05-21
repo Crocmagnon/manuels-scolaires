@@ -41,6 +41,16 @@ class Level(models.Model):
         return self.name
 
 
+class Editor(models.Model):
+    class Meta:
+        verbose_name = 'éditeur'
+        verbose_name_plural = 'éditeurs'
+    name = models.CharField('nom', max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 def isbn_validator(value):
     regex = re.compile(r'(\d-?){10,13}X?')
     if not regex.match(value):
@@ -57,7 +67,7 @@ class Book(models.Model):
     field = models.CharField('matière', max_length=100)
     title = models.TextField('titre')
     authors = models.TextField('auteurs')
-    editor = models.CharField('éditeur', max_length=200)
+    editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.SET_NULL, null=True)
     collection = models.CharField('collection', max_length=200, blank=True)
     publication_year = models.PositiveIntegerField('année de publication')
     isbn = models.CharField('ISBN/EAN', max_length=20, validators=[isbn_validator])
