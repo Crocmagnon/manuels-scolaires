@@ -5,7 +5,7 @@ from manuels.models import Teacher, Book, Level, Editor
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['full_name', 'email', 'phone_number']
 
 
 @admin.register(Level)
@@ -15,7 +15,9 @@ class LevelAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['title', 'authors', 'editor', 'collection', 'publication_year', 'isbn',
+                    'price', 'previously_acquired', 'teacher', 'level', 'field']
+    list_filter = ['editor', 'previously_acquired', 'teacher', 'level']
 
 
 @admin.register(Editor)
