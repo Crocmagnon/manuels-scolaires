@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn workout.wsgi --log-file -
+web: gunicorn manuels_collection.wsgi --log-file -
