@@ -1,5 +1,10 @@
+import os
+
+from django.conf import settings
 from django.contrib import messages
+from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import get_object_or_404, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import CreateView, ListView
 
@@ -9,7 +14,7 @@ from manuels.models import Teacher, Book
 
 class HomePageView(CreateView):
     model = Teacher
-    fields = ['first_name', 'last_name', 'phone_number']
+    fields = '__all__'
     template_name = 'manuels/home_page.html'
 
     def get(self, request, *args, **kwargs):
@@ -18,6 +23,26 @@ class HomePageView(CreateView):
             return redirect('list_books', pk=teacher_pk)
 
         return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        dest = form.cleaned_data['email']
+        link = self.request.build_absolute_uri(reverse('list_books', args=[str(self.object.pk)]))
+        msg = EmailMultiAlternatives(
+            subject='Gestion des manuels scolaires',
+            body=f'Bonjour {self.object.first_name},\n'
+                 f'Voici votre lien pour la gestion des manuels scolaires : {link}',
+            from_email=settings.SERVER_EMAIL,
+            to=[dest],
+        )
+        reply_to = [os.getenv('REPLY_TO')]
+        if reply_to:
+            msg.reply_to = reply_to
+        msg.attach_alternative(
+            render_to_string('manuels/email.html', {'link': link, 'teacher': self.object}), "text/html"
+        )
+        msg.send()
+        return response
 
 
 class BaseTeacherView:

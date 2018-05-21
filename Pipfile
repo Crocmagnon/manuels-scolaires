@@ -13,8 +13,8 @@ gunicorn = "*"
 dj-database-url = "*"
 "psycopg2-binary" = "*"
 django-dotenv = "*"
-django-mailgun = "*"
 uuid = "*"
+django-anymail = {extras = ["mailgun"]}
 
 
 [dev-packages]

@@ -13,6 +13,7 @@ class Teacher(models.Model):
     first_name = models.CharField('prénom', max_length=100)
     last_name = models.CharField('nom', max_length=100)
     phone_number = models.CharField('numéro de téléphone', max_length=10)
+    email = models.EmailField('adresse email')
 
     def get_absolute_url(self):
         from django.urls import reverse

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'anymail',
     'bootstrap4',
     'manuels',
 ]
@@ -134,6 +135,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 LOGIN_REDIRECT_URL = 'rooms-list'
 
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-MAILGUN_ACCESS_KEY = os.getenv('MAILGUN_ACCESS_KEY', '')
-MAILGUN_SERVER_NAME = os.getenv('MAILGUN_SERVER_NAME', '')
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv('MAILGUN_ACCESS_KEY', ''),
+    "MAILGUN_SENDER_DOMAIN": os.getenv('MAILGUN_SERVER_NAME', ''),
+}
+
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
