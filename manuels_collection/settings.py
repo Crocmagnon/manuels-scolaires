@@ -35,7 +35,7 @@ if DEBUG:
     ])
 host = os.getenv('HOST', None)
 if host:
-    ALLOWED_HOSTS.append(host)
+    ALLOWED_HOSTS.extend(host.split(','))
 
 ADMINS = [('Gabriel', os.getenv('ADMIN_EMAIL')), ]
 SERVER_EMAIL = os.getenv('SERVER_EMAIL')
