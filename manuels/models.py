@@ -48,4 +48,4 @@ class Book(models.Model):
     publication_year = models.PositiveIntegerField('année de publication')
     isbn = models.TextField('ISBN/EAN', validators=[isbn_validator])
     price = models.PositiveIntegerField('prix')
-    previously_acquired = models.BooleanField("manuel acquis précédemment par l'élève")
+    previously_acquired = models.BooleanField("manuel acquis précédemment par l'élève", blank=True)
