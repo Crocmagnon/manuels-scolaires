@@ -15,6 +15,7 @@ dj-database-url = "*"
 django-dotenv = "*"
 uuid = "*"
 django-anymail = {extras = ["mailgun"]}
+whitenoise = "*"
 
 
 [dev-packages]
