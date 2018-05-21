@@ -70,3 +70,9 @@ class AddBookView(BaseTeacherView, CreateView):
             return reverse('add_book', args=[str(self.teacher.pk)])
         else:
             return reverse('list_books', args=[str(self.teacher.pk)])
+
+
+def clear_teacher_view(request):
+    if request.session['teacher_pk']:
+        del request.session['teacher_pk']
+    return redirect('home_page')
