@@ -2,17 +2,12 @@
 
 {% load bootstrap4 %}
 
-{% block title %}Ajouter un livre{% endblock %}
-
 {% block content %}
     <div class="row">
         <div class="col-12">
-            Bienvenue {{ teacher.full_name }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <form action="#" method="post" class="form">
+            <h1>Bienvenue {{ teacher.full_name }}</h1>
+            <h2>{% block title %}Ajouter un livre{% endblock %}</h2>
+            <form action="" method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 {% buttons %}
