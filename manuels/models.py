@@ -1,5 +1,6 @@
 import re
 
+import uuid as uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -8,13 +9,14 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = 'enseignant'
         verbose_name_plural = 'enseignants'
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField('prénom', max_length=100)
     last_name = models.CharField('nom', max_length=100)
     phone_number = models.CharField('numéro de téléphone', max_length=10)
 
     def get_absolute_url(self):
         from django.urls import reverse
-        return reverse('add_book', args=[str(self.id)])
+        return reverse('add_book', args=[str(self.pk)])
 
     @property
     def full_name(self):

@@ -7,6 +7,18 @@
 {% block content %}
     <div class="row">
         <div class="col-12">
+            <h1>Bienvenue !</h1>
+        </div>
+    </div>
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Bienvenue</h4>
+        <p>Si c'est la première fois que vous visitez ce site, remplissez le formulaire suivant
+            afin de créer votre espace.</p>
+        <p class="mb-0">Sinon, <strong>utilisez le lien qui vous a été fourni</strong> pour voir votre liste
+            et y rajouter des livres.</p>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <form action="" method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}

@@ -17,7 +17,7 @@ class BaseTeacherView:
     teacher = None
 
     def dispatch(self, request, *args, **kwargs):
-        self.teacher = get_object_or_404(Teacher, pk=self.kwargs['id'])
+        self.teacher = get_object_or_404(Teacher, pk=self.kwargs['pk'])
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -59,6 +59,6 @@ class AddBookView(BaseTeacherView, CreateView):
     def get_success_url(self):
         messages.success(self.request, f'"{self.object}" a été ajouté.')
         if self.add_another:
-            return reverse('add_book', args=[str(self.teacher.id)])
+            return reverse('add_book', args=[str(self.teacher.pk)])
         else:
-            return reverse('list_books', args=[str(self.teacher.id)])
+            return reverse('list_books', args=[str(self.teacher.pk)])
