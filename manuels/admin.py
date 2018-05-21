@@ -18,6 +18,18 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ['title', 'authors', 'editor', 'collection', 'publication_year', 'isbn',
                     'price', 'previously_acquired', 'teacher', 'level', 'field']
     list_filter = ['editor', 'previously_acquired', 'teacher', 'level']
+    fieldsets = [
+        ('Infos livre', {
+            'fields': ('title', 'authors', 'editor', 'collection', 'publication_year', 'isbn', 'created_at', 'updated_at')
+        }),
+        ('Élève', {
+            'fields': ('price', 'previously_acquired',)
+        }),
+        ('Enseignant', {
+            'fields': ('teacher', 'level', 'field')
+        }),
+    ]
+    readonly_fields = ['created_at', 'updated_at']
 
 
 @admin.register(Editor)

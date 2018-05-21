@@ -5,7 +5,14 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 
-class Teacher(models.Model):
+class BaseModel(models.Model):
+    class Meta:
+        abstract = True
+    created_at = models.DateTimeField('créé le', auto_now_add=True)
+    updated_at = models.DateTimeField('mis à jour le', auto_now=True)
+
+
+class Teacher(BaseModel):
     class Meta:
         verbose_name = 'enseignant'
         verbose_name_plural = 'enseignants'
@@ -31,7 +38,7 @@ class Teacher(models.Model):
         return self.full_name
 
 
-class Level(models.Model):
+class Level(BaseModel):
     class Meta:
         verbose_name = 'classe'
         verbose_name_plural = 'classes'
@@ -41,7 +48,7 @@ class Level(models.Model):
         return self.name
 
 
-class Editor(models.Model):
+class Editor(BaseModel):
     class Meta:
         verbose_name = 'éditeur'
         verbose_name_plural = 'éditeurs'
@@ -57,7 +64,7 @@ def isbn_validator(value):
         raise ValidationError("%(value)s n'est pas un ISBN valide.", params={'value': value})
 
 
-class Book(models.Model):
+class Book(BaseModel):
     class Meta:
         verbose_name = 'livre'
         verbose_name_plural = 'livres'
