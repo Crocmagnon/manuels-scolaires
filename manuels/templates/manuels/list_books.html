@@ -6,6 +6,18 @@
     <div class="row">
         <div class="col-12">
             <h1>Bienvenue {{ teacher.full_name }}</h1>
+        </div>
+    </div>
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Attention</h4>
+        <p>Pensez à <strong>sauvegarder cette page dans vos favoris</strong>.</p>
+        <p class="mb-0">
+            Si vous perdez ce lien, vous ne risquez de ne plus être en mesure d'accéder à votre espace personnel
+            et vous ne pourrez plus ajouter de livre à votre liste.
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h2>{% block title %}Liste des livres demandés{% endblock %}</h2>
             <a href="{% url 'add_book' pk=teacher.pk %}" class="btn btn-primary">Ajouter un livre</a>
             <table class="table table-hover table-sm">

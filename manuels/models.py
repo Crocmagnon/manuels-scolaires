@@ -16,7 +16,7 @@ class Teacher(models.Model):
 
     def get_absolute_url(self):
         from django.urls import reverse
-        return reverse('add_book', args=[str(self.pk)])
+        return reverse('list_books', kwargs={'pk': str(self.pk)})
 
     @property
     def full_name(self):

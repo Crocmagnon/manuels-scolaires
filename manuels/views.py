@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView
 
@@ -12,12 +12,20 @@ class HomePageView(CreateView):
     fields = ['first_name', 'last_name', 'phone_number']
     template_name = 'manuels/home_page.html'
 
+    def get(self, request, *args, **kwargs):
+        teacher_pk = request.session.get('teacher_pk')
+        if teacher_pk:
+            return redirect('list_books', pk=teacher_pk)
+
+        return super().get(request, *args, **kwargs)
+
 
 class BaseTeacherView:
     teacher = None
 
     def dispatch(self, request, *args, **kwargs):
         self.teacher = get_object_or_404(Teacher, pk=self.kwargs['pk'])
+        request.session['teacher_pk'] = str(self.teacher.pk)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
