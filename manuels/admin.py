@@ -16,7 +16,7 @@ class TeacherAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = TeacherResource
     list_display = ['full_name', 'email', 'phone_number']
 
-    def send_link(modeladmin, request, queryset):
+    def send_link(self, request, queryset):
         for teacher in queryset:
             teacher.send_link(request)
 
