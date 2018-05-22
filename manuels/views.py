@@ -8,8 +8,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import CreateView, ListView
 
-from manuels.forms import AddBookForm
-from manuels.models import Teacher, Book
+from manuels.forms import AddBookForm, AddSuppliesForm
+from manuels.models import Teacher, Book, SuppliesRequirement
 
 
 class HomePageView(CreateView):
@@ -62,18 +62,27 @@ class BaseTeacherView:
 
 class ListBooksView(BaseTeacherView, ListView):
     model = Book
-    template_name = 'manuels/list_books.html'
+    template_name = 'manuels/list_books_supplies.html'
     context_object_name = 'books'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['supplies'] = SuppliesRequirement.objects.filter(teacher=self.teacher)
+        return context
 
     def get_queryset(self):
         return Book.objects.filter(teacher=self.teacher)
 
 
-class AddBookView(BaseTeacherView, CreateView):
-    model = Book
-    template_name = 'manuels/add_book.html'
-    form_class = AddBookForm
+class AddItemView(BaseTeacherView, CreateView):
     add_another = False
+    item_text = None
+    success_target = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item'] = self.item_text
+        return context
 
     def get_initial(self):
         return {
@@ -92,9 +101,25 @@ class AddBookView(BaseTeacherView, CreateView):
     def get_success_url(self):
         messages.success(self.request, f'"{self.object}" a été ajouté.')
         if self.add_another:
-            return reverse('add_book', args=[str(self.teacher.pk)])
+            return reverse(self.success_target, args=[str(self.teacher.pk)])
         else:
             return reverse('list_books', args=[str(self.teacher.pk)])
+
+
+class AddBookView(AddItemView):
+    model = Book
+    template_name = 'manuels/add_item.html'
+    form_class = AddBookForm
+    success_target = 'add_book'
+    item_text = 'un livre'
+
+
+class AddSuppliesView(AddItemView):
+    model = SuppliesRequirement
+    template_name = 'manuels/add_item.html'
+    form_class = AddSuppliesForm
+    success_target = 'add_supplies'
+    item_text = 'des fournitures'
 
 
 def clear_teacher_view(request):

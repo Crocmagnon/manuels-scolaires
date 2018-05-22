@@ -80,10 +80,15 @@ class Book(BaseModel):
     isbn = models.CharField('ISBN/EAN', max_length=20, validators=[isbn_validator])
     price = models.PositiveIntegerField('prix')
     YES_NO_CHOICE = (
-        (True, 'Oui'),
         (False, 'Non'),
+        (True, 'Oui'),
     )
-    previously_acquired = models.BooleanField("manuel acquis précédemment par l'élève", choices=YES_NO_CHOICE, blank=False)
+    previously_acquired = models.BooleanField(
+        "manuel acquis précédemment par l'élève",
+        choices=YES_NO_CHOICE,
+        blank=False,
+        default=False,
+    )
 
     @property
     def previously_acquired_emoji(self):
@@ -94,3 +99,16 @@ class Book(BaseModel):
 
     def __str__(self):
         return f'{self.title} ({self.authors}) - {self.isbn}'
+
+
+class SuppliesRequirement(BaseModel):
+    class Meta:
+        verbose_name = 'demande de fournitures'
+        verbose_name_plural = 'demandes de fournitures'
+
+    teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.SET_NULL, null=True)
+    level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.SET_NULL, null=True)
+    supplies = models.TextField('fournitures')
+
+    def __str__(self):
+        return f'{self.supplies} pour {self.level} ({self.teacher})'
