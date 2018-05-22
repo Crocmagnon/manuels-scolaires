@@ -132,6 +132,7 @@ class SuppliesRequirement(BaseModel):
 
     teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
+    field = models.CharField('matière', max_length=100)
     supplies = models.TextField('fournitures')
 
     def __str__(self):
