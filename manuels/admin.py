@@ -7,6 +7,14 @@ from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'email', 'phone_number']
 
+    def send_link(modeladmin, request, queryset):
+        for teacher in queryset:
+            teacher.send_link(request)
+
+    send_link.short_description = 'Envoyer le lien'
+
+    actions = [send_link]
+
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):

@@ -1,8 +1,14 @@
+import os
 import re
 
 import uuid as uuid
+
+from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.mail import EmailMultiAlternatives
 from django.db import models
+from django.template.loader import render_to_string
+from django.urls import reverse
 
 
 class BaseModel(models.Model):
@@ -36,6 +42,24 @@ class Teacher(BaseModel):
 
     def __str__(self):
         return self.full_name
+
+    def send_link(self, request):
+        dest = self.email
+        link = request.build_absolute_uri(reverse('list_books', args=[str(self.pk)]))
+        msg = EmailMultiAlternatives(
+            subject='Gestion des manuels scolaires',
+            body=f'Bonjour {self.first_name},\n'
+                 f'Voici votre lien pour la gestion des manuels scolaires : {link}',
+            from_email=settings.SERVER_EMAIL,
+            to=[dest],
+        )
+        reply_to = [os.getenv('REPLY_TO')]
+        if reply_to:
+            msg.reply_to = reply_to
+        msg.attach_alternative(
+            render_to_string('manuels/email.html', {'link': link, 'teacher': self}), "text/html"
+        )
+        msg.send()
 
 
 class Level(BaseModel):

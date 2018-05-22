@@ -26,22 +26,7 @@ class HomePageView(CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        dest = form.cleaned_data['email']
-        link = self.request.build_absolute_uri(reverse('list_books', args=[str(self.object.pk)]))
-        msg = EmailMultiAlternatives(
-            subject='Gestion des manuels scolaires',
-            body=f'Bonjour {self.object.first_name},\n'
-                 f'Voici votre lien pour la gestion des manuels scolaires : {link}',
-            from_email=settings.SERVER_EMAIL,
-            to=[dest],
-        )
-        reply_to = [os.getenv('REPLY_TO')]
-        if reply_to:
-            msg.reply_to = reply_to
-        msg.attach_alternative(
-            render_to_string('manuels/email.html', {'link': link, 'teacher': self.object}), "text/html"
-        )
-        msg.send()
+        self.object.send_link(self.request)
         return response
 
 
