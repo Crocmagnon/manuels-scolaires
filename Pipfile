@@ -16,6 +16,7 @@ django-dotenv = "*"
 uuid = "*"
 django-anymail = {extras = ["mailgun"]}
 whitenoise = "*"
+django-import-export = "*"
 
 
 [dev-packages]

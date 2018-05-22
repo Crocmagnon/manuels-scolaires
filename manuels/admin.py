@@ -1,10 +1,19 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ExportMixin
 
 from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement
 
 
+class TeacherResource(resources.ModelResource):
+    class Meta:
+        model = Teacher
+        fields = ('first_name', 'last_name', 'email', 'phone_number')
+
+
 @admin.register(Teacher)
-class TeacherAdmin(admin.ModelAdmin):
+class TeacherAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = TeacherResource
     list_display = ['full_name', 'email', 'phone_number']
 
     def send_link(modeladmin, request, queryset):
@@ -21,8 +30,16 @@ class LevelAdmin(admin.ModelAdmin):
     pass
 
 
+class BookResource(resources.ModelResource):
+    class Meta:
+        model = Book
+        fields = ('title', 'authors', 'editor', 'collection', 'publication_year', 'isbn',
+                  'price', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name', 'field')
+
+
 @admin.register(Book)
-class BookAdmin(admin.ModelAdmin):
+class BookAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = BookResource
     list_display = ['title', 'authors', 'editor', 'collection', 'publication_year', 'isbn',
                     'price', 'previously_acquired', 'teacher', 'level', 'field']
     list_filter = ['editor', 'previously_acquired', 'teacher', 'level']
@@ -45,7 +62,15 @@ class EditorAdmin(admin.ModelAdmin):
     pass
 
 
+class SuppliesResource(resources.ModelResource):
+    class Meta:
+        model = SuppliesRequirement
+        fields = ('supplies', 'level__name', 'teacher__first_name', 'teacher__last_name')
+
+
 @admin.register(SuppliesRequirement)
-class SuppliesRequirementAdmin(admin.ModelAdmin):
+class SuppliesRequirementAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = SuppliesResource
     list_display = ['teacher', 'level', 'supplies']
     readonly_fields = ['created_at', 'updated_at']
+    list_filter = ['teacher', 'level']

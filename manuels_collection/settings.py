@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'anymail',
     'bootstrap4',
     'manuels',
+    'import_export',
 ]
 
 MIDDLEWARE = [
