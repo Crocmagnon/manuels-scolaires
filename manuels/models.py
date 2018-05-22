@@ -93,12 +93,12 @@ class Book(BaseModel):
         verbose_name = 'livre'
         verbose_name_plural = 'livres'
 
-    teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.SET_NULL, null=True)
-    level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
+    level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
     field = models.CharField('matière', max_length=100)
     title = models.TextField('titre')
     authors = models.TextField('auteurs')
-    editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.SET_NULL, null=True)
+    editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.PROTECT, null=True)
     collection = models.CharField('collection', max_length=200, blank=True)
     publication_year = models.PositiveIntegerField('année de publication')
     isbn = models.CharField('ISBN/EAN', max_length=20, validators=[isbn_validator])
@@ -130,8 +130,8 @@ class SuppliesRequirement(BaseModel):
         verbose_name = 'demande de fournitures'
         verbose_name_plural = 'demandes de fournitures'
 
-    teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.SET_NULL, null=True)
-    level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
+    level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
     supplies = models.TextField('fournitures')
 
     def __str__(self):
