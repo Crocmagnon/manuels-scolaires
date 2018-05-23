@@ -114,7 +114,13 @@ class Book(BaseModel):
     authors = models.TextField('auteurs')
     editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.PROTECT, null=True)
     publication_year = models.PositiveIntegerField('année de publication')
-    isbn = models.CharField('ISBN/EAN', max_length=20, validators=[isbn_validator])
+    isbn = models.CharField(
+        'ISBN/EAN',
+        max_length=20,
+        help_text="Format attendu : 10 ou 13 chiffres, éventuellement séparés par des tirets et éventuellement "
+                  "suivis de la lettre <code>X</code>",
+        validators=[isbn_validator]
+    )
     price = models.PositiveIntegerField('prix')
     YES_NO_CHOICE = (
         (False, 'Non'),
