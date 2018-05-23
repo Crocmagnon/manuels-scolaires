@@ -61,11 +61,13 @@ class ListBooksView(BaseTeacherView, ListView):
 class AddItemView(BaseTeacherView, CreateView):
     add_another = False
     item_text = None
+    item_text_plural = None
     success_target = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['item'] = self.item_text
+        context['item_plural'] = self.item_text_plural
         return context
 
     def get_initial(self):
@@ -96,6 +98,7 @@ class AddBookView(AddItemView):
     form_class = AddBookForm
     success_target = 'add_book'
     item_text = 'un livre'
+    item_text_plural = 'livres'
 
 
 class AddSuppliesView(AddItemView):
@@ -104,6 +107,7 @@ class AddSuppliesView(AddItemView):
     form_class = AddSuppliesForm
     success_target = 'add_supplies'
     item_text = 'des fournitures'
+    item_text_plural = 'fournitures'
 
 
 def clear_teacher_view(request):
