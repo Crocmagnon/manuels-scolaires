@@ -35,14 +35,17 @@ class BookResource(resources.ModelResource):
         model = Book
         fields = ('title', 'authors', 'editor__name', 'publication_year', 'isbn',
                   'price', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name', 'field')
+        export_order = ('field', 'title', 'authors', 'editor__name', 'publication_year', 'isbn', 'price',
+                        'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name')
 
 
 @admin.register(Book)
 class BookAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = BookResource
-    list_display = ['title', 'authors', 'editor', 'publication_year', 'isbn',
-                    'price', 'previously_acquired', 'teacher', 'level', 'field']
+    list_display = ['level', 'field', 'title', 'authors', 'editor', 'publication_year', 'isbn',
+                    'price', 'previously_acquired', 'teacher',]
     list_filter = ['editor', 'previously_acquired', 'teacher', 'level']
+    list_display_links = ['title']
     fieldsets = [
         ('Infos livre', {
             'fields': ('title', 'authors', 'editor', 'publication_year', 'isbn', 'created_at', 'updated_at')
