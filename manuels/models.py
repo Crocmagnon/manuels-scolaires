@@ -99,7 +99,6 @@ class Book(BaseModel):
     title = models.TextField('titre')
     authors = models.TextField('auteurs')
     editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.PROTECT, null=True)
-    collection = models.CharField('collection', max_length=200, blank=True)
     publication_year = models.PositiveIntegerField('année de publication')
     isbn = models.CharField('ISBN/EAN', max_length=20, validators=[isbn_validator])
     price = models.PositiveIntegerField('prix')

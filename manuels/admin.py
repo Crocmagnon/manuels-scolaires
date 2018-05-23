@@ -33,19 +33,19 @@ class LevelAdmin(admin.ModelAdmin):
 class BookResource(resources.ModelResource):
     class Meta:
         model = Book
-        fields = ('title', 'authors', 'editor', 'collection', 'publication_year', 'isbn',
+        fields = ('title', 'authors', 'editor', 'publication_year', 'isbn',
                   'price', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name', 'field')
 
 
 @admin.register(Book)
 class BookAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = BookResource
-    list_display = ['title', 'authors', 'editor', 'collection', 'publication_year', 'isbn',
+    list_display = ['title', 'authors', 'editor', 'publication_year', 'isbn',
                     'price', 'previously_acquired', 'teacher', 'level', 'field']
     list_filter = ['editor', 'previously_acquired', 'teacher', 'level']
     fieldsets = [
         ('Infos livre', {
-            'fields': ('title', 'authors', 'editor', 'collection', 'publication_year', 'isbn', 'created_at', 'updated_at')
+            'fields': ('title', 'authors', 'editor', 'publication_year', 'isbn', 'created_at', 'updated_at')
         }),
         ('Élève', {
             'fields': ('price', 'previously_acquired',)
