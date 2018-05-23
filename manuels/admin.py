@@ -68,12 +68,13 @@ class EditorAdmin(admin.ModelAdmin):
 class SuppliesResource(resources.ModelResource):
     class Meta:
         model = SuppliesRequirement
-        fields = ('supplies', 'level__name', 'teacher__first_name', 'teacher__last_name')
+        fields = ('supplies', 'fields', 'level__name', 'teacher__first_name', 'teacher__last_name')
+        export_order = ('fields', 'supplies', 'teacher__first_name', 'teacher__last_name', 'level__name')
 
 
 @admin.register(SuppliesRequirement)
 class SuppliesRequirementAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = SuppliesResource
-    list_display = ['teacher', 'level', 'supplies']
+    list_display = ['id', 'teacher', 'level', 'fields', 'supplies']
     readonly_fields = ['created_at', 'updated_at']
     list_filter = ['teacher', 'level']
