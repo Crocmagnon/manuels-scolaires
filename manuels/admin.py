@@ -33,7 +33,7 @@ class LevelAdmin(admin.ModelAdmin):
 class BookResource(resources.ModelResource):
     class Meta:
         model = Book
-        fields = ('title', 'authors', 'editor', 'publication_year', 'isbn',
+        fields = ('title', 'authors', 'editor__name', 'publication_year', 'isbn',
                   'price', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name', 'field')
 
 
