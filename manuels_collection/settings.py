@@ -17,7 +17,6 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -27,7 +26,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'f6j7c0j%-^$r6&hf4!=db1=)88&ve3qwbsgl3ykd22
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_ENV', 'prod') == 'dev'
 
-ALLOWED_HOSTS = ['web',]
+ALLOWED_HOSTS = ['web', ]
 if DEBUG:
     ALLOWED_HOSTS.extend([
         'localhost',
@@ -89,14 +88,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'manuels_collection.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': dj_database_url.config(default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'), conn_max_age=600)
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -116,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -130,6 +126,29 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Logging
+LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] [%(process)d] [%(levelname)s] %(module)s - %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'manuels': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL
+        },
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

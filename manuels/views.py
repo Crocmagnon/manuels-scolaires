@@ -1,15 +1,14 @@
-import os
-
-from django.conf import settings
 from django.contrib import messages
-from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import get_object_or_404, redirect
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import CreateView, ListView
 
 from manuels.forms import AddBookForm, AddSuppliesForm
 from manuels.models import Teacher, Book, SuppliesRequirement
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class HomePageView(CreateView):
