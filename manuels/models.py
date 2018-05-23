@@ -18,6 +18,15 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField('mis à jour le', auto_now=True)
 
 
+def phone_validator(value):
+    regex = re.compile(r'^\d{10}$')
+    if not regex.match(value):
+        raise ValidationError(
+            "%(value)s n'est pas un numéro de téléphone valide. Format attendu : 10 chiffres.",
+            params={'value': value}
+        )
+
+
 class Teacher(BaseModel):
     class Meta:
         verbose_name = 'enseignant'
@@ -25,7 +34,12 @@ class Teacher(BaseModel):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField('prénom', max_length=100)
     last_name = models.CharField('nom', max_length=100)
-    phone_number = models.CharField('numéro de téléphone', help_text="En cas d'urgence", max_length=10)
+    phone_number = models.CharField(
+        'numéro de téléphone',
+        help_text="En cas d'urgence, 10 chiffres.",
+        max_length=10,
+        validators=[phone_validator]
+    )
     email = models.EmailField(
         'adresse email',
         help_text='Utilisée pour vous transmettre votre lien personnel',
