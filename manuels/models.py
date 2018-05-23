@@ -80,7 +80,7 @@ class Level(BaseModel):
     class Meta:
         verbose_name = 'classe'
         verbose_name_plural = 'classes'
-    name = models.CharField('nom', max_length=10)
+    name = models.CharField('nom', max_length=50)
 
     def __str__(self):
         return self.name
@@ -90,7 +90,7 @@ class Editor(BaseModel):
     class Meta:
         verbose_name = 'éditeur'
         verbose_name_plural = 'éditeurs'
-    name = models.CharField('nom', max_length=50)
+    name = models.CharField('nom', max_length=100)
 
     def __str__(self):
         return self.name
@@ -109,7 +109,7 @@ class Book(BaseModel):
 
     teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
-    field = models.CharField('matière', max_length=100)
+    field = models.CharField('matière', max_length=200)
     title = models.TextField('titre')
     authors = models.TextField('auteurs')
     editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.PROTECT, null=True)
@@ -151,7 +151,7 @@ class SuppliesRequirement(BaseModel):
 
     teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
-    field = models.CharField('matière', max_length=100)
+    field = models.CharField('matière', max_length=200)
     supplies = models.TextField('fournitures')
 
     def __str__(self):
