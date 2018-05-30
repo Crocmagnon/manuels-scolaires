@@ -109,7 +109,7 @@ class Book(BaseModel):
 
     teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
-    field = models.CharField('matière', max_length=200)
+    field = models.CharField('discipline', max_length=200)
     title = models.TextField('titre')
     authors = models.TextField('auteurs')
     editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.PROTECT, null=True)
@@ -151,7 +151,7 @@ class SuppliesRequirement(BaseModel):
 
     teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
-    fields = models.TextField('matières')
+    fields = models.TextField('disciplines')
     supplies = models.TextField('fournitures')
 
     def __str__(self):
