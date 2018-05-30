@@ -10,6 +10,11 @@
                 {% block title %}Ajouter {{ item }}{% endblock %}
                 <a href="{% url 'list_books' teacher.pk %}" class="btn btn-secondary">Retour à la liste des {{ item_plural }}</a>
             </h2>
+            {% if message_template %}
+                <div class="alert alert-info">
+                    {% include message_template %}
+                </div>
+            {% endif %}
             <form action="" method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}

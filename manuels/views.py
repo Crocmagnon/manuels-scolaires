@@ -63,11 +63,13 @@ class AddItemView(BaseTeacherView, CreateView):
     item_text = None
     item_text_plural = None
     success_target = None
+    message_template = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['item'] = self.item_text
         context['item_plural'] = self.item_text_plural
+        context['message_template'] = self.message_template
         return context
 
     def get_initial(self):
@@ -108,6 +110,7 @@ class AddSuppliesView(AddItemView):
     success_target = 'add_supplies'
     item_text = 'des fournitures'
     item_text_plural = 'fournitures'
+    message_template = 'manuels/supplies_message.html'
 
 
 def clear_teacher_view(request):
