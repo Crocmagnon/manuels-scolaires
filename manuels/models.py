@@ -132,6 +132,11 @@ class Book(BaseModel):
         blank=False,
         default=False,
     )
+    done = models.BooleanField(
+        'Traité',
+        blank=True,
+        default=False
+    )
 
     @property
     def previously_acquired_emoji(self):
@@ -153,6 +158,11 @@ class SuppliesRequirement(BaseModel):
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
     fields = models.TextField('disciplines')
     supplies = models.TextField('fournitures')
+    done = models.BooleanField(
+        'Traité',
+        blank=True,
+        default=False
+    )
 
     def __str__(self):
         return f'{self.supplies} pour {self.level} ({self.teacher})'
