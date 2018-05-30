@@ -137,6 +137,11 @@ class Book(BaseModel):
         blank=True,
         default=False
     )
+    comments = models.TextField(
+        'commentaires',
+        help_text="Ce message sera visible par la documentaliste. Vous pouvez l'utiliser par exemple si vous souhaitez "
+                  "saisir un éditeur qui n'est pas proposé."
+    )
 
     @property
     def previously_acquired_emoji(self):
