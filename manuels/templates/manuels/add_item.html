@@ -1,6 +1,7 @@
 {% extends 'manuels/base.html' %}
 
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
     <div class="row">
@@ -24,4 +25,8 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block end_js %}
+    <script src="{% static 'manuels/no_book.js' %}"></script>
 {% endblock %}
