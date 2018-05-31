@@ -1,9 +1,10 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
-from manuels.forms import AddBookForm, AddSuppliesForm
+from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
 from manuels.models import Teacher, Book, SuppliesRequirement
 
 import logging
@@ -31,9 +32,10 @@ class HomePageView(CreateView):
 
 class BaseTeacherView:
     teacher = None
+    teacher_field = 'pk'
 
     def dispatch(self, request, *args, **kwargs):
-        self.teacher = get_object_or_404(Teacher, pk=self.kwargs['pk'])
+        self.teacher = get_object_or_404(Teacher, pk=self.kwargs[self.teacher_field])
         request.session['teacher_pk'] = str(self.teacher.pk)
         return super().dispatch(request, *args, **kwargs)
 
@@ -58,18 +60,21 @@ class ListBooksView(BaseTeacherView, ListView):
         return Book.objects.filter(teacher=self.teacher)
 
 
-class AddItemView(BaseTeacherView, CreateView):
+class ItemView(BaseTeacherView):
     add_another = False
     item_text = None
     item_text_plural = None
     success_target = None
     message_template = None
+    template_name = 'manuels/add_item.html'
+    verb = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['item'] = self.item_text
         context['item_plural'] = self.item_text_plural
         context['message_template'] = self.message_template
+        context['verb'] = self.verb
         return context
 
     def get_initial(self):
@@ -82,9 +87,9 @@ class AddItemView(BaseTeacherView, CreateView):
         form.fields['teacher'].queryset = Teacher.objects.filter(pk=self.teacher.pk)
         return form
 
-    def form_valid(self, form):
-        self.add_another = form.cleaned_data['add_another']
-        return super().form_valid(form)
+
+class AddItemView(ItemView, CreateView):
+    verb = 'Ajouter'
 
     def get_success_url(self):
         messages.success(self.request, f'"{self.object}" a été ajouté.')
@@ -93,24 +98,56 @@ class AddItemView(BaseTeacherView, CreateView):
         else:
             return reverse('list_books', args=[str(self.teacher.pk)])
 
+    def form_valid(self, form):
+        self.add_another = form.cleaned_data['add_another']
+        return super().form_valid(form)
 
-class AddBookView(AddItemView):
+
+class BookView:
     model = Book
-    template_name = 'manuels/add_item.html'
-    form_class = AddBookForm
     success_target = 'add_book'
     item_text = 'un livre'
     item_text_plural = 'livres'
 
 
-class AddSuppliesView(AddItemView):
+class AddBookView(BookView, AddItemView):
+    form_class = AddBookForm
+
+
+class SuppliesView:
     model = SuppliesRequirement
-    template_name = 'manuels/add_item.html'
-    form_class = AddSuppliesForm
     success_target = 'add_supplies'
     item_text = 'des fournitures'
     item_text_plural = 'fournitures'
     message_template = 'manuels/supplies_message.html'
+
+
+class AddSuppliesView(SuppliesView, AddItemView):
+    form_class = AddSuppliesForm
+
+
+class EditItemView(ItemView, UpdateView):
+    template_name = 'manuels/add_item.html'
+    teacher_field = 'teacher_pk'
+    item_text = None
+    item_text_plural = None
+    message_template = None
+    verb = 'Modifier'
+
+    def get_queryset(self):
+        return self.model.objects.filter(teacher=self.teacher)
+
+    def get_success_url(self):
+        messages.success(self.request, f'"{self.object}" a été modifié.')
+        return reverse('list_books', args=[str(self.teacher.pk)])
+
+
+class EditBookView(BookView, EditItemView):
+    form_class = EditBookForm
+
+
+class EditSuppliesView(SuppliesView, EditItemView):
+    form_class = EditSuppliesForm
 
 
 def clear_teacher_view(request):

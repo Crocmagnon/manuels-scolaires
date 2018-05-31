@@ -154,6 +154,10 @@ class Book(BaseModel):
     def __str__(self):
         return f'{self.title} ({self.authors}) - {self.isbn}'
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('edit_book', kwargs={'teacher_pk': str(self.teacher.pk), 'pk': str(self.pk)})
+
 
 class SuppliesRequirement(BaseModel):
     class Meta:

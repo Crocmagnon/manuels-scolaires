@@ -31,7 +31,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Classe</th>
-                    <th scope="col">Matière</th>
+                    <th scope="col">Discipline</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Auteurs</th>
                     <th scope="col">Éditeur</th>
@@ -45,7 +45,7 @@
                 <tbody>
                 {% for book in books %}
                     <tr>
-                        <th scope="row">{{ forloop.counter }}</th>
+                        <th scope="row"><a href="{% url 'edit_book' teacher_pk=book.teacher.pk pk=book.pk %}"><i class="fas fa-edit"></i></a></th>
                         <td>{{ book.level }}</td>
                         <td>{{ book.field }}</td>
                         <td>{{ book.title }}</td>
@@ -73,16 +73,16 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Classe</th>
-                    <th scope="col">Matière</th>
+                    <th scope="col">Disciplines</th>
                     <th scope="col">Liste de fournitures</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for supply in supplies %}
                     <tr>
-                        <th scope="row">{{ forloop.counter }}</th>
+                        <th scope="row"><a href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"><i class="fas fa-edit"></i></a></th>
                         <td>{{ supply.level }}</td>
-                        <td>{{ supply.field }}</td>
+                        <td>{{ supply.fields }}</td>
                         <td>{{ supply.supplies|linebreaksbr }}</td>
                     </tr>
                 {% endfor %}
