@@ -139,6 +139,7 @@ class Book(BaseModel):
     )
     comments = models.TextField(
         'commentaires',
+        blank=True,
         help_text="Ce message sera visible par la documentaliste. Vous pouvez l'utiliser par exemple si vous souhaitez "
                   "saisir un éditeur qui n'est pas proposé."
     )
