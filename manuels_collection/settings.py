@@ -41,6 +41,9 @@ ADMINS = [('Gabriel', os.getenv('ADMIN_EMAIL')), ]
 SERVER_EMAIL = os.getenv('SERVER_EMAIL')
 EMAIL_SUBJECT_PREFIX = '[Manuels] '
 
+AUTHORIZED_EMAILS = os.getenv('AUTHORIZED_EMAILS', '').split(',')
+LIBRARIAN_EMAILS = os.getenv('LIBRARIAN_EMAILS', '').split(',')
+
 # Application definition
 
 INSTALLED_APPS = [

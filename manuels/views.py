@@ -198,4 +198,6 @@ class ConfirmTeacherView(BaseTeacherView, UpdateView):
         response = super().form_valid(form)
         self.object.has_confirmed_list = True
         self.object.save()
+        self.object.send_confirmation(request=self.request)
+        messages.success(self.request, "Vos listes ont été validées. Votre documentaliste a été notifiée par email.")
         return response

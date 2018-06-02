@@ -79,7 +79,25 @@ class Teacher(BaseModel):
         if reply_to:
             msg.reply_to = reply_to
         msg.attach_alternative(
-            render_to_string('manuels/email.html', {'link': link, 'teacher': self}), "text/html"
+            render_to_string('manuels/emails_link.html', {'link': link, 'teacher': self}), "text/html"
+        )
+        msg.send()
+
+    def send_confirmation(self, request):
+        dest = settings.LIBRARIAN_EMAILS
+        link = request.build_absolute_uri(reverse('home_page'))
+        msg = EmailMultiAlternatives(
+            subject="Gestion des manuels scolaires - Confirmation d'un coordonnateur",
+            body=f'Bonjour,\n'
+                 f'{self.first_name} a confirmé ses listes sur {link}',
+            from_email=settings.SERVER_EMAIL,
+            to=dest,
+        )
+        reply_to = [os.getenv('REPLY_TO')]
+        if reply_to:
+            msg.reply_to = reply_to
+        msg.attach_alternative(
+            render_to_string('manuels/emails_confirmation.html', {'link': link, 'teacher': self}), "text/html"
         )
         msg.send()
 

@@ -1,5 +1,5 @@
-import os
+from django.conf import settings
 
 
 def authorized_mails(request):
-    return {'authorized_mails': os.getenv('AUTHORIZED_MAILS', '').split(',')}
+    return {'authorized_mails': settings.AUTHORIZED_MAILS}
