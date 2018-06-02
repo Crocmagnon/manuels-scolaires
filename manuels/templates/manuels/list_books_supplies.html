@@ -58,7 +58,7 @@
                         <td>{{ book.collection }}</td>
                         <td>{{ book.publication_year }}</td>
                         <td>{{ book.isbn }}</td>
-                        <td>{{ book.price }}</td>
+                        <td>{{ book.price }}€</td>
                         <td>
                             <i class="fas fa-{% if book.previously_acquired %}check-circle{% else %}ban{% endif %}"></i>
                             {{ book.previously_acquired_text }}
