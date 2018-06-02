@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, FormView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, FormView, DetailView, TemplateView
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
 from manuels.models import Teacher, Book, SuppliesRequirement
@@ -46,18 +46,8 @@ class BaseTeacherView:
         return context
 
 
-class ListBooksView(BaseTeacherView, ListView):
-    model = Book
+class ListBooksView(BaseTeacherView, TemplateView):
     template_name = 'manuels/list_books_supplies.html'
-    context_object_name = 'books'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['supplies'] = SuppliesRequirement.objects.filter(teacher=self.teacher)
-        return context
-
-    def get_queryset(self):
-        return Book.objects.filter(teacher=self.teacher)
 
 
 class ItemView(BaseTeacherView):

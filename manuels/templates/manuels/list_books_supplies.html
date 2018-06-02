@@ -58,7 +58,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for book in books %}
+                    {% for book in teacher.book_set.all %}
                         <tr>
                             {% if not teacher.has_confirmed_list %}
                                 <th scope="row">
@@ -115,7 +115,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for supply in supplies %}
+                    {% for supply in teacher.suppliesrequirement_set.all %}
                         <tr>
                             {% if not teacher.has_confirmed_list %}
                                 <th scope="row">
