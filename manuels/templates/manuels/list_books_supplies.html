@@ -48,9 +48,14 @@
                     {% for book in books %}
                         <tr>
                             <th scope="row">
-                                <a title="Modifier"
-                                   href="{% url 'edit_book' teacher_pk=book.teacher.pk pk=book.pk %}"><i
-                                        class="fas fa-edit"></i></a>
+                                <div class="btn-group">
+                                    <a title="Modifier"
+                                       href="{% url 'edit_book' teacher_pk=book.teacher.pk pk=book.pk %}"
+                                       class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
+                                    <a title="Supprimer"
+                                       href="{% url 'delete_book' teacher_pk=book.teacher.pk pk=book.pk %}"
+                                       class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                </div>
                             </th>
                             <td>{{ book.level }}</td>
                             <td>{{ book.field }}</td>
@@ -92,9 +97,14 @@
                     {% for supply in supplies %}
                         <tr>
                             <th scope="row">
-                                <a title="Modifier"
-                                   href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"><i
-                                        class="fas fa-edit"></i></a>
+                                <div class="btn-group">
+                                    <a title="Modifier"
+                                       href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
+                                       class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
+                                    <a title="Supprimer"
+                                       href="{% url 'delete_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
+                                       class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                </div>
                             </th>
                             <td>{{ supply.level }}</td>
                             <td>{{ supply.fields }}</td>

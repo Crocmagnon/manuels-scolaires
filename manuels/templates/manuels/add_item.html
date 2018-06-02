@@ -12,15 +12,15 @@
                 <a href="{% url 'list_books' teacher.pk %}" class="btn btn-secondary">Retour à la liste des {{ item_plural }}</a>
             </h2>
             {% if message_template %}
-                <div class="alert alert-info">
-                    {% include message_template %}
-                </div>
+                {% include message_template %}
             {% endif %}
             <form action="" method="post" class="form">
                 {% csrf_token %}
-                {% bootstrap_form form %}
+                {% if form %}
+                    {% bootstrap_form form %}
+                {% endif %}
                 {% buttons %}
-                    <button type="submit" class="btn btn-primary">Valider</button>
+                    <button type="submit" class="btn btn-{{ button_class }}">{{ verb }}</button>
                 {% endbuttons %}
             </form>
         </div>

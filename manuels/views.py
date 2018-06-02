@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
 from manuels.models import Teacher, Book, SuppliesRequirement
@@ -68,6 +68,7 @@ class ItemView(BaseTeacherView):
     message_template = None
     template_name = 'manuels/add_item.html'
     verb = None
+    button_class = 'primary'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -75,6 +76,7 @@ class ItemView(BaseTeacherView):
         context['item_plural'] = self.item_text_plural
         context['message_template'] = self.message_template
         context['verb'] = self.verb
+        context['button_class'] = self.button_class
         return context
 
     def get_initial(self):
@@ -119,11 +121,11 @@ class SuppliesView:
     success_target = 'add_supplies'
     item_text = 'des fournitures'
     item_text_plural = 'fournitures'
-    message_template = 'manuels/supplies_message.html'
 
 
 class AddSuppliesView(SuppliesView, AddItemView):
     form_class = AddSuppliesForm
+    message_template = 'manuels/supplies_message.html'
 
 
 class EditItemView(ItemView, UpdateView):
@@ -148,6 +150,30 @@ class EditBookView(BookView, EditItemView):
 
 class EditSuppliesView(SuppliesView, EditItemView):
     form_class = EditSuppliesForm
+
+
+class DeleteItemView(ItemView, DeleteView):
+    teacher_field = 'teacher_pk'
+    item_text = None
+    item_text_plural = None
+    message_template = 'manuels/confirm_delete.html'
+    verb = 'Supprimer'
+    button_class = 'danger'
+
+    def get_queryset(self):
+        return self.model.objects.filter(teacher=self.teacher)
+
+    def get_success_url(self):
+        messages.success(self.request, f'"{self.object}" a été supprimé.')
+        return reverse('list_books', args=[str(self.teacher.pk)])
+
+
+class DeleteBookView(BookView, DeleteItemView):
+    pass
+
+
+class DeleteSuppliesView(SuppliesView, DeleteItemView):
+    pass
 
 
 def clear_teacher_view(request):
