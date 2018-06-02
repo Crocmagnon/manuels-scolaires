@@ -11,6 +11,11 @@ class EditBookForm(forms.ModelForm):
 
     no_book = forms.BooleanField(label='Pas de livre pour cette classe/matière', required=False, initial=False)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['title'].widget = forms.TextInput()
+        self.fields['authors'].widget = forms.TextInput()
+
 
 class AddBookForm(EditBookForm):
     class Meta(EditBookForm.Meta):
