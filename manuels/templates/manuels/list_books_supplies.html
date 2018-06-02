@@ -27,46 +27,49 @@
                 Liste des livres demandés
                 <a href="{% url 'add_book' pk=teacher.pk %}" class="btn btn-primary">Ajouter un livre</a>
             </h2>
-            <table class="table table-hover table-sm">
-                <thead>
-                <tr>
-                    <th scope="col">Modifier</th>
-                    <th scope="col">Classe</th>
-                    <th scope="col">Discipline</th>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Auteurs</th>
-                    <th scope="col">Éditeur</th>
-                    <th scope="col">Collection</th>
-                    <th scope="col">Année de publication</th>
-                    <th scope="col">ISBN</th>
-                    <th scope="col">Prix</th>
-                    <th scope="col">Déjà acheté par l'élève</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for book in books %}
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead>
                     <tr>
-                        <th scope="row">
-                            <a title="Modifier"
-                               href="{% url 'edit_book' teacher_pk=book.teacher.pk pk=book.pk %}"><i class="fas fa-edit"></i></a>
-                        </th>
-                        <td>{{ book.level }}</td>
-                        <td>{{ book.field }}</td>
-                        <td>{{ book.title }}</td>
-                        <td>{{ book.authors }}</td>
-                        <td>{{ book.editor }}</td>
-                        <td>{{ book.collection }}</td>
-                        <td>{{ book.publication_year }}</td>
-                        <td>{{ book.isbn }}</td>
-                        <td>{{ book.price }}€</td>
-                        <td>
-                            <i class="fas fa-{% if book.previously_acquired %}check-circle{% else %}ban{% endif %}"></i>
-                            {{ book.previously_acquired_text }}
-                        </td>
+                        <th scope="col">Modifier</th>
+                        <th scope="col">Classe</th>
+                        <th scope="col">Discipline</th>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Auteurs</th>
+                        <th scope="col">Éditeur</th>
+                        <th scope="col">Collection</th>
+                        <th scope="col">Année de publication</th>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Déjà acheté par l'élève</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <th scope="row">
+                                <a title="Modifier"
+                                   href="{% url 'edit_book' teacher_pk=book.teacher.pk pk=book.pk %}"><i
+                                        class="fas fa-edit"></i></a>
+                            </th>
+                            <td>{{ book.level }}</td>
+                            <td>{{ book.field }}</td>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.authors }}</td>
+                            <td>{{ book.editor }}</td>
+                            <td>{{ book.collection }}</td>
+                            <td>{{ book.publication_year }}</td>
+                            <td>{{ book.isbn }}</td>
+                            <td>{{ book.price }}€</td>
+                            <td>
+                                <i class="fas fa-{% if book.previously_acquired %}check-circle{% else %}ban{% endif %}"></i>
+                                {{ book.previously_acquired_text }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -75,29 +78,32 @@
                 Liste des fournitures demandées
                 <a href="{% url 'add_supplies' pk=teacher.pk %}" class="btn btn-primary">Ajouter des fournitures</a>
             </h2>
-            <table class="table table-hover table-sm">
-                <thead>
-                <tr>
-                    <th scope="col">Modifier</th>
-                    <th scope="col">Classe</th>
-                    <th scope="col">Disciplines</th>
-                    <th scope="col">Liste de fournitures</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for supply in supplies %}
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead>
                     <tr>
-                        <th scope="row">
-                            <a title="Modifier"
-                               href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"><i class="fas fa-edit"></i></a>
-                        </th>
-                        <td>{{ supply.level }}</td>
-                        <td>{{ supply.fields }}</td>
-                        <td>{{ supply.supplies|linebreaksbr }}</td>
+                        <th scope="col">Modifier</th>
+                        <th scope="col">Classe</th>
+                        <th scope="col">Disciplines</th>
+                        <th scope="col">Liste de fournitures</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for supply in supplies %}
+                        <tr>
+                            <th scope="row">
+                                <a title="Modifier"
+                                   href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"><i
+                                        class="fas fa-edit"></i></a>
+                            </th>
+                            <td>{{ supply.level }}</td>
+                            <td>{{ supply.fields }}</td>
+                            <td>{{ supply.supplies|linebreaksbr }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
