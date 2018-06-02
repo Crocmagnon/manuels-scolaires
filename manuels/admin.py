@@ -48,7 +48,7 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
     list_display_links = ['title']
     fieldsets = [
         ('Infos livre', {
-            'fields': ('title', 'authors', 'editor', 'publication_year', 'isbn', 'created_at', 'updated_at')
+            'fields': ('title', 'authors', 'editor', 'publication_year', 'isbn', 'created_at', 'updated_at', 'comment')
         }),
         ('Élève', {
             'fields': ('price', 'previously_acquired',)
