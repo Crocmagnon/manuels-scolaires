@@ -145,11 +145,11 @@ class Book(BaseModel):
     )
 
     @property
-    def previously_acquired_emoji(self):
+    def previously_acquired_text(self):
         if self.previously_acquired:
-            return '✅'
+            return 'Oui'
         else:
-            return '🚫'
+            return 'Non'
 
     def __str__(self):
         return f'{self.title} ({self.authors}) - {self.isbn}'
