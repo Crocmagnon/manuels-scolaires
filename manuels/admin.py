@@ -53,7 +53,7 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
         ('Élève', {
             'fields': ('price', 'previously_acquired',)
         }),
-        ('Enseignant', {
+        ('Coordonnateur', {
             'fields': ('teacher', 'level', 'field')
         }),
         ('Gestion', {

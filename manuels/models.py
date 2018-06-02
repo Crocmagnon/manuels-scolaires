@@ -29,8 +29,8 @@ def phone_validator(value):
 
 class Teacher(BaseModel):
     class Meta:
-        verbose_name = 'enseignant'
-        verbose_name_plural = 'enseignants'
+        verbose_name = 'coordonnateur'
+        verbose_name_plural = 'coordonnateurs'
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField('prénom', max_length=100)
     last_name = models.CharField('nom', max_length=100)
@@ -107,7 +107,7 @@ class Book(BaseModel):
         verbose_name = 'livre'
         verbose_name_plural = 'livres'
 
-    teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
+    teacher = models.ForeignKey(verbose_name='coordonnateur', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
     field = models.CharField('discipline', max_length=200)
     title = models.TextField('titre')
@@ -164,7 +164,7 @@ class SuppliesRequirement(BaseModel):
         verbose_name = 'demande de fournitures'
         verbose_name_plural = 'demandes de fournitures'
 
-    teacher = models.ForeignKey(verbose_name='enseignant', to=Teacher, on_delete=models.PROTECT, null=True)
+    teacher = models.ForeignKey(verbose_name='coordonnateur', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
     fields = models.TextField('disciplines')
     supplies = models.TextField('fournitures')
