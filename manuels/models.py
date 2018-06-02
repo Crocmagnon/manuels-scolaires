@@ -14,6 +14,7 @@ from django.urls import reverse
 class BaseModel(models.Model):
     class Meta:
         abstract = True
+
     created_at = models.DateTimeField('créé le', auto_now_add=True)
     updated_at = models.DateTimeField('mis à jour le', auto_now=True)
 
@@ -31,6 +32,8 @@ class Teacher(BaseModel):
     class Meta:
         verbose_name = 'coordonnateur'
         verbose_name_plural = 'coordonnateurs'
+        ordering = ['first_name']
+
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField('prénom', max_length=100)
     last_name = models.CharField('nom', max_length=100)
@@ -80,6 +83,7 @@ class Level(BaseModel):
     class Meta:
         verbose_name = 'classe'
         verbose_name_plural = 'classes'
+
     name = models.CharField('nom', max_length=50)
 
     def __str__(self):
@@ -90,6 +94,8 @@ class Editor(BaseModel):
     class Meta:
         verbose_name = 'éditeur'
         verbose_name_plural = 'éditeurs'
+        ordering = ['name']
+
     name = models.CharField('nom', max_length=100)
 
     def __str__(self):
