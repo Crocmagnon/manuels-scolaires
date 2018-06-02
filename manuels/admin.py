@@ -44,6 +44,7 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = BookResource
     list_display = ['level', 'field', 'title', 'authors', 'editor', 'publication_year', 'isbn',
                     'price', 'previously_acquired', 'teacher', 'done']
+    list_editable = ['done']
     list_filter = ['done', 'editor', 'previously_acquired', 'teacher', 'level']
     list_display_links = ['title']
     fieldsets = [
@@ -79,5 +80,6 @@ class SuppliesResource(resources.ModelResource):
 class SuppliesRequirementAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = SuppliesResource
     list_display = ['id', 'teacher', 'level', 'fields', 'supplies', 'done']
+    list_editable = ['done']
     readonly_fields = ['created_at', 'updated_at']
     list_filter = ['done', 'teacher', 'level']
