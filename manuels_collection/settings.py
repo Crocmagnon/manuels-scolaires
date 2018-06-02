@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
+from django.contrib.messages import constants as messages
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -165,3 +166,7 @@ ANYMAIL = {
 }
 
 EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

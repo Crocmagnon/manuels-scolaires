@@ -1,7 +1,7 @@
 from django.urls import path
 
 from manuels.views import AddBookView, ListBooksView, clear_teacher_view, AddSuppliesView, EditBookView, \
-    EditSuppliesView, DeleteBookView, DeleteSuppliesView
+    EditSuppliesView, DeleteBookView, DeleteSuppliesView, ConfirmTeacherView
 
 urlpatterns = [
     path('teacher/<uuid:pk>/add_book', AddBookView.as_view(), name='add_book'),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('teacher/<uuid:teacher_pk>/book/<int:pk>/delete', DeleteBookView.as_view(), name='delete_book'),
     path('teacher/<uuid:teacher_pk>/supplies/<int:pk>', EditSuppliesView.as_view(), name='edit_supplies'),
     path('teacher/<uuid:teacher_pk>/supplies/<int:pk>/delete', DeleteSuppliesView.as_view(), name='delete_supplies'),
+    path('teacher/<uuid:pk>/confirm', ConfirmTeacherView.as_view(), name='confirm_teacher'),
     path('clear', clear_teacher_view, name='clear_teacher'),
 ]

@@ -7,8 +7,15 @@
 {% block content %}
     <div class="row">
         <div class="col-12">
-            <h1>Bienvenue {{ teacher.full_name }} <a href="{% url 'clear_teacher' %}" class="btn btn-warning">Se
-                déconnecter</a></h1>
+            <h1>Bienvenue {{ teacher.full_name }}
+                <a href="{% url 'clear_teacher' %}" class="btn btn-warning">
+                    <i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+
+                {% if not teacher.has_confirmed_list %}
+                    <a href="{% url 'confirm_teacher' pk=teacher.pk %}" class="btn btn-danger">
+                        <i class="fas fa-check-circle"></i> Confirmer ma liste</a>
+                {% endif %}
+            </h1>
         </div>
     </div>
     <div class="alert alert-warning" role="alert">
@@ -25,13 +32,19 @@
         <div class="col-12">
             <h2>
                 Liste des livres demandés
-                <a href="{% url 'add_book' pk=teacher.pk %}" class="btn btn-primary">Ajouter un livre</a>
+                {% if not teacher.has_confirmed_list %}
+                    <a href="{% url 'add_book' pk=teacher.pk %}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Ajouter un livre
+                    </a>
+                {% endif %}
             </h2>
             <div class="table-responsive">
                 <table class="table table-hover table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">Modifier</th>
+                        {% if not teacher.has_confirmed_list %}
+                            <th scope="col">Modifier</th>
+                        {% endif %}
                         <th scope="col">Classe</th>
                         <th scope="col">Discipline</th>
                         <th scope="col">Titre</th>
@@ -47,16 +60,18 @@
                     <tbody>
                     {% for book in books %}
                         <tr>
-                            <th scope="row">
-                                <div class="btn-group">
-                                    <a title="Modifier"
-                                       href="{% url 'edit_book' teacher_pk=book.teacher.pk pk=book.pk %}"
-                                       class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
-                                    <a title="Supprimer"
-                                       href="{% url 'delete_book' teacher_pk=book.teacher.pk pk=book.pk %}"
-                                       class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </th>
+                            {% if not teacher.has_confirmed_list %}
+                                <th scope="row">
+                                    <div class="btn-group">
+                                        <a title="Modifier"
+                                           href="{% url 'edit_book' teacher_pk=book.teacher.pk pk=book.pk %}"
+                                           class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
+                                        <a title="Supprimer"
+                                           href="{% url 'delete_book' teacher_pk=book.teacher.pk pk=book.pk %}"
+                                           class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                    </div>
+                                </th>
+                            {% endif %}
                             <td>{{ book.level }}</td>
                             <td>{{ book.field }}</td>
                             <td>{{ book.title }}</td>
@@ -81,13 +96,19 @@
         <div class="col-12">
             <h2>
                 Liste des fournitures demandées
-                <a href="{% url 'add_supplies' pk=teacher.pk %}" class="btn btn-primary">Ajouter des fournitures</a>
+                {% if not teacher.has_confirmed_list %}
+                    <a href="{% url 'add_supplies' pk=teacher.pk %}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Ajouter des fournitures
+                    </a>
+                {% endif %}
             </h2>
             <div class="table-responsive">
                 <table class="table table-hover table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">Modifier</th>
+                        {% if not teacher.has_confirmed_list %}
+                            <th scope="col">Modifier</th>
+                        {% endif %}
                         <th scope="col">Classe</th>
                         <th scope="col">Disciplines</th>
                         <th scope="col">Liste de fournitures</th>
@@ -96,16 +117,18 @@
                     <tbody>
                     {% for supply in supplies %}
                         <tr>
-                            <th scope="row">
-                                <div class="btn-group">
-                                    <a title="Modifier"
-                                       href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
-                                       class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
-                                    <a title="Supprimer"
-                                       href="{% url 'delete_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
-                                       class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </th>
+                            {% if not teacher.has_confirmed_list %}
+                                <th scope="row">
+                                    <div class="btn-group">
+                                        <a title="Modifier"
+                                           href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
+                                           class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
+                                        <a title="Supprimer"
+                                           href="{% url 'delete_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
+                                           class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                    </div>
+                                </th>
+                            {% endif %}
                             <td>{{ supply.level }}</td>
                             <td>{{ supply.fields }}</td>
                             <td>{{ supply.supplies|linebreaksbr }}</td>

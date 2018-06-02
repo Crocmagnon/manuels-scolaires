@@ -48,6 +48,11 @@ class Teacher(BaseModel):
         help_text='Utilisée pour vous transmettre votre lien personnel',
         unique=True
     )
+    has_confirmed_list = models.BooleanField(
+        'a confirmé les listes',
+        default=False,
+        blank=True
+    )
 
     def get_absolute_url(self):
         from django.urls import reverse

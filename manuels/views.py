@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, FormView
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
 from manuels.models import Teacher, Book, SuppliesRequirement
@@ -69,6 +69,13 @@ class ItemView(BaseTeacherView):
     template_name = 'manuels/add_item.html'
     verb = None
     button_class = 'primary'
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if self.teacher.has_confirmed_list:
+            messages.error(request, "Vous avez déjà confirmé vos listes. Il n'est plus possible de les modifier.")
+            return redirect('list_books', pk=self.teacher.pk)
+        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -180,3 +187,15 @@ def clear_teacher_view(request):
     if request.session['teacher_pk']:
         del request.session['teacher_pk']
     return redirect('home_page')
+
+
+class ConfirmTeacherView(BaseTeacherView, UpdateView):
+    model = Teacher
+    fields = []
+    template_name = 'manuels/confirm_teacher.html'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.object.has_confirmed_list = True
+        self.object.save()
+        return response
