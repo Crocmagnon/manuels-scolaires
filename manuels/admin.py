@@ -45,7 +45,7 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['level', 'field', 'title', 'authors', 'editor', 'publication_year', 'isbn',
                     'price', 'previously_acquired', 'teacher', 'done']
     list_editable = ['done']
-    list_filter = ['done', 'editor', 'previously_acquired', 'teacher', 'level']
+    list_filter = ['done', 'previously_acquired', 'level', 'editor', 'teacher']
     list_display_links = ['title']
     fieldsets = [
         ('Infos livre', {
