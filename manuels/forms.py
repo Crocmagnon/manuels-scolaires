@@ -15,6 +15,7 @@ class EditBookForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['title'].widget = forms.TextInput()
         self.fields['authors'].widget = forms.TextInput()
+        self.fields['comments'].widget.attrs.update(rows=3)
 
 
 class AddBookForm(EditBookForm):
@@ -28,7 +29,12 @@ class AddBookForm(EditBookForm):
 class EditSuppliesForm(forms.ModelForm):
     class Meta:
         model = SuppliesRequirement
-        exclude = ['done']
+        fields = ['teacher', 'level', 'fields', 'supplies']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['fields'].widget.attrs.update(rows=3)
+        self.fields['supplies'].widget.attrs.update(rows=3)
 
 
 class AddSuppliesForm(EditSuppliesForm):
