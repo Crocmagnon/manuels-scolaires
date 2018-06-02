@@ -31,7 +31,7 @@ class EditSuppliesForm(forms.ModelForm):
         exclude = ['done']
 
 
-class AddSuppliesForm(forms.ModelForm):
+class AddSuppliesForm(EditSuppliesForm):
     class Meta(EditSuppliesForm.Meta):
         pass
 
