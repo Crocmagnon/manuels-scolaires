@@ -35,8 +35,8 @@ class BookResource(resources.ModelResource):
         model = Book
         fields = ('title', 'authors', 'editor__name', 'publication_year', 'isbn',
                   'price', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name', 'field')
-        export_order = ('field', 'title', 'authors', 'editor__name', 'publication_year', 'isbn', 'price',
-                        'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name')
+        export_order = ('level__name', 'field', 'title', 'authors', 'editor__name', 'publication_year', 'isbn', 'price',
+                        'previously_acquired', 'teacher__first_name', 'teacher__last_name')
 
 
 @admin.register(Book)
@@ -73,7 +73,7 @@ class SuppliesResource(resources.ModelResource):
     class Meta:
         model = SuppliesRequirement
         fields = ('supplies', 'fields', 'level__name', 'teacher__first_name', 'teacher__last_name')
-        export_order = ('fields', 'supplies', 'teacher__first_name', 'teacher__last_name', 'level__name')
+        export_order = ('level__name', 'fields', 'supplies', 'teacher__first_name', 'teacher__last_name')
 
 
 @admin.register(SuppliesRequirement)
