@@ -16,10 +16,14 @@ COPY . ./
 RUN chmod +x bash/run-prod.sh
 CMD bash/run-prod.sh
 
-ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/workout
+ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/manuels
 ENV SECRET_KEY ''
 ENV MAILGUN_ACCESS_KEY ''
 ENV MAILGUN_SERVER_NAME ''
 ENV DJANGO_ENV ''
 ENV ADMIN_EMAIL ''
 ENV SERVER_EMAIL ''
+ENV HOST ''
+ENV REPLY_TO ''
+ENV AUTHORIZED_EMAILS ''
+ENV LIBRARIAN_EMAILS ''
