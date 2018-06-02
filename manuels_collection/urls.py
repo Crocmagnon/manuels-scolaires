@@ -18,6 +18,8 @@ from django.urls import path, include
 
 from manuels.views import HomePageView
 
+admin.site.site_header = 'Manuels scolaires - Administration'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageView.as_view(), name='home_page'),
