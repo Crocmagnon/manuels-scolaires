@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     var _selector = document.querySelector('#id_no_book');
+    if (_selector === null) return;
     _selector.addEventListener('change', function (event) {
         if (_selector.checked) {
             document.querySelector('#id_title').value = "PAS DE LIVRE POUR CETTE CLASSE";
