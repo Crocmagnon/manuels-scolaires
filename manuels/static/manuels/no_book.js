@@ -11,6 +11,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     };
     _selector.addEventListener('change', function (event) {
         if (_selector.checked) {
+            data = {
+                title: document.querySelector('#id_title').value,
+                authors: document.querySelector('#id_authors').value,
+                publicationYear: document.querySelector('#id_publication_year').value,
+                isbn: document.querySelector('#id_isbn').value,
+                price: document.querySelector('#id_price').value,
+                editor: document.querySelector('#id_editor').value,
+            };
             document.querySelector('#id_title').value = "PAS DE LIVRE POUR CETTE CLASSE";
             document.querySelector('#id_authors').value = "N/A";
             document.querySelector('#id_publication_year').value = 1900;
