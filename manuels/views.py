@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class HomePageView(CreateView):
     model = Teacher
-    fields = '__all__'
+    fields = ['first_name', 'last_name', 'phone_number', 'email']
     template_name = 'manuels/home_page.html'
 
     def get(self, request, *args, **kwargs):
