@@ -6,23 +6,19 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-8 offset-md-2">
             <h1>Bienvenue !</h1>
-        </div>
-    </div>
-    <div class="alert alert-info" role="alert">
-        <h4 class="alert-heading">Bienvenue</h4>
-        <p>Si c'est la première fois que vous visitez ce site, remplissez le formulaire suivant
-            afin de créer votre espace.</p>
-        <hr>
-        <p class="mb-0">
-            Sinon, <strong>utilisez le lien qui vous a été fourni</strong> pour voir votre liste
-            et y rajouter des livres.<br>
-            Si vous n'avez pas pensé à sauvegarder le lien, merci de vous adresser à votre documentaliste.
-        </p>
-    </div>
-    <div class="row">
-        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">Bienvenue</h4>
+                <p>Si c'est la première fois que vous visitez ce site, remplissez le formulaire suivant
+                    afin de créer votre espace.</p>
+                <hr>
+                <p class="mb-0">
+                    Sinon, <strong>utilisez le lien qui vous a été fourni</strong> pour voir votre liste
+                    et y rajouter des livres.<br>
+                    Si vous n'avez pas pensé à sauvegarder le lien, merci de vous adresser à votre documentaliste.
+                </p>
+            </div>
             <form action="" method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}
