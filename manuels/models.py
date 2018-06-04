@@ -131,6 +131,17 @@ def isbn_validator(value):
         raise ValidationError("%(value)s n'est pas un ISBN valide.", params={'value': value})
 
 
+def positive_float_validator(value):
+    try:
+        value = float(value)
+    except ValueError:
+        raise ValidationError("%(value)s doit être un nombre décimal")
+
+    if value < 0:
+        raise ValidationError("%(value)s doit être un nombre positif")
+
+
+
 class Book(BaseModel):
     class Meta:
         verbose_name = 'livre'
@@ -150,7 +161,7 @@ class Book(BaseModel):
                   "suivis de la lettre <code>X</code>",
         validators=[isbn_validator]
     )
-    price = models.PositiveIntegerField('prix')
+    price = models.FloatField('prix', validators=[positive_float_validator])
     YES_NO_CHOICE = (
         (False, 'Non'),
         (True, 'Oui'),
