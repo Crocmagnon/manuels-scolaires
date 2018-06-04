@@ -6,10 +6,14 @@ from manuels.models import Book, SuppliesRequirement
 class EditBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['teacher', 'level', 'field', 'no_book', 'title', 'authors', 'editor', 'publication_year',
+        fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'publication_year',
                   'isbn', 'price', 'previously_acquired', 'comments']
 
     no_book = forms.BooleanField(label='Pas de livre pour cette classe/matière', required=False, initial=False)
+    see_later = forms.BooleanField(
+        label='Voir à la rentrée', help_text="Notamment en cas de désaccord sur l'adoption ou non d'un manuel",
+        required=False, initial=False
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,7 +24,7 @@ class EditBookForm(forms.ModelForm):
 
 class AddBookForm(EditBookForm):
     class Meta(EditBookForm.Meta):
-        fields = ['teacher', 'level', 'field', 'no_book', 'title', 'authors', 'editor', 'publication_year',
+        fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'publication_year',
                   'isbn', 'price', 'previously_acquired', 'comments', 'add_another']
 
     add_another = forms.BooleanField(label='Ajouter un autre livre', required=False, initial=True)
