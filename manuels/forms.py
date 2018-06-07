@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from manuels.models import Book, SuppliesRequirement
 
@@ -6,8 +7,8 @@ from manuels.models import Book, SuppliesRequirement
 class EditBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'publication_year',
-                  'isbn', 'price', 'previously_acquired', 'comments']
+        fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'other_editor',
+                  'publication_year', 'isbn', 'price', 'previously_acquired', 'comments']
 
     no_book = forms.BooleanField(label='Pas de livre pour cette classe/matière', required=False, initial=False)
     see_later = forms.BooleanField(
@@ -21,11 +22,28 @@ class EditBookForm(forms.ModelForm):
         self.fields['authors'].widget = forms.TextInput()
         self.fields['comments'].widget.attrs.update(rows=3)
 
+    def clean(self):
+        editor = self.cleaned_data['editor']
+        other_editor = self.cleaned_data['other_editor']
+        title = self.cleaned_data['title']
+
+        if (editor
+                and 'autre' in editor.name.lower()
+                and not other_editor
+                and title not in ['PAS DE LIVRE POUR CETTE CLASSE', 'VOIR À LA RENTRÉE']):
+            self.add_error(
+                'other_editor',
+                ValidationError(
+                    "Vous devez préciser l'éditeur si vous n'en choisissez pas un parmi la liste.",
+                    code='missing'
+                )
+            )
+
 
 class AddBookForm(EditBookForm):
     class Meta(EditBookForm.Meta):
-        fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'publication_year',
-                  'isbn', 'price', 'previously_acquired', 'comments', 'add_another']
+        fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'other_editor',
+                  'publication_year', 'isbn', 'price', 'previously_acquired', 'comments', 'add_another']
 
     add_another = forms.BooleanField(label='Ajouter un autre livre', required=False, initial=True)
 

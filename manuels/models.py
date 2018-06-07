@@ -141,7 +141,6 @@ def positive_float_validator(value):
         raise ValidationError("%(value)s doit être un nombre positif")
 
 
-
 class Book(BaseModel):
     class Meta:
         verbose_name = 'livre'
@@ -153,6 +152,7 @@ class Book(BaseModel):
     title = models.TextField('titre')
     authors = models.TextField('auteurs')
     editor = models.ForeignKey(verbose_name='éditeur', to=Editor, on_delete=models.PROTECT, null=True)
+    other_editor = models.CharField(verbose_name='préciser', max_length=100, blank=True)
     publication_year = models.PositiveIntegerField('année de publication')
     isbn = models.CharField(
         'ISBN/EAN',
@@ -180,8 +180,7 @@ class Book(BaseModel):
     comments = models.TextField(
         'commentaires',
         blank=True,
-        help_text="Ce message sera visible par la documentaliste. Vous pouvez l'utiliser par exemple si vous souhaitez "
-                  "saisir un éditeur qui n'est pas proposé."
+        help_text="Ce message sera visible par la documentaliste."
     )
 
     @property
