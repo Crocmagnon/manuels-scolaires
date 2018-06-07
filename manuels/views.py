@@ -35,7 +35,11 @@ class BaseTeacherView:
     teacher_field = 'pk'
 
     def dispatch(self, request, *args, **kwargs):
-        self.teacher = get_object_or_404(Teacher, pk=self.kwargs[self.teacher_field])
+        self.teacher = Teacher.objects.filter(pk=self.kwargs[self.teacher_field]).first()
+        if not self.teacher:
+            messages.warning(request, "Impossible de trouver le coordonnateur demandé. Si vous pensez que ceci est "
+                                      "une erreur, merci de vous adresser à votre documentaliste.")
+            return redirect('clear_teacher')
         request.session['teacher_pk'] = str(self.teacher.pk)
         return super().dispatch(request, *args, **kwargs)
 
@@ -174,7 +178,7 @@ class DeleteSuppliesView(SuppliesView, DeleteItemView):
 
 
 def clear_teacher_view(request):
-    if request.session['teacher_pk']:
+    if 'teacher_pk' in request.session:
         del request.session['teacher_pk']
     return redirect('home_page')
 
