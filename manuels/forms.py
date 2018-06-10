@@ -49,7 +49,8 @@ class AddBookForm(EditBookForm):
     levels = forms.ModelMultipleChoiceField(
         queryset=Level.objects.all(),
         label='Classes',
-        required=True
+        required=True,
+        help_text='Maintenez la touche Ctrl (ou Cmd) enfoncée pour en sélectionner plusieurs.'
     )
 
 
