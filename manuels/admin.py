@@ -42,14 +42,15 @@ class BookResource(resources.ModelResource):
 @admin.register(Book)
 class BookAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = BookResource
-    list_display = ['level', 'field', 'title', 'authors', 'editor', 'publication_year', 'isbn',
+    list_display = ['level', 'field', 'title', 'authors', 'editor', 'other_editor', 'publication_year', 'isbn',
                     'price', 'previously_acquired', 'teacher', 'done']
     list_editable = ['done']
     list_filter = ['done', 'previously_acquired', 'level', 'editor', 'teacher']
     list_display_links = ['title']
     fieldsets = [
         ('Infos livre', {
-            'fields': ('title', 'authors', 'editor', 'publication_year', 'isbn', 'created_at', 'updated_at', 'comments')
+            'fields': ('title', 'authors', ('editor', 'other_editor'), 'publication_year',
+                       'isbn', 'created_at', 'updated_at', 'comments')
         }),
         ('Élève', {
             'fields': ('price', 'previously_acquired',)
