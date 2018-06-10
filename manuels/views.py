@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, FormView, DetailView, TemplateView
@@ -95,7 +96,6 @@ class AddItemView(ItemView, CreateView):
     verb = 'Ajouter'
 
     def get_success_url(self):
-        messages.success(self.request, f'"{self.object}" a été ajouté.')
         if self.add_another:
             return reverse(self.success_target, args=[str(self.teacher.pk)])
         else:
@@ -103,7 +103,9 @@ class AddItemView(ItemView, CreateView):
 
     def form_valid(self, form):
         self.add_another = form.cleaned_data['add_another']
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, f'"{self.object}" a été ajouté.')
+        return response
 
 
 class BookView:
@@ -115,6 +117,27 @@ class BookView:
 
 class AddBookView(BookView, AddItemView):
     form_class = AddBookForm
+
+    def form_valid(self, form: AddBookForm):
+        self.add_another = form.cleaned_data['add_another']
+        for level in form.cleaned_data['levels']:
+            book = Book.objects.create(
+                teacher=form.cleaned_data['teacher'],
+                level=level,
+                field=form.cleaned_data['field'],
+                title=form.cleaned_data['title'],
+                authors=form.cleaned_data['authors'],
+                editor=form.cleaned_data['editor'],
+                other_editor=form.cleaned_data['other_editor'],
+                publication_year=form.cleaned_data['publication_year'],
+                isbn=form.cleaned_data['isbn'],
+                price=form.cleaned_data['price'],
+                previously_acquired=form.cleaned_data['previously_acquired'],
+                comments=form.cleaned_data['comments'],
+            )
+            messages.success(self.request, f'"{book}" a été ajouté.')
+
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class SuppliesView:

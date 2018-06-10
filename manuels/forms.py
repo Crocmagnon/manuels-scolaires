@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from manuels.models import Book, SuppliesRequirement
+from manuels.models import Book, SuppliesRequirement, Level
 
 
 class EditBookForm(forms.ModelForm):
@@ -42,10 +42,15 @@ class EditBookForm(forms.ModelForm):
 
 class AddBookForm(EditBookForm):
     class Meta(EditBookForm.Meta):
-        fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'other_editor',
+        fields = ['teacher', 'levels', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'other_editor',
                   'publication_year', 'isbn', 'price', 'previously_acquired', 'comments', 'add_another']
 
     add_another = forms.BooleanField(label='Ajouter un autre livre', required=False, initial=True)
+    levels = forms.ModelMultipleChoiceField(
+        queryset=Level.objects.all(),
+        label='Classes',
+        required=True
+    )
 
 
 class EditSuppliesForm(forms.ModelForm):
