@@ -75,7 +75,9 @@
                             <td>{{ book.field }}</td>
                             <td>{{ book.title }}</td>
                             <td>{{ book.authors }}</td>
-                            <td>{{ book.editor }}</td>
+                            <td>{{ book.editor }}{% if book.other_editor %}
+                                ({{ book.other_editor }})
+                            {% endif %}</td>
                             <td>{{ book.publication_year }}</td>
                             <td>{{ book.isbn }}</td>
                             <td>{{ book.price }}€</td>
