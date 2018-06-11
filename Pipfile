@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 django = "*"
 "django-bootstrap4" = "*"
 gunicorn = "*"
@@ -18,12 +15,8 @@ django-anymail = {extras = ["mailgun"]}
 whitenoise = "*"
 django-import-export = "*"
 
-
 [dev-packages]
-
 selenium = "*"
 
-
 [requires]
-
 python_version = "3.6"

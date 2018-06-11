@@ -46,19 +46,19 @@
         },
         "django": {
             "hashes": [
-                "sha256:26b34f4417aa38d895b6b5307177b51bc3f4d53179d8696a5c19dcb50582523c",
-                "sha256:71d1a584bb4ad2b4f933d07d02c716755c1394feaac1ce61ce37843ac5401092"
+                "sha256:3eb25c99df1523446ec2dc1b00e25eb2ecbdf42c9d8b0b8b32a204a8db9011f8",
+                "sha256:69ff89fa3c3a8337015478a1a0744f52a9fef5d12c1efa01a01f99bcce9bf10c"
             ],
             "index": "pypi",
-            "version": "==2.0.5"
+            "version": "==2.0.6"
         },
         "django-anymail": {
             "hashes": [
-                "sha256:9058c1009adbd926213fb2f18d20a8592e23c63f845a4aaa63c51b6476a4638a",
-                "sha256:969ea878da44b54ef2229241da9f0e9a72886c9dea14186ba6733939b63320f4"
+                "sha256:a3c6d3793d5d2c2dbb5d8407c9881015d7733073aaa42865a0576ced27230a38",
+                "sha256:ea2302f0bb3b52c6abcb0a43a54ffcd7b5ef8e19d4c8f67dfeda2e23e26f4dc2"
             ],
             "index": "pypi",
-            "version": "==2.2"
+            "version": "==3.0"
         },
         "django-bootstrap4": {
             "hashes": [
@@ -120,9 +120,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:0046fca88d6731875a385bf7edd689d7c4133f829203ea615a81291de3fa48b6"
+                "sha256:9239b74faf175dc4276a5fc277655fc53c2f704ded39e680d35e6a39e1913f69"
             ],
-            "version": "==2.5.3"
+            "version": "==2.5.4"
         },
         "psycopg2-binary": {
             "hashes": [
