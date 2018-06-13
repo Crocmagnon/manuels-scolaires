@@ -21,6 +21,9 @@ class EditBookForm(forms.ModelForm):
         self.fields['title'].widget = forms.TextInput()
         self.fields['authors'].widget = forms.TextInput()
         self.fields['comments'].widget.attrs.update(rows=3)
+        self.fields['teacher'].widget.attrs.update({'class': 'custom-select'})
+        self.fields['editor'].widget.attrs.update({'class': 'custom-select'})
+        self.fields['previously_acquired'].widget.attrs.update({'class': 'custom-select'})
 
     def clean(self):
         editor = self.cleaned_data['editor']
@@ -63,6 +66,8 @@ class EditSuppliesForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['fields'].widget.attrs.update(rows=3)
         self.fields['supplies'].widget.attrs.update(rows=3)
+        self.fields['teacher'].widget.attrs.update({'class': 'custom-select'})
+        self.fields['level'].widget.attrs.update({'class': 'custom-select'})
 
 
 class AddSuppliesForm(EditSuppliesForm):
