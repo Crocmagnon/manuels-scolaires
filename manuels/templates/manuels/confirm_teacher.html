@@ -9,10 +9,13 @@
             <h1>Bienvenue {{ teacher.full_name }}</h1>
             <h2>
                 {% block title %}Confirmer les listes{% endblock %}
-                <a href="{% url 'list_books' teacher.pk %}" class="btn btn-secondary">Retour à vos listes</a>
+                <a href="{% url 'list_books' teacher.pk %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-circle-left"></i>
+                    Retour à vos listes
+                </a>
             </h2>
             <div class="alert alert-danger">
-                <h4 class="alert-heading"><i class="fas fa-info-circle"></i> Danger</h4>
+                <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Danger</h4>
                 <p class="mb-0">
                     <strong>Êtes-vous certain&centerdot;e de vouloir confirmer vos listes ?
                         Cette action est définitive : vous ne ne serez plus en mesure de les modifier ensuite.</strong>
