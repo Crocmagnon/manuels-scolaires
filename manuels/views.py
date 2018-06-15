@@ -61,7 +61,6 @@ class ItemView(BaseTeacherView):
     item_text_plural = None
     success_target = None
     message_template = None
-    template_name = 'manuels/add_item.html'
     verb = None
     button_class = 'primary'
 
@@ -117,6 +116,7 @@ class BookView:
 
 class AddBookView(BookView, AddItemView):
     form_class = AddBookForm
+    template_name = 'manuels/add_book.html'
 
     def form_valid(self, form: AddBookForm):
         self.add_another = form.cleaned_data['add_another']
@@ -150,10 +150,10 @@ class SuppliesView:
 class AddSuppliesView(SuppliesView, AddItemView):
     form_class = AddSuppliesForm
     message_template = 'manuels/supplies_message.html'
+    template_name = 'manuels/add_supplies.html'
 
 
 class EditItemView(ItemView, UpdateView):
-    template_name = 'manuels/add_item.html'
     teacher_field = 'teacher_pk'
     item_text = None
     item_text_plural = None
@@ -170,10 +170,12 @@ class EditItemView(ItemView, UpdateView):
 
 class EditBookView(BookView, EditItemView):
     form_class = EditBookForm
+    template_name = 'manuels/add_book.html'
 
 
 class EditSuppliesView(SuppliesView, EditItemView):
     form_class = EditSuppliesForm
+    template_name = 'manuels/add_supplies.html'
 
 
 class DeleteItemView(ItemView, DeleteView):

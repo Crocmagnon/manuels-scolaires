@@ -20,7 +20,8 @@
             <form action="" method="post" class="form">
                 {% csrf_token %}
                 {% if form %}
-                    {% bootstrap_form form %}
+                    {% block form %}
+                    {% endblock %}
                 {% endif %}
                 {% buttons %}
                     <button type="submit" class="btn btn-{{ button_class }}">{{ verb }}</button>
@@ -28,8 +29,4 @@
             </form>
         </div>
     </div>
-{% endblock %}
-
-{% block end_js %}
-    <script src="{% static 'manuels/no_book.js' %}"></script>
 {% endblock %}

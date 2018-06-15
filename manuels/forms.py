@@ -24,7 +24,8 @@ class EditBookForm(forms.ModelForm):
         self.fields['teacher'].widget.attrs.update({'class': 'custom-select'})
         self.fields['editor'].widget.attrs.update({'class': 'custom-select'})
         self.fields['previously_acquired'].widget.attrs.update({'class': 'custom-select'})
-        self.fields['level'].widget.attrs.update({'class': 'custom-select'})
+        if 'level' in self.fields:
+            self.fields['level'].widget.attrs.update({'class': 'custom-select'})
 
     def clean(self):
         editor = self.cleaned_data['editor']

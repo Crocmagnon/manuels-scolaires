@@ -1,0 +1,69 @@
+{% extends 'manuels/add_item.html' %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block form %}
+    <div class="form-row">
+        <div class="col-lg-6">
+            {% if form.levels %}
+                {% bootstrap_field form.levels %}
+            {% elif form.level %}
+                {% bootstrap_field form.level %}
+            {% endif %}
+        </div>
+        <div class="col-lg-6">
+            {% bootstrap_field form.teacher %}
+            {% bootstrap_field form.field %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-lg-6">
+            {% bootstrap_field form.no_book %}
+        </div>
+        <div class="col-lg-6">
+            {% bootstrap_field form.see_later %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.isbn %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-lg-4">
+            {% bootstrap_field form.title %}
+            {% bootstrap_field form.authors %}
+        </div>
+        <div class="col-lg-4">
+            {% bootstrap_field form.publication_year %}
+            {% bootstrap_field form.price %}
+        </div>
+        <div class="col-lg-4">
+            {% bootstrap_field form.editor %}
+            {% bootstrap_field form.other_editor %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.previously_acquired %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.comments %}
+        </div>
+    </div>
+    {% if form.add_another %}
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.add_another %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block end_js %}
+    <script src="{% static 'manuels/no_book.js' %}"></script>
+    <script src="{% static 'manuels/fetch-isbn.js' %}"></script>
+{% endblock %}
