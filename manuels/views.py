@@ -1,6 +1,10 @@
+import re
+
+import bs4
+import requests
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, FormView, DetailView, TemplateView
@@ -220,3 +224,50 @@ class ConfirmTeacherView(BaseTeacherView, UpdateView):
         self.object.send_confirmation(request=self.request)
         messages.success(self.request, "Vos listes ont été validées. Votre documentaliste a été notifiée par email.")
         return response
+
+
+def isbn_api(request, isbn):
+    res = requests.get(f'https://www.decitre.fr/livres/{isbn}.html')
+
+    try:
+        res.raise_for_status()
+    except Exception as exc:
+        return JsonResponse({
+            'error': str(exc)
+        })
+
+    decitre_soup = bs4.BeautifulSoup(res.text, "html.parser")
+    title = decitre_soup.select('h1.product-title')
+    if title:
+        title = title[0]
+        title.span.extract()
+        title = title.getText().strip()
+
+    authors = decitre_soup.select('h2.authors')
+    if authors:
+        authors = authors[0]
+        authors = authors.getText().strip()
+
+    price = decitre_soup.select('.product-add-to-cart-wrapper div.price span.final-price')
+    if price:
+        price = price[0]
+        price = price.getText().replace('€', '').replace(',', '.').strip()
+
+    year = None
+    editor = None
+    extra_info = decitre_soup.select('ul.extra-infos.hide-on-responsive')
+    if extra_info:
+        extra_info = extra_info[0].getText().strip()
+        matches = re.match('^(?P<editor>.+)\nParu le : \d{2}/\d{2}/(?P<year>\d{4})$', extra_info)
+        groups = matches.groupdict()
+        year = groups.get('year')
+        editor = groups.get('editor')
+
+    return JsonResponse({
+        'title': title,
+        'authors': authors,
+        'isbn': isbn,
+        'price': float(price),
+        'year': year,
+        'editor': editor,
+    })

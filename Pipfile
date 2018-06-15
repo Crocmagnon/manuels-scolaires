@@ -14,6 +14,7 @@ uuid = "*"
 django-anymail = {extras = ["mailgun"]}
 whitenoise = "*"
 django-import-export = "*"
+"beautifulsoup4" = "*"
 
 [dev-packages]
 selenium = "*"

@@ -27,7 +27,27 @@
     </div>
     <div class="form-row">
         <div class="col-12">
-            {% bootstrap_field form.isbn %}
+            <div class="form-group">
+                {% bootstrap_label content=form.isbn.label label_for=id_isbn %}
+                <div class="input-group">
+                    <input name="isbn" maxlength="20"
+                           class="form-control"
+                           placeholder="{{ form.isbn.label }}"
+                           required="" id="id_isbn" type="text">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="id_isbn_button">
+                            Chercher sur Decitre
+                        </button>
+                    </div>
+                </div>
+                <div class="invalid-feedback" id="id_isbn_invalid_feedback">
+                    Erreur lors de la recherche. Veuillez saisir les informations du livre à la main.<br>
+                    Données techniques : <span id="id_isbn_error_text"></span>
+                </div>
+                <small class="form-text text-muted">
+                    {{ form.isbn.help_text|safe }}
+                </small>
+            </div>
         </div>
     </div>
     <div class="form-row">
@@ -55,11 +75,11 @@
         </div>
     </div>
     {% if form.add_another %}
-    <div class="form-row">
-        <div class="col-12">
-            {% bootstrap_field form.add_another %}
+        <div class="form-row">
+            <div class="col-12">
+                {% bootstrap_field form.add_another %}
+            </div>
         </div>
-    </div>
     {% endif %}
 {% endblock %}
 
