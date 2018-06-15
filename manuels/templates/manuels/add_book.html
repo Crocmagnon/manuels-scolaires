@@ -19,10 +19,22 @@
     </div>
     <div class="form-row">
         <div class="col-lg-6">
-            {% bootstrap_field form.no_book %}
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="{{ form.no_book.auto_id }}">
+                <label class="custom-control-label" for="{{ form.no_book.auto_id }}">{{ form.no_book.label }}</label>
+                <small class="form-text text-muted">
+                    {{ form.no_book.help_text|safe }}
+                </small>
+            </div>
         </div>
         <div class="col-lg-6">
-            {% bootstrap_field form.see_later %}
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="{{ form.see_later.auto_id }}">
+                <label class="custom-control-label" for="{{ form.see_later.auto_id }}">{{ form.see_later.label }}</label>
+                <small class="form-text text-muted">
+                    {{ form.see_later.help_text|safe }}
+                </small>
+            </div>
         </div>
     </div>
     <div class="form-row">
