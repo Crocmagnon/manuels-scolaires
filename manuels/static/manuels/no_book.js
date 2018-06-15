@@ -68,9 +68,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     editor.addEventListener('change', function(event) {
-        console.log(editor.options);
-        console.log(editor.selectedIndex);
-        console.log(editor.options[editor.selectedIndex].text);
         if (editor.options[editor.selectedIndex].text.toLowerCase().indexOf('autre') !== -1) {
             otherEditor.style.display = 'block';
         }
