@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, FormView, DetailView, TemplateView
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
@@ -226,6 +227,7 @@ class ConfirmTeacherView(BaseTeacherView, UpdateView):
         return response
 
 
+@cache_page(None)
 def isbn_api(request, isbn):
     res = requests.get(f'https://www.decitre.fr/livres/{isbn}.html')
 

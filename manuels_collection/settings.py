@@ -173,3 +173,11 @@ EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'manuels_cache',
+    }
+}
+
