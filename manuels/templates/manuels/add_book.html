@@ -28,12 +28,12 @@
     <div class="form-row">
         <div class="col-12">
             <div class="form-group">
-                {% bootstrap_label content=form.isbn.label label_for=id_isbn %}
+                {% bootstrap_label content=form.isbn.label label_for=form.isbn.auto_id %}
                 <div class="input-group">
                     <input name="isbn" maxlength="20"
                            class="form-control"
                            placeholder="{{ form.isbn.label }}"
-                           required="" id="id_isbn" type="text">
+                           required="" id="{{ form.isbn.auto_id }}" type="text">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="id_isbn_button">
                             Chercher sur Decitre
