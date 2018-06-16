@@ -1,38 +1,65 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     var isbnButton = document.querySelector('#id_isbn_button');
     var isbn = document.querySelector('#id_isbn');
-    isbnButton.addEventListener('click', function (event) {
+    var title = document.querySelector('#id_title');
+    var authors = document.querySelector('#id_authors');
+    var year = document.querySelector('#id_publication_year');
+    var price = document.querySelector('#id_price');
+    var editor = document.querySelector('#id_editor');
+    var otherEditor = document.querySelector('#id_other_editor');
+    var spinner = document.querySelector('#id_isbn_spinner');
+    var feedback = document.querySelector('#id_isbn_invalid_feedback');
+
+    function enableFields() {
+        isbn.removeAttribute('disabled');
+        isbnButton.removeAttribute('disabled');
+        document.querySelector('#id_title').removeAttribute('disabled');
+        authors.removeAttribute('disabled');
+        year.removeAttribute('disabled');
+        price.removeAttribute('disabled');
+        editor.removeAttribute('disabled');
+        otherEditor.removeAttribute('disabled');
+        spinner.setAttribute('hidden', 'hidden');
+    }
+
+    function disableFields() {
         isbn.setAttribute('disabled', 'disabled');
         isbnButton.setAttribute('disabled', 'disabled');
-        document.querySelector('#id_title').setAttribute('disabled', 'disabled');
-        document.querySelector('#id_authors').setAttribute('disabled', 'disabled');
-        document.querySelector('#id_publication_year').setAttribute('disabled', 'disabled');
-        document.querySelector('#id_price').setAttribute('disabled', 'disabled');
-        document.querySelector('#id_editor').setAttribute('disabled', 'disabled');
-        document.querySelector('#id_other_editor').setAttribute('disabled', 'disabled');
-        document.querySelector('#id_isbn_spinner').removeAttribute('hidden');
+        title.setAttribute('disabled', 'disabled');
+        authors.setAttribute('disabled', 'disabled');
+        year.setAttribute('disabled', 'disabled');
+        price.setAttribute('disabled', 'disabled');
+        editor.setAttribute('disabled', 'disabled');
+        otherEditor.setAttribute('disabled', 'disabled');
+        spinner.removeAttribute('hidden');
+    }
+
+    isbnButton.addEventListener('click', function (event) {
+        disableFields();
+
         $.get("/isbn_api/" + isbn.value, {}, function (data, status, xhr) {
             if (data.error) {
                 isbn.classList.add('is-invalid');
                 isbn.classList.remove('is-valid');
-                document.querySelector('#id_isbn_invalid_feedback').style.display = 'block';
-                document.querySelector('#id_isbn_invalid_feedback').textContent = data.error;
+                feedback.style.display = 'block';
+                feedback.textContent = data.error;
+                enableFields();
                 return;
             }
 
             isbn.classList.remove('is-invalid');
             isbn.classList.add('is-valid');
-            document.querySelector('#id_isbn_invalid_feedback').style.display = 'none';
-            document.querySelector('#id_isbn_invalid_feedback').textContent = '';
+            feedback.style.display = 'none';
+            feedback.textContent = '';
 
-            document.querySelector('#id_title').value = data.title;
-            document.querySelector('#id_title').classList.add('is-valid');
-            document.querySelector('#id_authors').value = data.authors;
-            document.querySelector('#id_authors').classList.add('is-valid');
-            document.querySelector('#id_publication_year').value = data.year;
-            document.querySelector('#id_publication_year').classList.add('is-valid');
-            document.querySelector('#id_price').value = data.price;
-            document.querySelector('#id_price').classList.add('is-valid');
+            title.value = data.title;
+            title.classList.add('is-valid');
+            authors.value = data.authors;
+            authors.classList.add('is-valid');
+            year.value = data.year;
+            year.classList.add('is-valid');
+            price.value = data.price;
+            price.classList.add('is-valid');
 
             var editorValue = "";
             var editorIsOther = false;
@@ -46,27 +73,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     editorIsOther = false;
                 }
             }
-            document.querySelector('#id_editor').value = editorValue;
-            document.querySelector('#id_editor').classList.add('is-valid');
+            editor.value = editorValue;
+            editor.classList.add('is-valid');
 
             event = document.createEvent("HTMLEvents");
             event.initEvent("change", true, true);
             event.eventName = "change";
-            document.querySelector('#id_editor').dispatchEvent(event);
+            editor.dispatchEvent(event);
             if (editorIsOther) {
-                document.querySelector('#id_other_editor').value = data.editor;
-                document.querySelector('#id_other_editor').classList.add('is-valid');
+                otherEditor.value = data.editor;
+                otherEditor.classList.add('is-valid');
             }
-
-            isbn.removeAttribute('disabled');
-            isbnButton.removeAttribute('disabled');
-            document.querySelector('#id_title').removeAttribute('disabled');
-            document.querySelector('#id_authors').removeAttribute('disabled');
-            document.querySelector('#id_publication_year').removeAttribute('disabled');
-            document.querySelector('#id_price').removeAttribute('disabled');
-            document.querySelector('#id_editor').removeAttribute('disabled');
-            document.querySelector('#id_other_editor').removeAttribute('disabled');
-            document.querySelector('#id_isbn_spinner').setAttribute('hidden', 'hidden');
+            enableFields();
         });
     });
 });
