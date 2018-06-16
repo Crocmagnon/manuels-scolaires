@@ -57,23 +57,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
 
-    var editor = document.querySelector('#id_editor');
-    var otherEditor = document.querySelector('#id_other_editor').parentElement;
+    function toggleOtherEditorDisplay() {
+        var editor = document.querySelector('#id_editor');
+        var otherEditor = document.querySelector('#id_other_editor').parentElement;
 
-    if (editor.options[editor.selectedIndex].text.toLowerCase().indexOf('autre') !== -1) {
-        otherEditor.style.display = 'block';
-    }
-    else {
-        otherEditor.style.display = 'none';
-    }
-
-    editor.addEventListener('change', function(event) {
         if (editor.options[editor.selectedIndex].text.toLowerCase().indexOf('autre') !== -1) {
             otherEditor.style.display = 'block';
         }
         else {
             otherEditor.style.display = 'none';
         }
-    });
+    }
+    toggleOtherEditorDisplay();
+
+    document.querySelector('#id_editor').addEventListener('change', toggleOtherEditorDisplay);
 
 });

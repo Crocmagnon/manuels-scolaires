@@ -76,15 +76,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
             editor.value = editorValue;
             editor.classList.add('is-valid');
 
-            event = document.createEvent("HTMLEvents");
-            event.initEvent("change", true, true);
-            event.eventName = "change";
-            editor.dispatchEvent(event);
             if (editorIsOther) {
                 otherEditor.value = data.editor;
                 otherEditor.classList.add('is-valid');
             }
             enableFields();
+
+            // The event propagation must be done after the fields have been re-enabled
+            // because a change event can't be propagated to a field that's disabled.
+            var event = document.createEvent("HTMLEvents");
+            event.initEvent("change", true, true);
+            event.eventName = "change";
+            document.querySelector('#id_editor').dispatchEvent(event);
         });
     });
 });
