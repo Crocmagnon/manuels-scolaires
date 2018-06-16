@@ -2,6 +2,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
     var isbnButton = document.querySelector('#id_isbn_button');
     var isbn = document.querySelector('#id_isbn');
     isbnButton.addEventListener('click', function (event) {
+        isbn.setAttribute('disabled', 'disabled');
+        isbnButton.setAttribute('disabled', 'disabled');
+        document.querySelector('#id_title').setAttribute('disabled', 'disabled');
+        document.querySelector('#id_authors').setAttribute('disabled', 'disabled');
+        document.querySelector('#id_publication_year').setAttribute('disabled', 'disabled');
+        document.querySelector('#id_price').setAttribute('disabled', 'disabled');
+        document.querySelector('#id_editor').setAttribute('disabled', 'disabled');
+        document.querySelector('#id_other_editor').setAttribute('disabled', 'disabled');
+        document.querySelector('#id_isbn_spinner').removeAttribute('hidden');
         $.get("/isbn_api/" + isbn.value, {}, function (data, status, xhr) {
             if (data.error) {
                 isbn.classList.add('is-invalid');
@@ -48,6 +57,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.querySelector('#id_other_editor').value = data.editor;
                 document.querySelector('#id_other_editor').classList.add('is-valid');
             }
+
+            isbn.removeAttribute('disabled');
+            isbnButton.removeAttribute('disabled');
+            document.querySelector('#id_title').removeAttribute('disabled');
+            document.querySelector('#id_authors').removeAttribute('disabled');
+            document.querySelector('#id_publication_year').removeAttribute('disabled');
+            document.querySelector('#id_price').removeAttribute('disabled');
+            document.querySelector('#id_editor').removeAttribute('disabled');
+            document.querySelector('#id_other_editor').removeAttribute('disabled');
+            document.querySelector('#id_isbn_spinner').setAttribute('hidden', 'hidden');
         });
     });
 });

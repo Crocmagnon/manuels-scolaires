@@ -280,7 +280,8 @@ def isbn_api(request, isbn):
     title = decitre_soup.select('h1.product-title')
     if title:
         title = title[0]
-        title.span.extract()
+        if title.span:
+            title.span.extract()
         title = title.getText().strip()
 
     authors = decitre_soup.select('h2.authors')
