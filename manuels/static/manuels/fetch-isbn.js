@@ -7,13 +7,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 isbn.classList.add('is-invalid');
                 isbn.classList.remove('is-valid');
                 document.querySelector('#id_isbn_invalid_feedback').style.display = 'block';
-                document.querySelector('#id_isbn_error_text').textContent = data.error;
+                document.querySelector('#id_isbn_invalid_feedback').textContent = data.error;
                 return;
             }
 
             isbn.classList.remove('is-invalid');
             isbn.classList.add('is-valid');
             document.querySelector('#id_isbn_invalid_feedback').style.display = 'none';
+            document.querySelector('#id_isbn_invalid_feedback').textContent = '';
 
             document.querySelector('#id_title').value = data.title;
             document.querySelector('#id_title').classList.add('is-valid');

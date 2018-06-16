@@ -227,15 +227,53 @@ class ConfirmTeacherView(BaseTeacherView, UpdateView):
         return response
 
 
+def validate_isbn(isbn):
+    _sum = 0
+    if len(isbn) == 10:
+        for i, digit in enumerate(isbn):
+            if digit == 'X':
+                digit = 10
+            else:
+                digit = int(digit)
+            _sum += digit * (i + 1)
+
+        return _sum % 11 == 0
+
+    elif len(isbn) == 13:
+        for i, digit in enumerate(isbn):
+            weight = 3 if i % 2 == 1 else 1
+            digit = int(digit)
+            _sum += digit * weight
+
+        return _sum % 10 == 0
+
+    return False
+
+
 @cache_page(None)
 def isbn_api(request, isbn):
+    isbn = isbn.strip().replace('-', '')
+
+    if not validate_isbn(isbn):
+        return JsonResponse({
+            'error': "L'ISBN saisi n'est pas valide."
+        })
+
+    if len(isbn) == 10:
+        return JsonResponse({
+            'error': "La recherche sur Decitre ne fonctionne qu'avec un ISBN 13 (ou EAN)."
+        })
+
     res = requests.get(f'https://www.decitre.fr/livres/{isbn}.html')
 
     try:
         res.raise_for_status()
     except Exception as exc:
+        message = ("Erreur lors de la recherche. Il se peut que le livre n'existe pas dans la base de connaissances "
+                   "de Decitre ou que vous ayez mal saisi l'ISBN. Vous pouvez toujours saisir "
+                   "les informations du livre à la main. Message : {}").format(str(exc))
         return JsonResponse({
-            'error': str(exc)
+            'error': message
         })
 
     decitre_soup = bs4.BeautifulSoup(res.text, "html.parser")

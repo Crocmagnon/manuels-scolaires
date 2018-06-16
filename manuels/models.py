@@ -158,7 +158,8 @@ class Book(BaseModel):
         'ISBN/EAN',
         max_length=20,
         help_text="Format attendu : 10 ou 13 chiffres, éventuellement séparés par des tirets et éventuellement "
-                  "suivis de la lettre <code>X</code>",
+                  "suivis de la lettre <code>X</code>. La recherche sur Decitre ne fonctionnera qu'avec un code ISBN à"
+                  "13 chiffres (ou EAN)",
         validators=[isbn_validator]
     )
     price = models.FloatField('prix', validators=[positive_float_validator])
