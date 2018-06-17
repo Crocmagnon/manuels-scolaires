@@ -68,6 +68,7 @@ class ItemView(BaseTeacherView):
     message_template = None
     verb = None
     button_class = 'primary'
+    button_icon = 'fas fa-check-circle'
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
@@ -83,6 +84,7 @@ class ItemView(BaseTeacherView):
         context['message_template'] = self.message_template
         context['verb'] = self.verb
         context['button_class'] = self.button_class
+        context['button_icon'] = self.button_icon
         return context
 
     def get_initial(self):
@@ -98,6 +100,7 @@ class ItemView(BaseTeacherView):
 
 class AddItemView(ItemView, CreateView):
     verb = 'Ajouter'
+    button_icon = 'fas fa-plus-circle'
 
     def get_success_url(self):
         if self.add_another:
@@ -190,6 +193,8 @@ class DeleteItemView(ItemView, DeleteView):
     message_template = 'manuels/confirm_delete.html'
     verb = 'Supprimer'
     button_class = 'danger'
+    button_icon = 'fas fa-trash'
+    template_name = 'manuels/add_supplies.html'
 
     def get_queryset(self):
         return self.model.objects.filter(teacher=self.teacher)
