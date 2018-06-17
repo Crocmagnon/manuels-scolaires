@@ -30,7 +30,8 @@
         <div class="col-lg-6">
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="{{ form.see_later.auto_id }}">
-                <label class="custom-control-label" for="{{ form.see_later.auto_id }}">{{ form.see_later.label }}</label>
+                <label class="custom-control-label"
+                       for="{{ form.see_later.auto_id }}">{{ form.see_later.label }}</label>
                 <small class="form-text text-muted">
                     {{ form.see_later.help_text|safe }}
                 </small>
@@ -87,7 +88,14 @@
     {% if form.add_another %}
         <div class="form-row">
             <div class="col-12">
-                {% bootstrap_field form.add_another %}
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="{{ form.add_another.auto_id }}">
+                    <label class="custom-control-label"
+                           for="{{ form.add_another.auto_id }}">{{ form.add_another.label }}</label>
+                    <small class="form-text text-muted">
+                        {{ form.add_another.help_text|safe }}
+                    </small>
+                </div>
             </div>
         </div>
     {% endif %}
