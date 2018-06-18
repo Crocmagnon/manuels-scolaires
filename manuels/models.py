@@ -164,6 +164,7 @@ class Book(BaseModel):
     )
     price = models.FloatField('prix', validators=[positive_float_validator])
     YES_NO_CHOICE = (
+        (None, '------------'),
         (False, 'Non'),
         (True, 'Oui'),
     )
@@ -171,7 +172,7 @@ class Book(BaseModel):
         "manuel acquis précédemment par l'élève",
         choices=YES_NO_CHOICE,
         blank=False,
-        default=False,
+        default=None,
     )
     done = models.BooleanField(
         'Traité',

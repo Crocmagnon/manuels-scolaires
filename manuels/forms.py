@@ -44,6 +44,13 @@ class EditBookForm(forms.ModelForm):
                 )
             )
 
+    def clean_previously_acquired(self):
+        data = self.cleaned_data['previously_acquired']
+        if data is None or data == '':
+            raise ValidationError('Vous devez choisir une valeur')
+
+        return data
+
 
 class AddBookForm(EditBookForm):
     class Meta(EditBookForm.Meta):

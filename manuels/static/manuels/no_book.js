@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             isbn: document.querySelector('#id_isbn').value,
             price: document.querySelector('#id_price').value,
             editor: document.querySelector('#id_editor').value,
+            previouslyAcquired: document.querySelector('#id_previously_acquired').value,
         };
         _selector.addEventListener('change', function (event) {
             if (_selector.checked) {
@@ -29,12 +30,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     isbn: document.querySelector('#id_isbn').value,
                     price: document.querySelector('#id_price').value,
                     editor: document.querySelector('#id_editor').value,
+                    previouslyAcquired: document.querySelector('#id_previously_acquired').value,
                 };
                 document.querySelector('#id_title').value = selector.value;
                 document.querySelector('#id_authors').value = "N/A";
                 document.querySelector('#id_publication_year').value = 1900;
                 document.querySelector('#id_isbn').value = "0000000000";
                 document.querySelector('#id_price').value = 0;
+                document.querySelector('#id_previously_acquired').value = "False";
                 var editorValue = null;
                 for (var option of document.querySelector('#id_editor').children) {
                     if (editorValue === null && option.value !== "") {
@@ -52,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.querySelector('#id_publication_year').value = data.publicationYear;
                 document.querySelector('#id_isbn').value = data.isbn;
                 document.querySelector('#id_price').value = data.price;
+                document.querySelector('#id_previously_acquired').value = data.previouslyAcquired;
             }
         });
     });
