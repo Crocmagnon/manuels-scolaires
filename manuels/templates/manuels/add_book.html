@@ -43,9 +43,10 @@
             <div class="form-group">
                 {% bootstrap_label content=form.isbn.label label_for=form.isbn.auto_id %}
                 <div class="input-group">
-                    <input name="isbn" maxlength="20"
+                    <input name="{{ form.isbn.name }}" maxlength="20"
                            class="form-control"
                            placeholder="{{ form.isbn.label }}"
+                           {% if form.isbn.value != None %} value="{{ form.isbn.value|stringformat:'s' }}"{% endif %}
                            required="" id="{{ form.isbn.auto_id }}" type="text">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="id_isbn_button">
@@ -89,7 +90,10 @@
         <div class="form-row">
             <div class="col-12">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="{{ form.add_another.auto_id }}">
+                    <input type="checkbox" class="custom-control-input"
+                           {% if form.add_another.initial %}checked="checked"{% endif %}
+                           name="{{ form.add_another.name }}"
+                           id="{{ form.add_another.auto_id }}">
                     <label class="custom-control-label"
                            for="{{ form.add_another.auto_id }}">{{ form.add_another.label }}</label>
                     <small class="form-text text-muted">
