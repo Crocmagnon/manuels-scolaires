@@ -110,9 +110,7 @@ class AddItemView(ItemView, CreateView):
 
     def form_valid(self, form):
         self.add_another = form.cleaned_data['add_another']
-        response = super().form_valid(form)
-        messages.success(self.request, f'"{self.object}" a été ajouté.')
-        return response
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class BookView:
@@ -127,7 +125,6 @@ class AddBookView(BookView, AddItemView):
     template_name = 'manuels/add_book.html'
 
     def form_valid(self, form: AddBookForm):
-        self.add_another = form.cleaned_data['add_another']
         for level in form.cleaned_data['levels']:
             book = Book.objects.create(
                 teacher=form.cleaned_data['teacher'],
@@ -145,7 +142,7 @@ class AddBookView(BookView, AddItemView):
             )
             messages.success(self.request, f'"{book}" a été ajouté.')
 
-        return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
 
 
 class SuppliesView:
@@ -159,6 +156,18 @@ class AddSuppliesView(SuppliesView, AddItemView):
     form_class = AddSuppliesForm
     message_template = 'manuels/supplies_message.html'
     template_name = 'manuels/add_supplies.html'
+
+    def form_valid(self, form: AddBookForm):
+        for level in form.cleaned_data['levels']:
+            supplies = SuppliesRequirement.objects.create(
+                teacher=form.cleaned_data['teacher'],
+                level=level,
+                fields=form.cleaned_data['fields'],
+                supplies=form.cleaned_data['supplies'],
+            )
+            messages.success(self.request, f'"{supplies}" a été ajouté.')
+
+        return super().form_valid(form)
 
 
 class EditItemView(ItemView, UpdateView):

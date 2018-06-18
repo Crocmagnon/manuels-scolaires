@@ -76,11 +76,18 @@ class EditSuppliesForm(forms.ModelForm):
         self.fields['fields'].widget.attrs.update(rows=3)
         self.fields['supplies'].widget.attrs.update(rows=3)
         self.fields['teacher'].widget.attrs.update({'class': 'custom-select'})
-        self.fields['level'].widget.attrs.update({'class': 'custom-select'})
+        if 'level' in self.fields:
+            self.fields['level'].widget.attrs.update({'class': 'custom-select'})
 
 
 class AddSuppliesForm(EditSuppliesForm):
     class Meta(EditSuppliesForm.Meta):
-        pass
+        fields = ['teacher', 'levels', 'fields', 'supplies']
 
     add_another = forms.BooleanField(label="Ajouter d'autres fournitures", required=False, initial=True)
+    levels = forms.ModelMultipleChoiceField(
+        queryset=Level.objects.all(),
+        label='Classes',
+        required=True,
+        help_text='Maintenez la touche Ctrl (ou Cmd) enfoncée pour en sélectionner plusieurs.'
+    )
