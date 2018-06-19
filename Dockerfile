@@ -1,7 +1,12 @@
-FROM python:3.6
+FROM python:3.6-alpine
 
-RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata
+#RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
+#    dpkg-reconfigure -f noninteractive tzdata
+
+RUN apk add --update postgresql-libs && \
+    apk add --udpate --virtual .build-deps gcc musl-dev postgresql-dev tzdata && \
+    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
+    echo "Europe/Paris" >  /etc/timezone
 
 WORKDIR /app
 EXPOSE 8000
@@ -11,10 +16,11 @@ RUN pip3 install pipenv
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install
 
+RUN apk del .build-deps
+
 COPY . ./
 
-RUN chmod +x bash/run-prod.sh
-CMD bash/run-prod.sh
+CMD ["bash", "bash/run-prod.sh"]
 
 HEALTHCHECK --interval=10s --timeout=10s CMD ["pipenv", "run", "python", "healthcheck.py"]
 
