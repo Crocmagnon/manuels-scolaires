@@ -16,7 +16,7 @@ COPY . ./
 RUN chmod +x bash/run-prod.sh
 CMD bash/run-prod.sh
 
-HEALTHCHECK CMD ["pipenv", "run", "python", "healthcheck.py"]
+HEALTHCHECK --interval=10s --timeout=10s CMD ["pipenv", "run", "python", "healthcheck.py"]
 
 ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/manuels
 ENV SECRET_KEY ''
