@@ -1,8 +1,5 @@
 FROM python:3.6-alpine
 
-#RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
-#    dpkg-reconfigure -f noninteractive tzdata
-
 RUN apk add --update postgresql-libs && \
     apk add --udpate --virtual .build-deps gcc musl-dev postgresql-dev tzdata && \
     cp /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
@@ -20,7 +17,7 @@ RUN apk del .build-deps
 
 COPY . ./
 
-CMD ["bash", "bash/run-prod.sh"]
+CMD ["sh", "bash/run-prod.sh"]
 
 HEALTHCHECK --interval=10s --timeout=10s CMD ["pipenv", "run", "python", "healthcheck.py"]
 
