@@ -14,7 +14,7 @@ class TeacherResource(resources.ModelResource):
 @admin.register(Teacher)
 class TeacherAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = TeacherResource
-    list_display = ['full_name', 'email', 'phone_number']
+    list_display = ['full_name', 'email', 'phone_number', 'has_confirmed_list']
 
     def send_link(self, request, queryset):
         for teacher in queryset:
