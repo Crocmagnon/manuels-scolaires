@@ -33,10 +33,10 @@ class LevelAdmin(admin.ModelAdmin):
 class BookResource(resources.ModelResource):
     class Meta:
         model = Book
-        fields = ('title', 'authors', 'editor__name', 'publication_year', 'isbn', 'comments',
+        fields = ('title', 'authors', 'editor__name', 'publication_year', 'isbn', 'comments', 'other_editor',
                   'price', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name', 'field')
         export_order = ('level__name', 'field', 'title', 'authors', 'editor__name', 'publication_year', 'isbn', 'price',
-                        'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'comments')
+                        'other_editor', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'comments')
 
 
 @admin.register(Book)
