@@ -11,7 +11,7 @@ VOLUME /app/staticfiles
 
 RUN pip3 install pipenv
 COPY Pipfile Pipfile.lock ./
-RUN pipenv install
+RUN pipenv install --deploy
 
 RUN apk del .build-deps
 
