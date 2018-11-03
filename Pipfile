@@ -15,6 +15,7 @@ django-anymail = {extras = ["mailgun"]}
 whitenoise = "*"
 django-import-export = "*"
 "beautifulsoup4" = "*"
+requests = ">=2.20.0"
 
 [dev-packages]
 selenium = "*"
