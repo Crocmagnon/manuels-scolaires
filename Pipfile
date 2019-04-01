@@ -18,7 +18,6 @@ django-import-export = "*"
 requests = ">=2.20.0"
 
 [dev-packages]
-selenium = "*"
 
 [requires]
 python_version = "3.7"
