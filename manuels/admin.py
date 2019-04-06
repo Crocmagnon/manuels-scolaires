@@ -27,7 +27,9 @@ class TeacherAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'order']
+    list_editable = ['order']
+    list_display_links = ['name']
 
 
 class BookResource(resources.ModelResource):
