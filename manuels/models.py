@@ -106,8 +106,10 @@ class Level(BaseModel):
     class Meta:
         verbose_name = 'classe'
         verbose_name_plural = 'classes'
+        ordering = ['order', 'name']
 
     name = models.CharField('nom', max_length=50)
+    order = models.IntegerField('ordre', default=0)
 
     def __str__(self):
         return self.name
