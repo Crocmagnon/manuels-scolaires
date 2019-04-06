@@ -70,11 +70,10 @@ class AddBookForm(EditBookForm):
 class EditSuppliesForm(forms.ModelForm):
     class Meta:
         model = SuppliesRequirement
-        fields = ['teacher', 'level', 'fields', 'supplies']
+        fields = ['teacher', 'level', 'field', 'supplies']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['fields'].widget.attrs.update(rows=3)
         self.fields['supplies'].widget.attrs.update(rows=3)
         self.fields['teacher'].widget.attrs.update({'class': 'custom-select'})
         if 'level' in self.fields:
@@ -83,7 +82,7 @@ class EditSuppliesForm(forms.ModelForm):
 
 class AddSuppliesForm(EditSuppliesForm):
     class Meta(EditSuppliesForm.Meta):
-        fields = ['teacher', 'levels', 'fields', 'supplies']
+        fields = ['teacher', 'levels', 'field', 'supplies']
 
     add_another = forms.BooleanField(label="Ajouter d'autres fournitures", required=False, initial=True)
     levels = forms.ModelMultipleChoiceField(

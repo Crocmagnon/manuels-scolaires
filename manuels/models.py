@@ -223,7 +223,7 @@ class SuppliesRequirement(BaseModel):
 
     teacher = models.ForeignKey(verbose_name='coordonnateur', to=Teacher, on_delete=models.PROTECT, null=True)
     level = models.ForeignKey(verbose_name='classe', to=Level, on_delete=models.PROTECT, null=True)
-    fields = models.TextField('disciplines')
+    field = models.CharField('discipline', max_length=50)
     supplies = models.TextField('fournitures')
     done = models.BooleanField(
         'Traité',
