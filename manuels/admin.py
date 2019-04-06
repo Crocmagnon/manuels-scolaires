@@ -45,13 +45,13 @@ class BookResource(resources.ModelResource):
 class BookAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = BookResource
     list_display = ['level', 'field', 'title', 'authors', 'editor', 'other_editor', 'publication_year', 'isbn',
-                    'price', 'previously_acquired', 'teacher', 'done']
+                    'price', 'previously_acquired', 'teacher', 'done', 'consumable']
     list_editable = ['done']
-    list_filter = ['done', 'previously_acquired', 'level', 'editor', 'teacher']
+    list_filter = ['done', 'previously_acquired', 'consumable', 'level', 'editor', 'teacher']
     list_display_links = ['title']
     fieldsets = [
         ('Infos livre', {
-            'fields': ('title', 'authors', ('editor', 'other_editor'), 'publication_year',
+            'fields': ('title', 'consumable', 'authors', ('editor', 'other_editor'), 'publication_year',
                        'isbn', 'created_at', 'updated_at', 'comments')
         }),
         ('Élève', {
