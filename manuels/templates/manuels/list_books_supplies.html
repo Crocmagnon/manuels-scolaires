@@ -54,6 +54,7 @@
                         <th scope="col">ISBN</th>
                         <th scope="col">Prix</th>
                         <th scope="col">Déjà acheté par l'élève</th>
+                        <th scope="col">Consommable</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -85,6 +86,10 @@
                                 <i class="fas fa-{% if book.previously_acquired %}check-circle{% else %}ban{% endif %}"></i>
                                 {{ book.previously_acquired_text }}
                             </td>
+                            <td>
+                                <i class="fas fa-{% if book.consumable %}check-circle{% else %}ban{% endif %}"></i>
+                                {{ book.consumable_text }}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -110,7 +115,7 @@
                             <th scope="col">Modifier</th>
                         {% endif %}
                         <th scope="col">Classe</th>
-                        <th scope="col">Disciplines</th>
+                        <th scope="col">Discipline</th>
                         <th scope="col">Liste de fournitures</th>
                     </tr>
                     </thead>
@@ -130,7 +135,7 @@
                                 </th>
                             {% endif %}
                             <td>{{ supply.level }}</td>
-                            <td>{{ supply.fields }}</td>
+                            <td>{{ supply.field }}</td>
                             <td>{{ supply.supplies|linebreaksbr }}</td>
                         </tr>
                     {% endfor %}

@@ -184,9 +184,23 @@ class Book(BaseModel):
         blank=True,
         help_text="Ce message sera visible par la documentaliste."
     )
+    consumable = models.BooleanField(
+        'consommable',
+        help_text="Exemple : un cahier d'exercices est un consommable",
+        choices=YES_NO_CHOICE,
+        blank=False,
+        default=None,
+    )
 
     @property
     def previously_acquired_text(self):
+        if self.previously_acquired:
+            return 'Oui'
+        else:
+            return 'Non'
+
+    @property
+    def consumable_text(self):
         if self.previously_acquired:
             return 'Oui'
         else:

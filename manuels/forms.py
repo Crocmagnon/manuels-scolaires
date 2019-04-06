@@ -8,7 +8,7 @@ class EditBookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['teacher', 'level', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'other_editor',
-                  'publication_year', 'isbn', 'price', 'previously_acquired', 'comments']
+                  'publication_year', 'isbn', 'price', 'previously_acquired', 'comments', 'consumable']
 
     no_book = forms.BooleanField(label='Pas de livre pour cette classe/matière', required=False, initial=False)
     see_later = forms.BooleanField(
@@ -24,6 +24,7 @@ class EditBookForm(forms.ModelForm):
         self.fields['teacher'].widget.attrs.update({'class': 'custom-select'})
         self.fields['editor'].widget.attrs.update({'class': 'custom-select'})
         self.fields['previously_acquired'].widget.attrs.update({'class': 'custom-select'})
+        self.fields['consumable'].widget.attrs.update({'class': 'custom-select'})
         if 'level' in self.fields:
             self.fields['level'].widget.attrs.update({'class': 'custom-select'})
 
@@ -55,7 +56,7 @@ class EditBookForm(forms.ModelForm):
 class AddBookForm(EditBookForm):
     class Meta(EditBookForm.Meta):
         fields = ['teacher', 'levels', 'field', 'no_book', 'see_later', 'title', 'authors', 'editor', 'other_editor',
-                  'publication_year', 'isbn', 'price', 'previously_acquired', 'comments', 'add_another']
+                  'publication_year', 'isbn', 'price', 'previously_acquired', 'comments', 'add_another', 'consumable']
 
     add_another = forms.BooleanField(label='Ajouter un autre livre', required=False, initial=True)
     levels = forms.ModelMultipleChoiceField(
