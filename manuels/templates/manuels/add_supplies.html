@@ -4,5 +4,42 @@
 {% load static %}
 
 {% block form %}
-    {% bootstrap_form form %}
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.teacher %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.levels %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.field %}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12">
+            {% bootstrap_field form.supplies %}
+        </div>
+    </div>
+
+    {% if form.add_another %}
+        <div class="form-row">
+            <div class="col-12">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input"
+                           {% if form.add_another.initial %}checked="checked"{% endif %}
+                           name="{{ form.add_another.name }}"
+                           id="{{ form.add_another.auto_id }}">
+                    <label class="custom-control-label"
+                           for="{{ form.add_another.auto_id }}">{{ form.add_another.label }}</label>
+                    <small class="form-text text-muted">
+                        {{ form.add_another.help_text|safe }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
