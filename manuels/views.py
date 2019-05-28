@@ -139,6 +139,7 @@ class AddBookView(BookView, AddItemView):
                 price=form.cleaned_data['price'],
                 previously_acquired=form.cleaned_data['previously_acquired'],
                 comments=form.cleaned_data['comments'],
+                consumable=form.cleaned_data['consumable'],
             )
             messages.success(self.request, f'"{book}" a été ajouté.')
 
