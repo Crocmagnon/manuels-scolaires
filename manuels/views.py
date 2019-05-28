@@ -72,7 +72,7 @@ class ItemView(BaseTeacherView):
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        if self.teacher.has_confirmed_list:
+        if self.teacher and self.teacher.has_confirmed_list:
             messages.error(request, "Vous avez déjà confirmé vos listes. Il n'est plus possible de les modifier.")
             return redirect('list_books', pk=self.teacher.pk)
         return response
