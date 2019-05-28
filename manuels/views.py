@@ -306,7 +306,7 @@ def isbn_api(request, isbn):
         authors = authors.getText().strip()
 
     price = decitre_soup.select('.product-add-to-cart-wrapper div.price span.final-price')
-    logger.info(f'Fonud price {price}')
+    logger.info(f'Found price html {price}')
     if price:
         price = price[0]
         price = price.getText().replace('€', '').replace(',', '.').strip()
