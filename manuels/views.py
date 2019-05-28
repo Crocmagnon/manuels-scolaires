@@ -162,7 +162,7 @@ class AddSuppliesView(SuppliesView, AddItemView):
             supplies = SuppliesRequirement.objects.create(
                 teacher=form.cleaned_data['teacher'],
                 level=level,
-                fields=form.cleaned_data['fields'],
+                field=form.cleaned_data['field'],
                 supplies=form.cleaned_data['supplies'],
             )
             messages.success(self.request, f'"{supplies}" a été ajouté.')
