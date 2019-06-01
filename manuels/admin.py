@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from import_export import resources
 from import_export.admin import ExportMixin
 
@@ -19,6 +19,7 @@ class TeacherAdmin(ExportMixin, admin.ModelAdmin):
     def send_link(self, request, queryset):
         for teacher in queryset:
             teacher.send_link(request)
+        messages.success(request, f'Le lien a bien été envoyé aux {queryset.count()} coordonateur(s) sélectionné(s).')
 
     send_link.short_description = 'Envoyer le lien'
 
