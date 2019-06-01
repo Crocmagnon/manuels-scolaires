@@ -311,18 +311,18 @@ def isbn_api(request, isbn):
     year = None
     editor = None
     extra_info = decitre_soup.select('.informations-container')
-    logger.info('raw extra_info')
-    logger.info(extra_info)
+    logger.debug('raw extra_info')
+    logger.debug(extra_info)
     if not extra_info:
-        logger.info('#fiche-technique')
+        logger.debug('#fiche-technique')
         extra_info = decitre_soup.select('#fiche-technique')
-        logger.info('raw extra_info fiche technique')
-        logger.info(extra_info)
+        logger.debug('raw extra_info fiche technique')
+        logger.debug(extra_info)
 
     if extra_info:
         extra_info = extra_info[0].get_text(strip=True)
-        logger.info('extra_info')
-        logger.info(extra_info)
+        logger.debug('extra_info')
+        logger.debug(extra_info)
         matches = re.search(r'Date de parution(?: :)?\d{2}/\d{2}/(?P<year>\d{4})Editeur(?: :)?(?P<editor>[\w ]+)ISBN', extra_info)
         if matches:
             groups = matches.groupdict()
