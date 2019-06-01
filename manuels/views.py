@@ -311,9 +311,13 @@ def isbn_api(request, isbn):
     year = None
     editor = None
     extra_info = decitre_soup.select('.informations-container')
+    logger.debug('raw extra_info')
+    logger.debug(extra_info)
     if not extra_info:
         logger.debug('#fiche-technique')
         extra_info = decitre_soup.select('#fiche-technique')
+        logger.debug('raw extra_info fiche technique')
+        logger.debug(extra_info)
 
     if extra_info:
         extra_info = extra_info[0].get_text(strip=True)
