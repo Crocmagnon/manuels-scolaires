@@ -63,14 +63,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             var editorValue = "";
             var editorIsOther = false;
-            for (var option of document.querySelector('#id_editor').children) {
-                if (editorValue === "" && option.firstChild.data.toLowerCase().indexOf('autre') !== -1) {
-                    editorValue = option.value;
-                    editorIsOther = true;
-                }
-                if (option.firstChild.data.toLowerCase() === data.editor.toLowerCase()) {
-                    editorValue = option.value;
-                    editorIsOther = false;
+            if (data.editor) {
+                for (var option of document.querySelector('#id_editor').children) {
+                    if (editorValue === "" && option.firstChild.data.toLowerCase().indexOf('autre') !== -1) {
+                        editorValue = option.value;
+                        editorIsOther = true;
+                    }
+                    if (option.firstChild.data.toLowerCase() === data.editor.toLowerCase()) {
+                        editorValue = option.value;
+                        editorIsOther = false;
+                    }
                 }
             }
             editor.value = editorValue;
