@@ -264,7 +264,7 @@ def validate_isbn(isbn):
 
 
 # We are able to cache the response because it's very unlikely that the details of a book will change through time
-# @cache_page(7 * 24 * 60 * 60)
+@cache_page(7 * 24 * 60 * 60)
 def isbn_api(request, isbn):
     isbn = isbn.strip().replace('-', '')
 
