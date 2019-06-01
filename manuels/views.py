@@ -1,19 +1,17 @@
+import logging
 import re
 
 import bs4
 import requests
 from django.contrib import messages
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, FormView, DetailView, TemplateView
+from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
 from manuels.models import Teacher, Book, SuppliesRequirement
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -266,7 +264,7 @@ def validate_isbn(isbn):
 
 
 # We are able to cache the response because it's very unlikely that the details of a book will change through time
-@cache_page(7 * 24 * 60 * 60)
+# @cache_page(7 * 24 * 60 * 60)
 def isbn_api(request, isbn):
     isbn = isbn.strip().replace('-', '')
 
@@ -298,29 +296,32 @@ def isbn_api(request, isbn):
         title = title[0]
         if title.span:
             title.span.extract()
-        title = title.getText().strip()
+        title = title.get_text(strip=True)
 
-    authors = decitre_soup.select('h2.authors')
+    authors = decitre_soup.select('.authors')
     if authors:
         authors = authors[0]
-        authors = authors.getText().strip()
+        authors = authors.get_text(strip=True)
 
-    price = decitre_soup.select('.product-add-to-cart-wrapper div.price span.final-price')
-    logger.info(f'Found price html {price}')
+    price = decitre_soup.select('div.price span.final-price')
     if price:
         price = price[0]
-        price = price.getText().replace('€', '').replace(',', '.').strip()
-        logger.info(f'Final price {price}')
+        price = price.get_text().replace('€', '').replace(',', '.').strip()
 
     year = None
     editor = None
-    extra_info = decitre_soup.select('ul.extra-infos.hide-on-responsive')
+    extra_info = decitre_soup.select('.informations-container')
+    if not extra_info:
+        logger.debug('#fiche-technique')
+        extra_info = decitre_soup.select('#fiche-technique')
+
     if extra_info:
-        extra_info = extra_info[0].getText().strip()
-        matches = re.match('^(?P<editor>.+)\nParu le : \d{2}/\d{2}/(?P<year>\d{4})$', extra_info)
-        groups = matches.groupdict()
-        year = groups.get('year')
-        editor = groups.get('editor')
+        extra_info = extra_info[0].get_text(strip=True)
+        matches = re.search(r'Date de parution(?: :)?\d{2}/\d{2}/(?P<year>\d{4})Editeur(?: :)?(?P<editor>[\w ]+)ISBN', extra_info)
+        if matches:
+            groups = matches.groupdict()
+            year = groups.get('year')
+            editor = groups.get('editor').strip()
 
     return JsonResponse({
         'title': title,
