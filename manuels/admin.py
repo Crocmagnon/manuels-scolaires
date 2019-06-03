@@ -78,7 +78,7 @@ class EditorAdmin(admin.ModelAdmin):
 class SuppliesResource(resources.ModelResource):
     class Meta:
         model = SuppliesRequirement
-        fields = ('supplies', 'fields', 'level__name', 'teacher__first_name', 'teacher__last_name')
+        fields = ('supplies', 'field', 'level__name', 'teacher__first_name', 'teacher__last_name')
         export_order = ('level__name', 'field', 'supplies', 'teacher__first_name', 'teacher__last_name')
 
 
