@@ -323,7 +323,7 @@ def isbn_api(request, isbn):
         extra_info = extra_info[0].get_text(strip=True)
         logger.debug('extra_info')
         logger.debug(extra_info)
-        matches = re.search(r'Date de parution(?: :)?\d{2}/\d{2}/(?P<year>\d{4})Editeur(?: :)?(?P<editor>[\w ]+)ISBN', extra_info)
+        matches = re.search(r'Date de parution(?: :)?\d{2}/\d{2}/(?P<year>\d{4})Editeur(?: :)?(?P<editor>.+?)(?:ISBN|Collection)', extra_info)
         if matches:
             groups = matches.groupdict()
             year = groups.get('year')
