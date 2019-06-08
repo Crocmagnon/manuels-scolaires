@@ -278,7 +278,12 @@ def isbn_api(request, isbn):
             'error': "La recherche sur Decitre ne fonctionne qu'avec un ISBN 13 (ou EAN)."
         })
 
-    res = requests.get(f'https://www.decitre.fr/livres/{isbn}.html')
+    try:
+        res = requests.get(f'https://www.decitre.fr/livres/{isbn}.html', timeout=10)
+    except requests.exceptions.Timeout as exc:
+        return JsonResponse({
+            'error': "Decitre n'a pas répondu dans les temps. Message : {}".format(str(exc))
+        })
 
     try:
         res.raise_for_status()
