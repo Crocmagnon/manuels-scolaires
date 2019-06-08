@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     isbnButton.addEventListener('click', function (event) {
+        if (!isbn.value) {
+            return;
+        }
         disableFields();
 
         $.get("/isbn_api/" + isbn.value, {}, function (data, status, xhr) {
