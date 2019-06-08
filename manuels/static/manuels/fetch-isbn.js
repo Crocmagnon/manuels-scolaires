@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function (event) {
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
     var isbnButton = document.querySelector('#id_isbn_button');
     var isbn = document.querySelector('#id_isbn');
     var title = document.querySelector('#id_title');
