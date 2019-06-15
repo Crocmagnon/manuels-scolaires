@@ -239,7 +239,7 @@ class CommonSupply(BaseModel):
     class Meta:
         verbose_name = 'fourniture commune'
         verbose_name_plural = 'fournitures communes'
-        ordering = ('order',)
+        ordering = ('order', 'name',)
 
     name = models.CharField('nom', max_length=200)
     order = models.IntegerField('ordre')
