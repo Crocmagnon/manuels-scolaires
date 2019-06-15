@@ -11,7 +11,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
-from manuels.models import Teacher, Book, SuppliesRequirement
+from manuels.models import Teacher, Book, SuppliesRequirement, CommonSupply
 
 logger = logging.getLogger(__name__)
 
@@ -155,6 +155,11 @@ class AddSuppliesView(SuppliesView, AddItemView):
     form_class = AddSuppliesForm
     message_template = 'manuels/supplies_message.html'
     template_name = 'manuels/add_supplies.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['common_supplies'] = CommonSupply.objects.all()
+        return context
 
     def form_valid(self, form: AddBookForm):
         for level in form.cleaned_data['levels']:

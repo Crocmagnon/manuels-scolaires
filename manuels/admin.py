@@ -2,7 +2,7 @@ from django.contrib import admin, messages
 from import_export import resources
 from import_export.admin import ExportMixin
 
-from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement
+from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement, CommonSupply
 
 
 class TeacherResource(resources.ModelResource):
@@ -73,6 +73,12 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
 @admin.register(Editor)
 class EditorAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(CommonSupply)
+class CommonSupplyAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'order']
+    list_display_links = ['id', 'name']
 
 
 class SuppliesResource(resources.ModelResource):

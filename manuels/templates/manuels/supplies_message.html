@@ -4,18 +4,8 @@
         <strong>Merci de ne pas re-saisir les fournitures communes à tous les élèves, à savoir :</strong>
     </p>
     <ul class="mb-0">
-        <li>cahier de textes ou agenda</li>
-        <li>trousse complète (y compris gomme, taille-crayons, blanc correcteur, bâtons de colle, règle 30 cm.,
-            surligneurs
-            4 couleurs&#8230;)
-        </li>
-        <li>1 paire de ciseaux</li>
-        <li>clé(s) USB</li>
-        <li>1 agrafeuse</li>
-        <li>crayons de couleurs (minimum 12)</li>
-        <li>système de reliure (baguettes sans perçage, transparents, papier épais, &#8230;) pour les éventuels dossiers
-            de
-            fin d’année
-        </li>
+        {% for supply in common_supplies %}
+            <li>{{ supply.name }}</li>
+        {% endfor %}
     </ul>
 </div>
