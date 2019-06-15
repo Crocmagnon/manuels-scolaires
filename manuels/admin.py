@@ -77,8 +77,8 @@ class EditorAdmin(admin.ModelAdmin):
 
 @admin.register(CommonSupply)
 class CommonSupplyAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'order']
-    list_display_links = ['id', 'name']
+    list_display = ['name', 'order']
+    list_display_links = ['name']
 
 
 class SuppliesResource(resources.ModelResource):
