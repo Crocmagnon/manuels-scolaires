@@ -79,6 +79,7 @@ class EditorAdmin(admin.ModelAdmin):
 class CommonSupplyAdmin(admin.ModelAdmin):
     list_display = ['name', 'order']
     list_display_links = ['name']
+    list_editable = ['order']
 
 
 class SuppliesResource(resources.ModelResource):
