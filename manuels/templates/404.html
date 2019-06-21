@@ -1,0 +1,51 @@
+{% extends 'manuels/base.html' %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block title %}
+    Page non trouvée (404)
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>Erreur 404 - La page demandée n'a pas été trouvée</h1>
+            <p>
+                Le lien que vous avez suivi est peut-être trop ancien 👴🏻, ou l'élément que vous recherchez a
+                peut-être été supprimé. Dans tous les cas, il n'y a plus rien ici 😿
+            </p>
+            <p>
+                Vous avez peut-être déjà rencontré ce type d'erreur (peut-être même sur ce site) sans
+                forcément comprendre ce qu'il signifie.
+                Comme je crois qu'un peu de lecture ne fait jamais de mal, voici un extrait de la page
+                <a href="https://fr.wikipedia.org/wiki/Erreur_HTTP_404">Wikipedia traitant spécifiquement
+                    de l'erreur 404</a> 🤓
+            </p>
+
+            <blockquote class="blockquote text-right">
+                <p class="mb-0">
+                    En informatique, l’erreur 404 est un code d’erreur du protocole de communication HTTP sur le réseau
+                    Internet. Ce code est renvoyé par un serveur HTTP pour indiquer qu'aucune ressource
+                    (généralement une page web) n'a été trouvée à l'adresse demandée.
+                    Le serveur d'hébergement de sites Web génère généralement une page Web "404 Fichier introuvable"
+                    lorsqu'un utilisateur tente de suivre un lien rompu ou mort ; par conséquent, l'erreur 404 est l'une
+                    des erreurs les plus reconnaissables rencontrées sur le World Wide Web.
+                </p>
+                <footer class="blockquote-footer">
+                    Erreur HTTP 404 sur
+                    <cite title="Wikipedia">
+                        <a href="https://fr.wikipedia.org/wiki/Erreur_HTTP_404">
+                            Wikipedia
+                        </a>
+                    </cite>
+                </footer>
+            </blockquote>
+
+            <a href="{% url 'home_page' %}" class="btn btn-primary">
+                <i class="fas fa-arrow-circle-left"></i>
+                Revenir à l'accueil
+            </a>
+        </div>
+    </div>
+{% endblock %}

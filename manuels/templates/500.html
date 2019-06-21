@@ -1,0 +1,35 @@
+{% extends 'manuels/base.html' %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block title %}
+    Erreur inattendue (500)
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>Erreur 500 - Nous ne nous attendions pas à ça</h1>
+            <p>
+                Nous avons visiblement rencontré une erreur inattendue. Ne vous inquiétez pas,
+                <strong>ce n'est pas de votre faute</strong> mais plus vraisemblablement celle du développeur
+                (un peu endormi 😴 ?) qui a certainement mis en ligne une nouvelle
+                version sans faire suffisamment de tests 😅
+            </p>
+            <p>
+                Toutes les informations techniques utiles ont été transmises au développeur 👨🏻‍💻 <br>
+                Cependant, si vous vous attendiez à pouvoir réaliser une quelconque tâche
+                qui vous est désormais impossible, vous devriez prendre contact avec votre documentaliste 📚
+            </p>
+            <p>
+                Le plus sage en attendant est peut-être de...
+            </p>
+
+            <a href="{% url 'home_page' %}" class="btn btn-primary">
+                <i class="fas fa-arrow-circle-left"></i>
+                Revenir à l'accueil
+            </a>
+        </div>
+    </div>
+{% endblock %}
