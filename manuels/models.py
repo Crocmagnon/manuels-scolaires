@@ -203,7 +203,7 @@ class Book(BaseModel):
 
     @property
     def consumable_text(self):
-        if self.previously_acquired:
+        if self.consumable:
             return 'Oui'
         else:
             return 'Non'
