@@ -4,6 +4,7 @@ import re
 import uuid as uuid
 
 from django.conf import settings
+from django.contrib.postgres.fields import CIEmailField
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -43,7 +44,7 @@ class Teacher(BaseModel):
         max_length=10,
         validators=[phone_validator]
     )
-    email = models.EmailField(
+    email = CIEmailField(
         'adresse email',
         help_text='Utilisée pour vous transmettre votre lien personnel',
         unique=True
