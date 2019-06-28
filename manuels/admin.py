@@ -1,6 +1,7 @@
 from django.contrib import admin, messages
 from import_export import resources, fields
 from import_export.admin import ExportMixin
+from import_export.widgets import IntegerWidget, DecimalWidget
 
 from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement, CommonSupply
 
@@ -27,11 +28,11 @@ class TeacherAdmin(ExportMixin, admin.ModelAdmin):
 
 
 class LevelResource(resources.ModelResource):
-    non_acquired_book_count = fields.Field(attribute='non_acquired_book_count')
-    non_acquired_book_price = fields.Field(attribute='non_acquired_book_price')
-    non_acquired_consumable_count = fields.Field(attribute='non_acquired_consumable_count')
-    non_acquired_consumable_price = fields.Field(attribute='non_acquired_consumable_price')
-    non_acquired_total_price = fields.Field(attribute='non_acquired_total_price')
+    non_acquired_book_count = fields.Field(attribute='non_acquired_book_count', widget=IntegerWidget())
+    non_acquired_book_price = fields.Field(attribute='non_acquired_book_price', widget=DecimalWidget())
+    non_acquired_consumable_count = fields.Field(attribute='non_acquired_consumable_count', widget=IntegerWidget())
+    non_acquired_consumable_price = fields.Field(attribute='non_acquired_consumable_price', widget=DecimalWidget())
+    non_acquired_total_price = fields.Field(attribute='non_acquired_total_price', widget=DecimalWidget())
 
     class Meta:
         model = Level
