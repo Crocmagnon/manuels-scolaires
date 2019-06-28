@@ -37,34 +37,34 @@ class LevelAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'order',
-        'book_count',
-        'consumable_count',
-        'consumable_price',
+        'non_acquired_book_count',
+        'non_acquired_book_price',
         'non_acquired_consumable_count',
-        'non_acquired_consumable_price'
+        'non_acquired_consumable_price',
+        'non_acquired_total_price',
     ]
     list_editable = ['order']
     list_display_links = ['name']
 
-    def consumable_count(self, obj: Level):
-        return obj.consumable_count
-    consumable_count.short_description = 'Nombre de consommable(s)'
+    def non_acquired_book_count(self, obj: Level):
+        return obj.book_set.filter(previously_acquired=False, consumable=False).count()
+    non_acquired_book_count.short_description = 'Nombre de livres à acheter (hors consommables)'
 
-    def book_count(self, obj: Level):
-        return obj.book_set.count()
-    book_count.short_description = 'Nombre de livre(s)'
-
-    def consumable_price(self, obj: Level):
-        return f'{obj.consumable_price:.2f}€'
-    consumable_price.short_description = 'Coût des consommables'
+    def non_acquired_book_price(self, obj: Level):
+        return f'{obj.non_acquired_book_price:.2f}€'
+    non_acquired_book_price.short_description = 'Coût des livres à acheter (hors consommables)'
 
     def non_acquired_consumable_count(self, obj: Level):
-        return obj.non_acquired_consumable_count
-    non_acquired_consumable_count.short_description = 'Nombre de consommable(s) à acheter cette année'
+        return obj.book_set.filter(consumable=True, previously_acquired=False).count()
+    non_acquired_consumable_count.short_description = 'Nombre de consommables à acheter'
 
     def non_acquired_consumable_price(self, obj: Level):
         return f'{obj.non_acquired_consumable_price:.2f}€'
-    non_acquired_consumable_price.short_description = 'Coût des consommables à acheter cette année'
+    non_acquired_consumable_price.short_description = 'Coût des consommables à acheter'
+
+    def non_acquired_total_price(self, obj: Level):
+        return f'{obj.non_acquired_total_price:.2f}€'
+    non_acquired_total_price.short_description = 'Coût total à acheter'
 
 
 class BookResource(resources.ModelResource):
