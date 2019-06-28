@@ -3,7 +3,7 @@ from import_export import resources, fields
 from import_export.admin import ExportMixin
 from import_export.widgets import IntegerWidget, DecimalWidget
 
-from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement, CommonSupply
+from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement, CommonSupply, ISBNError
 
 
 class TeacherResource(resources.ModelResource):
@@ -125,6 +125,24 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
         }),
     ]
     readonly_fields = ['created_at', 'updated_at']
+
+    def update_with_decitre(self, request, queryset):
+        for book in queryset:
+            try:
+                book.update_from_decitre()
+                messages.success(
+                    request,
+                    f'Mise à jour réussie du livre "{book.title}" ({book.level.name} - {book.field})'
+                )
+            except ISBNError as e:
+                messages.warning(
+                    request,
+                    f'Erreur lors de la mise à jour du livre "{book.title}" ({book.level.name} - {book.field}) : {e.data.get("error")}'
+                )
+
+    update_with_decitre.short_description = 'Mettre à jour avec Decitre'
+
+    actions = [update_with_decitre]
 
 
 @admin.register(Editor)

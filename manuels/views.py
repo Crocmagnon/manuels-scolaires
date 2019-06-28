@@ -11,7 +11,8 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
-from manuels.models import Teacher, Book, SuppliesRequirement, CommonSupply
+from manuels.models import Teacher, Book, SuppliesRequirement, CommonSupply, ISBNError
+from manuels.utils import validate_isbn
 
 logger = logging.getLogger(__name__)
 
@@ -245,105 +246,10 @@ class ConfirmTeacherView(BaseTeacherView, UpdateView):
         return response
 
 
-def validate_isbn(isbn):
-    _sum = 0
-    if len(isbn) == 10:
-        for i, digit in enumerate(isbn):
-            if digit == 'X':
-                digit = 10
-            else:
-                digit = int(digit)
-            _sum += digit * (i + 1)
-
-        return _sum % 11 == 0
-
-    elif len(isbn) == 13:
-        for i, digit in enumerate(isbn):
-            weight = 3 if i % 2 == 1 else 1
-            digit = int(digit)
-            _sum += digit * weight
-
-        return _sum % 10 == 0
-
-    return False
-
-
 # We are able to cache the response because it's very unlikely that the details of a book will change through time
 @cache_page(2 * 60 * 60)
 def isbn_api(request, isbn):
-    isbn = isbn.strip().replace('-', '')
-
-    if not validate_isbn(isbn):
-        return JsonResponse({
-            'error': "L'ISBN saisi n'est pas valide."
-        })
-
-    if len(isbn) == 10:
-        return JsonResponse({
-            'error': "La recherche sur Decitre ne fonctionne qu'avec un ISBN 13 (ou EAN)."
-        })
-
     try:
-        res = requests.get(f'https://www.decitre.fr/livres/{isbn}.html', timeout=10)
-    except requests.exceptions.Timeout as exc:
-        return JsonResponse({
-            'error': "Decitre n'a pas répondu dans les temps. Message : {}".format(str(exc))
-        })
-
-    try:
-        res.raise_for_status()
-    except Exception as exc:
-        message = ("Erreur lors de la recherche. Il se peut que le livre n'existe pas dans la base de connaissances "
-                   "de Decitre ou que vous ayez mal saisi l'ISBN. Vous pouvez toujours saisir "
-                   "les informations du livre à la main. Message : {}").format(str(exc))
-        return JsonResponse({
-            'error': message
-        })
-
-    decitre_soup = bs4.BeautifulSoup(res.text, "html.parser")
-    title = decitre_soup.select('h1.product-title')
-    if title:
-        title = title[0]
-        if title.span:
-            title.span.extract()
-        title = title.get_text(strip=True)
-
-    authors = decitre_soup.select('.authors')
-    if authors:
-        authors = authors[0]
-        authors = authors.get_text(strip=True)
-
-    price = decitre_soup.select('div.price span.final-price')
-    if price:
-        price = price[0]
-        price = price.get_text().replace('€', '').replace(',', '.').strip()
-
-    year = None
-    editor = None
-    extra_info = decitre_soup.select('.informations-container')
-    logger.debug('raw extra_info')
-    logger.debug(extra_info)
-    if not extra_info:
-        logger.debug('#fiche-technique')
-        extra_info = decitre_soup.select('#fiche-technique')
-        logger.debug('raw extra_info fiche technique')
-        logger.debug(extra_info)
-
-    if extra_info:
-        extra_info = extra_info[0].get_text(strip=True)
-        logger.debug('extra_info')
-        logger.debug(extra_info)
-        matches = re.search(r'Date de parution(?: :)?\d{2}/\d{2}/(?P<year>\d{4})Editeur(?: :)?(?P<editor>.+?)(?:ISBN|Collection)', extra_info)
-        if matches:
-            groups = matches.groupdict()
-            year = groups.get('year')
-            editor = groups.get('editor').strip()
-
-    return JsonResponse({
-        'title': title,
-        'authors': authors,
-        'isbn': isbn,
-        'price': float(price) if price else None,
-        'year': year,
-        'editor': editor,
-    })
+        return JsonResponse(Book.fetch_from_decitre(isbn))
+    except ISBNError as e:
+        return JsonResponse(e.data)

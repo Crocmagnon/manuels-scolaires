@@ -1,8 +1,10 @@
+import logging
 import os
 import re
-
 import uuid as uuid
 
+import bs4
+import requests
 from django.conf import settings
 from django.contrib.postgres.fields import CIEmailField
 from django.core.exceptions import ValidationError
@@ -11,6 +13,15 @@ from django.db import models
 from django.db.models import Sum
 from django.template.loader import render_to_string
 from django.urls import reverse
+
+from manuels.utils import validate_isbn
+
+logger = logging.getLogger(__name__)
+
+
+class ISBNError(Exception):
+    def __init__(self, data):
+        self.data = data
 
 
 class BaseModel(models.Model):
@@ -245,6 +256,102 @@ class Book(BaseModel):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('edit_book', kwargs={'teacher_pk': str(self.teacher.pk), 'pk': str(self.pk)})
+
+    def update_from_decitre(self):
+        decitre_data = self.fetch_from_decitre(self.isbn)
+        self.title = decitre_data.get('title')
+        self.authors = decitre_data.get('authors')
+        self.price = decitre_data.get('price')
+        self.publication_year = decitre_data.get('year')
+        editor = decitre_data.get('editor')
+        try:
+            self.editor = Editor.objects.get(name__icontains=editor)
+        except Editor.DoesNotExist:
+            self.editor = Editor.objects.get(name__istartswith='autre')
+
+        self.save()
+
+    @staticmethod
+    def fetch_from_decitre(isbn: str):
+        isbn = isbn.strip().replace('-', '')
+
+        if not validate_isbn(isbn):
+            raise ISBNError({
+                'error': "L'ISBN saisi n'est pas valide."
+            })
+
+        if len(isbn) == 10:
+            raise ISBNError({
+                'error': "La recherche sur Decitre ne fonctionne qu'avec un ISBN 13 (ou EAN)."
+            })
+
+        try:
+            res = requests.get(f'https://www.decitre.fr/livres/{isbn}.html', timeout=10)
+        except requests.exceptions.Timeout as exc:
+            raise ISBNError({
+                'error': "Decitre n'a pas répondu dans les temps. Message : {}".format(str(exc))
+            })
+
+        try:
+            res.raise_for_status()
+        except Exception as exc:
+            message = (
+                "Erreur lors de la recherche. Il se peut que le livre n'existe pas dans la base de connaissances "
+                "de Decitre ou que vous ayez mal saisi l'ISBN. Vous pouvez toujours saisir "
+                "les informations du livre à la main. Message : {}").format(str(exc))
+            raise ISBNError({
+                'error': message
+            })
+
+        decitre_soup = bs4.BeautifulSoup(res.text, "html.parser")
+        title = decitre_soup.select('h1.product-title')
+        if title:
+            title = title[0]
+            if title.span:
+                title.span.extract()
+            title = title.get_text(strip=True)
+
+        authors = decitre_soup.select('.authors')
+        if authors:
+            authors = authors[0]
+            authors = authors.get_text(strip=True)
+
+        price = decitre_soup.select('div.price span.final-price')
+        if price:
+            price = price[0]
+            price = price.get_text().replace('€', '').replace(',', '.').strip()
+
+        year = None
+        editor = None
+        extra_info = decitre_soup.select('.informations-container')
+        logger.debug('raw extra_info')
+        logger.debug(extra_info)
+        if not extra_info:
+            logger.debug('#fiche-technique')
+            extra_info = decitre_soup.select('#fiche-technique')
+            logger.debug('raw extra_info fiche technique')
+            logger.debug(extra_info)
+
+        if extra_info:
+            extra_info = extra_info[0].get_text(strip=True)
+            logger.debug('extra_info')
+            logger.debug(extra_info)
+            matches = re.search(
+                r'Date de parution(?: :)?\d{2}/\d{2}/(?P<year>\d{4})Editeur(?: :)?(?P<editor>.+?)(?:ISBN|Collection)',
+                extra_info)
+            if matches:
+                groups = matches.groupdict()
+                year = groups.get('year')
+                editor = groups.get('editor').strip()
+
+        return {
+            'title': title,
+            'authors': authors,
+            'isbn': isbn,
+            'price': float(price) if price else None,
+            'year': year,
+            'editor': editor,
+        }
 
 
 class SuppliesRequirement(BaseModel):
