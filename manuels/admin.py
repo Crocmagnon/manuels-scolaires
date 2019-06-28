@@ -34,7 +34,15 @@ class TeacherResource(resources.ModelResource):
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
-    list_display = ['name', 'order', 'book_count', 'consumable_count', 'consumable_price']
+    list_display = [
+        'name',
+        'order',
+        'book_count',
+        'consumable_count',
+        'consumable_price',
+        'non_acquired_consumable_count',
+        'non_acquired_consumable_price'
+    ]
     list_editable = ['order']
     list_display_links = ['name']
 
@@ -49,6 +57,14 @@ class LevelAdmin(admin.ModelAdmin):
     def consumable_price(self, obj: Level):
         return f'{obj.consumable_price:.2f}€'
     consumable_price.short_description = 'Coût des consommables'
+
+    def non_acquired_consumable_count(self, obj: Level):
+        return obj.non_acquired_consumable_count
+    non_acquired_consumable_count.short_description = 'Nombre de consommable(s) à acheter cette année'
+
+    def non_acquired_consumable_price(self, obj: Level):
+        return f'{obj.non_acquired_consumable_price:.2f}€'
+    non_acquired_consumable_price.short_description = 'Coût des consommables à acheter cette année'
 
 
 class BookResource(resources.ModelResource):
