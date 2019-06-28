@@ -8,6 +8,7 @@ from django.contrib.postgres.fields import CIEmailField
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
+from django.db.models import Sum
 from django.template.loader import render_to_string
 from django.urls import reverse
 
@@ -114,6 +115,17 @@ class Level(BaseModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def consumable_count(self):
+        return self.book_set.filter(consumable=True).count()
+
+    @property
+    def consumable_price(self):
+        price = self.book_set.filter(consumable=True).aggregate(Sum('price')).get('price__sum', 0)
+        if price is None:
+            return 0
+        return price
 
 
 class Editor(BaseModel):

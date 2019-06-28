@@ -28,9 +28,17 @@ class TeacherAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
-    list_display = ['name', 'order']
+    list_display = ['name', 'order', 'consumable_count', 'consumable_price']
     list_editable = ['order']
     list_display_links = ['name']
+
+    def consumable_count(self, obj: Level):
+        return obj.consumable_count
+    consumable_count.short_description = 'Nombre de consommable(s)'
+
+    def consumable_price(self, obj: Level):
+        return f'{obj.consumable_price:.2f}€'
+    consumable_price.short_description = 'Coût des consommables'
 
 
 class BookResource(resources.ModelResource):
