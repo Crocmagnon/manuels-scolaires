@@ -39,20 +39,21 @@
         </div>
     </div>
     <div class="form-row">
-        <div class="col-12">
+        <div class="col-8">
             <div class="form-group">
                 {% bootstrap_label content=form.isbn.label label_for=form.isbn.auto_id %}
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="id_isbn_button" data-toggle="tooltip" data-placement="top" title="Chercher avec Decitre">
-                            <i class="fas fa-search"></i> <i class="fas fa-spinner fa-spin" id="id_isbn_spinner" hidden></i>
-                        </button>
-                    </div>
                     <input name="{{ form.isbn.name }}" maxlength="20"
                            class="form-control"
                            placeholder="{{ form.isbn.label }}"
                            {% if form.isbn.value != None %} value="{{ form.isbn.value|stringformat:'s' }}"{% endif %}
                            required="" id="{{ form.isbn.auto_id }}" type="text">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="id_isbn_button" data-toggle="tooltip" data-placement="top" title="Chercher avec Decitre">
+                            <i class="fas fa-search"></i> <i class="fas fa-spinner fa-spin" id="id_isbn_spinner" hidden></i>
+                            Remplir les champs suivants avec Decitre
+                        </button>
+                    </div>
                 </div>
                 <div class="invalid-feedback" id="id_isbn_invalid_feedback">
                 </div>
