@@ -117,11 +117,19 @@ class Level(BaseModel):
         return self.name
 
     @property
+    def non_acquired_consumable_count(self):
+        return self.book_set.filter(consumable=True, previously_acquired=False).count()
+
+    @property
     def non_acquired_consumable_price(self):
         price = self.book_set.filter(consumable=True, previously_acquired=False).aggregate(Sum('price')).get('price__sum', 0)
         if price is None:
             return 0
         return price
+
+    @property
+    def non_acquired_book_count(self):
+        return self.book_set.filter(consumable=False, previously_acquired=False).count()
 
     @property
     def non_acquired_book_price(self):

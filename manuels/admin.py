@@ -1,5 +1,5 @@
 from django.contrib import admin, messages
-from import_export import resources
+from import_export import resources, fields
 from import_export.admin import ExportMixin
 
 from manuels.models import Teacher, Book, Level, Editor, SuppliesRequirement, CommonSupply
@@ -26,14 +26,36 @@ class TeacherAdmin(ExportMixin, admin.ModelAdmin):
     actions = [send_link]
 
 
-class TeacherResource(resources.ModelResource):
+class LevelResource(resources.ModelResource):
+    non_acquired_book_count = fields.Field(attribute='non_acquired_book_count')
+    non_acquired_book_price = fields.Field(attribute='non_acquired_book_price')
+    non_acquired_consumable_count = fields.Field(attribute='non_acquired_consumable_count')
+    non_acquired_consumable_price = fields.Field(attribute='non_acquired_consumable_price')
+    non_acquired_total_price = fields.Field(attribute='non_acquired_total_price')
+
     class Meta:
-        model = Teacher
-        fields = ('first_name', 'last_name', 'email', 'phone_number')
+        model = Level
+        fields = (
+            'name',
+            'non_acquired_book_count',
+            'non_acquired_book_price',
+            'non_acquired_consumable_count',
+            'non_acquired_consumable_price',
+            'non_acquired_total_price',
+        )
+        export_order = (
+            'name',
+            'non_acquired_book_count',
+            'non_acquired_book_price',
+            'non_acquired_consumable_count',
+            'non_acquired_consumable_price',
+            'non_acquired_total_price',
+        )
 
 
 @admin.register(Level)
-class LevelAdmin(admin.ModelAdmin):
+class LevelAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = LevelResource
     list_display = [
         'name',
         'order',
@@ -47,7 +69,7 @@ class LevelAdmin(admin.ModelAdmin):
     list_display_links = ['name']
 
     def non_acquired_book_count(self, obj: Level):
-        return obj.book_set.filter(previously_acquired=False, consumable=False).count()
+        return obj.non_acquired_book_count
     non_acquired_book_count.short_description = 'Nombre de livres à acheter (hors consommables)'
 
     def non_acquired_book_price(self, obj: Level):
@@ -55,7 +77,7 @@ class LevelAdmin(admin.ModelAdmin):
     non_acquired_book_price.short_description = 'Coût des livres à acheter (hors consommables)'
 
     def non_acquired_consumable_count(self, obj: Level):
-        return obj.book_set.filter(consumable=True, previously_acquired=False).count()
+        return obj.non_acquired_consumable_count
     non_acquired_consumable_count.short_description = 'Nombre de consommables à acheter'
 
     def non_acquired_consumable_price(self, obj: Level):
