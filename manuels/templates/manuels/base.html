@@ -1,10 +1,22 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Manuels - {% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/png" href="data:;base64,iVBORw0KGgo=">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon.png' %}?v=yyLzeamAbE">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32x32.png' %}?v=yyLzeamAbE">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icons/favicon-16x16.png' %}?v=yyLzeamAbE">
+    <link rel="manifest" href="{% static 'icons/site.webmanifest' %}?v=yyLzeamAbE">
+    <link rel="mask-icon" href="{% static 'icons/safari-pinned-tab.svg' %}?v=yyLzeamAbE" color="#000000">
+    <link rel="shortcut icon" href="{% static 'icons/favicon.ico' %}?v=yyLzeamAbE">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-config" content="{% static 'icons/browserconfig.xml' %}?v=yyLzeamAbE">
+    <meta name="theme-color" content="#ffffff">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
