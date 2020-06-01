@@ -128,33 +128,55 @@ class Level(BaseModel):
         return self.name
 
     @property
+    def non_acquired_consumables(self):
+        if hasattr(self, "prefetched_books"):
+            return filter(lambda book: book.consumable and not book.previously_acquired, self.prefetched_books)
+        return self.book_set.filter(consumable=True, previously_acquired=False)
+
+    @property
     def non_acquired_consumable_count(self):
-        return self.book_set.filter(consumable=True, previously_acquired=False).count()
+        if hasattr(self, "prefetched_books"):
+            return len(list(self.non_acquired_consumables))
+        return self.non_acquired_consumables.count()
 
     @property
     def non_acquired_consumable_price(self):
-        price = self.book_set.filter(consumable=True, previously_acquired=False).aggregate(Sum('price')).get('price__sum', 0)
-        if price is None:
-            return 0
-        return price
+        if hasattr(self, "prefetched_books"):
+            return sum(map(lambda book: book.price, self.non_acquired_consumables))
+        return self.non_acquired_consumables.aggregate(Sum('price')).get(
+            'price__sum', 0)
+
+    @property
+    def non_acquired_books(self):
+        if hasattr(self, "prefetched_books"):
+            return filter(lambda book: not book.consumable and not book.previously_acquired, self.prefetched_books)
+        return self.book_set.filter(consumable=False, previously_acquired=False)
 
     @property
     def non_acquired_book_count(self):
-        return self.book_set.filter(consumable=False, previously_acquired=False).count()
+        if hasattr(self, "prefetched_books"):
+            return len(list(self.non_acquired_books))
+        return self.non_acquired_books.count()
 
     @property
     def non_acquired_book_price(self):
-        price = self.book_set.filter(consumable=False, previously_acquired=False).aggregate(Sum('price')).get('price__sum', 0)
-        if price is None:
-            return 0
-        return price
+        if hasattr(self, "prefetched_books"):
+            return sum(map(lambda book: book.price, self.non_acquired_books))
+        return self.non_acquired_books.aggregate(Sum('price')).get(
+            'price__sum', 0)
+
+    @property
+    def non_acquired_items(self):
+        if hasattr(self, "prefetched_books"):
+            return filter(lambda book: not book.previously_acquired, self.prefetched_books)
+        return self.book_set.filter(previously_acquired=False)
 
     @property
     def non_acquired_total_price(self):
-        price = self.book_set.filter(previously_acquired=False).aggregate(Sum('price')).get('price__sum', 0)
-        if price is None:
-            return 0
-        return price
+        if hasattr(self, "prefetched_books"):
+            return sum(map(lambda book: book.price, self.non_acquired_items))
+        return self.non_acquired_items.aggregate(Sum('price')).get(
+            'price__sum', 0)
 
 
 class Editor(BaseModel):

@@ -1,4 +1,5 @@
 from django.contrib import admin, messages
+from django.db.models import Prefetch
 from import_export import resources, fields
 from import_export.admin import ExportMixin
 from import_export.widgets import IntegerWidget, DecimalWidget
@@ -69,24 +70,33 @@ class LevelAdmin(ExportMixin, admin.ModelAdmin):
     list_editable = ['order']
     list_display_links = ['name']
 
+    def get_queryset(self, request):
+        return super(LevelAdmin, self).get_queryset(request).prefetch_related(
+            Prefetch("book_set", to_attr="prefetched_books"))
+
     def non_acquired_book_count(self, obj: Level):
         return obj.non_acquired_book_count
+
     non_acquired_book_count.short_description = 'Nombre de livres à acheter (hors consommables)'
 
     def non_acquired_book_price(self, obj: Level):
         return f'{obj.non_acquired_book_price:.2f}€'
+
     non_acquired_book_price.short_description = 'Coût des livres à acheter (hors consommables)'
 
     def non_acquired_consumable_count(self, obj: Level):
         return obj.non_acquired_consumable_count
+
     non_acquired_consumable_count.short_description = 'Nombre de consommables à acheter'
 
     def non_acquired_consumable_price(self, obj: Level):
         return f'{obj.non_acquired_consumable_price:.2f}€'
+
     non_acquired_consumable_price.short_description = 'Coût des consommables à acheter'
 
     def non_acquired_total_price(self, obj: Level):
         return f'{obj.non_acquired_total_price:.2f}€'
+
     non_acquired_total_price.short_description = 'Coût total à acheter'
 
 
@@ -125,6 +135,9 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
         }),
     ]
     readonly_fields = ['created_at', 'updated_at']
+
+    def get_queryset(self, request):
+        return super(BookAdmin, self).get_queryset(request).select_related("editor", "level", "teacher")
 
     def update_with_decitre(self, request, queryset):
         for book in queryset:
@@ -171,3 +184,6 @@ class SuppliesRequirementAdmin(ExportMixin, admin.ModelAdmin):
     list_editable = ['done']
     readonly_fields = ['created_at', 'updated_at']
     list_filter = ['done', 'teacher', 'level']
+
+    def get_queryset(self, request):
+        return super(SuppliesRequirementAdmin, self).get_queryset(request).select_related("level", "teacher")
