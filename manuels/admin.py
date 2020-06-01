@@ -101,14 +101,16 @@ class LevelAdmin(ExportMixin, admin.ModelAdmin):
 
 
 class BookResource(resources.ModelResource):
+    decitre_url = fields.Field(attribute='decitre_url')
+
     class Meta:
         model = Book
         fields = ('title', 'authors', 'editor__name', 'publication_year', 'isbn', 'comments', 'other_editor',
                   'price', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'level__name', 'field',
-                  'consumable')
+                  'consumable', "decitre_url")
         export_order = ('level__name', 'field', 'title', 'authors', 'editor__name', 'publication_year', 'isbn', 'price',
                         'other_editor', 'previously_acquired', 'teacher__first_name', 'teacher__last_name', 'comments',
-                        'consumable')
+                        'consumable', "decitre_url")
 
 
 @admin.register(Book)

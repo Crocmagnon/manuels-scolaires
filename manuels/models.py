@@ -293,6 +293,13 @@ class Book(BaseModel):
 
         self.save()
 
+    @property
+    def decitre_url(self):
+        isbn = self.isbn.strip().replace('-', '')
+        if not validate_isbn(isbn) or len(isbn) == 10:
+            return ""
+        return f'https://www.decitre.fr/livres/{isbn}.html'
+
     @staticmethod
     def fetch_from_decitre(isbn: str):
         isbn = isbn.strip().replace('-', '')
