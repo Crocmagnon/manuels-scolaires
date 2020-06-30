@@ -285,12 +285,15 @@ class Book(BaseModel):
         self.authors = decitre_data.get('authors')
         self.price = decitre_data.get('price')
         self.publication_year = decitre_data.get('year')
-        editor = decitre_data.get('editor')
-        try:
-            self.editor = Editor.objects.get(name__icontains=editor)
-        except Editor.DoesNotExist:
-            self.editor = Editor.objects.get(name__istartswith='autre')
 
+        editor = decitre_data.get('editor')
+        potential_editor = (
+            Editor.objects.filter(name__iexact=editor).first()
+            or Editor.objects.filter(name__icontains=editor).first()
+            or Editor.objects.get(name__istartswith="autre")
+        )
+
+        self.editor = potential_editor
         self.save()
 
     @property
