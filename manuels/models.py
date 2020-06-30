@@ -290,8 +290,12 @@ class Book(BaseModel):
         potential_editor = (
             Editor.objects.filter(name__iexact=editor).first()
             or Editor.objects.filter(name__icontains=editor).first()
-            or Editor.objects.get(name__istartswith="autre")
         )
+        if potential_editor:
+            self.other_editor = ""
+        else:
+            potential_editor = Editor.objects.get(name__istartswith="autre")
+            self.other_editor = editor
 
         self.editor = potential_editor
         self.save()
