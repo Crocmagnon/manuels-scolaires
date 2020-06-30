@@ -157,7 +157,11 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
 
     update_with_decitre.short_description = 'Mettre à jour avec Decitre'
 
-    actions = [update_with_decitre]
+    def mark_as_done(self, request, queryset):
+        queryset.update(done=True)
+
+    mark_as_done.short_description = "Marquer comme traité"
+    actions = [update_with_decitre, mark_as_done]
 
 
 @admin.register(Editor)
