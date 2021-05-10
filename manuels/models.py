@@ -221,7 +221,7 @@ class Book(BaseModel):
     other_editor = models.CharField(verbose_name='préciser', max_length=100, blank=True)
     publication_year = models.PositiveIntegerField('année de publication')
     isbn = models.CharField(
-        'ISBN/EAN',
+        'ISBN/EAN du manuel élève (hors specimen)',
         max_length=20,
         help_text="Format attendu : 10 ou 13 chiffres, éventuellement séparés par des tirets et éventuellement "
                   "suivis de la lettre <code>X</code>. La recherche sur Decitre ne fonctionnera qu'avec un code ISBN à "
