@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     $(function () {
-      $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     var isbnButton = document.querySelector('#id_isbn_button');
@@ -44,16 +44,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         disableFields();
 
-        $.get("/isbn_api/" + isbn.value, {}, function (data, status, xhr) {
-            if (data.error) {
-                isbn.classList.add('is-invalid');
-                isbn.classList.remove('is-valid');
-                feedback.style.display = 'block';
-                feedback.textContent = data.error;
-                enableFields();
-                return;
+        fetch("/isbn_api/" + isbn.value).then(function (data) {
+            if (!data.ok) {
+                throw Error("Erreur dans la récupération des données");
             }
-
+            return data.json();
+        }).then(function (data) {
             isbn.classList.remove('is-invalid');
             isbn.classList.add('is-valid');
             feedback.style.display = 'none';
@@ -97,6 +93,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
             event.initEvent("change", true, true);
             event.eventName = "change";
             document.querySelector('#id_editor').dispatchEvent(event);
+        }).catch(function(error) {
+            isbn.classList.add('is-invalid');
+            isbn.classList.remove('is-valid');
+            feedback.style.display = 'block';
+            feedback.textContent = error;
+            enableFields();
         });
     });
 });
