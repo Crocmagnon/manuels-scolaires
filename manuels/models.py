@@ -352,7 +352,7 @@ class Book(BaseModel):
             authors = authors[0]
             authors = authors.get_text(strip=True)
 
-        price = decitre_soup.select('div.price span.final-price')
+        price = decitre_soup.select('.fp-top--add-to-cart div.price span.final-price')
         if price:
             price = price[0]
             price = price.get_text().replace('€', '').replace(',', '.').strip()
