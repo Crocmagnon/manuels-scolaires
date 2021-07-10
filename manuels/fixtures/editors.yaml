@@ -1,0 +1,96 @@
+- model: manuels.editor
+  pk: 1
+  fields:
+    created_at: 2018-05-21 23:52:04.625313+00:00
+    updated_at: 2018-05-21 23:52:04.625339+00:00
+    name: Nathan Technique
+- model: manuels.editor
+  pk: 2
+  fields:
+    created_at: 2018-05-23 21:30:36.614547+00:00
+    updated_at: 2018-05-23 21:30:36.614582+00:00
+    name: Foucher
+- model: manuels.editor
+  pk: 3
+  fields:
+    created_at: 2018-05-23 21:30:53.729217+00:00
+    updated_at: 2018-05-23 21:30:53.729244+00:00
+    name: Delagrave
+- model: manuels.editor
+  pk: 4
+  fields:
+    created_at: 2018-05-24 07:42:36.637920+00:00
+    updated_at: 2020-06-30 11:05:21.154628+00:00
+    name: BPI (Editions)
+- model: manuels.editor
+  pk: 5
+  fields:
+    created_at: 2018-05-24 07:43:36.023261+00:00
+    updated_at: 2018-05-24 07:43:36.023288+00:00
+    name: Delagrave Lanore
+- model: manuels.editor
+  pk: 6
+  fields:
+    created_at: 2018-05-24 07:46:42.224916+00:00
+    updated_at: 2018-05-24 07:46:42.224969+00:00
+    name: Bertrand-Lacoste
+- model: manuels.editor
+  pk: 7
+  fields:
+    created_at: 2018-05-24 07:47:02.123413+00:00
+    updated_at: 2018-05-24 07:47:02.123470+00:00
+    name: Livre de Poche
+- model: manuels.editor
+  pk: 8
+  fields:
+    created_at: 2018-05-24 07:47:27.845201+00:00
+    updated_at: 2018-05-24 07:49:43.457058+00:00
+    name: Le Génie Editeur
+- model: manuels.editor
+  pk: 9
+  fields:
+    created_at: 2018-05-24 07:50:08.412072+00:00
+    updated_at: 2018-05-24 07:50:08.412099+00:00
+    name: Librio
+- model: manuels.editor
+  pk: 10
+  fields:
+    created_at: 2018-05-24 07:50:15.312354+00:00
+    updated_at: 2018-05-24 07:50:15.312401+00:00
+    name: Belin
+- model: manuels.editor
+  pk: 11
+  fields:
+    created_at: 2018-05-24 07:50:29.376570+00:00
+    updated_at: 2018-05-24 07:50:29.376595+00:00
+    name: LT Jacques Lanore
+- model: manuels.editor
+  pk: 12
+  fields:
+    created_at: 2018-05-24 08:41:15.179008+00:00
+    updated_at: 2018-05-24 08:41:15.179039+00:00
+    name: Hachette Education
+- model: manuels.editor
+  pk: 13
+  fields:
+    created_at: 2018-05-24 08:41:23.198186+00:00
+    updated_at: 2018-05-24 08:41:23.198211+00:00
+    name: Hachette Technique
+- model: manuels.editor
+  pk: 14
+  fields:
+    created_at: 2019-04-06 15:56:17.391985+00:00
+    updated_at: 2019-04-06 15:56:17.392024+00:00
+    name: AUTRE
+- model: manuels.editor
+  pk: 15
+  fields:
+    created_at: 2020-06-30 11:05:52.948953+00:00
+    updated_at: 2020-06-30 11:05:52.948979+00:00
+    name: BPI
+- model: manuels.editor
+  pk: 16
+  fields:
+    created_at: 2020-06-30 11:07:41.171551+00:00
+    updated_at: 2020-06-30 11:07:41.171584+00:00
+    name: Nathan

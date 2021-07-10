@@ -1,0 +1,161 @@
+- model: manuels.level
+  pk: 1
+  fields:
+    created_at: 2018-05-21 23:51:32.192659+00:00
+    updated_at: 2021-06-10 14:49:31.808889+00:00
+    name: TEPC
+    order: 60
+- model: manuels.level
+  pk: 2
+  fields:
+    created_at: 2018-05-21 23:51:32.192659+00:00
+    updated_at: 2021-05-09 15:46:27.101295+00:00
+    name: 1EPC
+    order: 50
+- model: manuels.level
+  pk: 3
+  fields:
+    created_at: 2018-05-22 09:35:47.899146+00:00
+    updated_at: 2019-05-28 08:22:28.856626+00:00
+    name: 1HCR
+    order: 70
+- model: manuels.level
+  pk: 4
+  fields:
+    created_at: 2018-05-22 09:36:20.462287+00:00
+    updated_at: 2019-05-28 08:22:28.840231+00:00
+    name: TC
+    order: 40
+- model: manuels.level
+  pk: 6
+  fields:
+    created_at: 2018-05-22 09:40:05.347592+00:00
+    updated_at: 2019-05-28 08:22:28.861702+00:00
+    name: THCR
+    order: 80
+- model: manuels.level
+  pk: 10
+  fields:
+    created_at: 2018-05-24 07:21:03.328756+00:00
+    updated_at: 2021-06-10 15:00:11.767805+00:00
+    name: 2BR (FMHR)
+    order: 100
+- model: manuels.level
+  pk: 13
+  fields:
+    created_at: 2018-05-24 07:23:10.806269+00:00
+    updated_at: 2019-05-28 08:22:28.830441+00:00
+    name: TAPH
+    order: 20
+- model: manuels.level
+  pk: 14
+  fields:
+    created_at: 2018-05-24 07:30:03.322522+00:00
+    updated_at: 2021-06-10 15:01:09.966530+00:00
+    name: 1BR (FMHR)
+    order: 120
+- model: manuels.level
+  pk: 16
+  fields:
+    created_at: 2018-05-24 07:31:24.408312+00:00
+    updated_at: 2019-05-28 08:22:28.890927+00:00
+    name: TBR Cuisine
+    order: 140
+- model: manuels.level
+  pk: 17
+  fields:
+    created_at: 2018-05-24 07:31:32.980401+00:00
+    updated_at: 2019-05-28 08:22:28.896019+00:00
+    name: TBR Service
+    order: 150
+- model: manuels.level
+  pk: 18
+  fields:
+    created_at: 2018-05-24 07:33:31.956769+00:00
+    updated_at: 2019-05-28 08:22:28.901015+00:00
+    name: 2BHPS
+    order: 160
+- model: manuels.level
+  pk: 19
+  fields:
+    created_at: 2018-05-24 07:33:38.415125+00:00
+    updated_at: 2019-05-28 08:22:28.905544+00:00
+    name: 1BHPS
+    order: 170
+- model: manuels.level
+  pk: 20
+  fields:
+    created_at: 2018-05-24 07:34:31.289711+00:00
+    updated_at: 2019-05-28 08:22:28.910135+00:00
+    name: TBHPS
+    order: 180
+- model: manuels.level
+  pk: 22
+  fields:
+    created_at: 2018-05-24 07:36:38.466515+00:00
+    updated_at: 2019-05-28 09:11:16.516466+00:00
+    name: FCCDR
+    order: 210
+- model: manuels.level
+  pk: 24
+  fields:
+    created_at: 2018-05-24 07:37:17.698638+00:00
+    updated_at: 2019-05-28 09:14:54.078509+00:00
+    name: PCR/APH
+    order: 225
+- model: manuels.level
+  pk: 26
+  fields:
+    created_at: 2019-05-28 08:08:16.829760+00:00
+    updated_at: 2019-05-28 09:14:11.945424+00:00
+    name: BTS MSE1
+    order: 250
+- model: manuels.level
+  pk: 27
+  fields:
+    created_at: 2019-05-28 08:08:24.160816+00:00
+    updated_at: 2019-05-28 09:14:11.953016+00:00
+    name: BTS MSE2
+    order: 260
+- model: manuels.level
+  pk: 28
+  fields:
+    created_at: 2019-05-28 09:11:52.129850+00:00
+    updated_at: 2019-05-28 09:12:37.745160+00:00
+    name: CS1
+    order: 220
+- model: manuels.level
+  pk: 29
+  fields:
+    created_at: 2019-05-28 09:13:22.829655+00:00
+    updated_at: 2019-07-02 08:48:52.770113+00:00
+    name: 1ACR
+    order: 231
+- model: manuels.level
+  pk: 30
+  fields:
+    created_at: 2019-05-28 09:13:29.936347+00:00
+    updated_at: 2019-07-02 08:48:52.779779+00:00
+    name: TACR
+    order: 241
+- model: manuels.level
+  pk: 31
+  fields:
+    created_at: 2021-05-09 15:46:45.283121+00:00
+    updated_at: 2021-05-09 15:46:45.283173+00:00
+    name: 3e Prépa Métiers
+    order: 0
+- model: manuels.level
+  pk: 32
+  fields:
+    created_at: 2021-05-09 15:47:10.620285+00:00
+    updated_at: 2021-05-09 15:47:21.317562+00:00
+    name: 1 APH
+    order: 10
+- model: manuels.level
+  pk: 33
+  fields:
+    created_at: 2021-05-09 15:48:31.353920+00:00
+    updated_at: 2021-05-09 15:48:31.353972+00:00
+    name: 1C
+    order: 30
