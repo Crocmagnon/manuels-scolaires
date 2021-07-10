@@ -1,6 +1,6 @@
 envs/local.env
 .envrc
-
+pytest_result
 
 # Created by https://www.gitignore.io/api/pycharm+all,python,django
 
