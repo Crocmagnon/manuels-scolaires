@@ -1,3 +1,6 @@
+envs/local.env
+.envrc
+
 
 # Created by https://www.gitignore.io/api/pycharm+all,python,django
 

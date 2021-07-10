@@ -11,38 +11,50 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from pathlib import Path
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import dj_database_url
 from django.contrib.messages import constants as messages
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import environ
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
+env = environ.Env(
+    SECRET_KEY=str,
+    DJANGO_ENV=(str, "prod"),
+    CURRENT_IP=(str, "192.168.0.200"),
+    HOST=(list, None),
+    ADMIN_EMAIL=str,
+    SERVER_EMAIL=str,
+    AUTHORIZED_EMAILS=(list, []),
+    LIBRARIAN_EMAILS=(list, []),
+    MAILGUN_ACCESS_KEY=(str, ''),
+    MAILGUN_SERVER_NAME=(str, ''),
+)
+env_file = os.getenv("ENV_FILE", None)
+if env_file:
+    environ.Env.read_env(env_file)
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'f6j7c0j%-^$r6&hf4!=db1=)88&ve3qwbsgl3ykd22%gl4xy-$')
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_ENV', 'prod') == 'dev'
+DEBUG = env('DJANGO_ENV') == 'dev'
 
 ALLOWED_HOSTS = ['web', '127.0.0.1']
 if DEBUG:
     ALLOWED_HOSTS.extend([
         'localhost',
-        os.getenv('CURRENT_IP', '192.168.1.27')
+        env('CURRENT_IP')
     ])
-host = os.getenv('HOST', None)
-if host:
-    ALLOWED_HOSTS.extend(host.split(','))
+ALLOWED_HOSTS.extend(env("HOST"))
 
-ADMINS = [('Gabriel', os.getenv('ADMIN_EMAIL')), ]
-SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+ADMINS = [('Gabriel', env('ADMIN_EMAIL')), ]
+SERVER_EMAIL = env('SERVER_EMAIL')
 EMAIL_SUBJECT_PREFIX = '[Manuels] '
 
-AUTHORIZED_EMAILS = os.getenv('AUTHORIZED_EMAILS', '').split(',')
-LIBRARIAN_EMAILS = os.getenv('LIBRARIAN_EMAILS', '').split(',')
+AUTHORIZED_EMAILS = env('AUTHORIZED_EMAILS')
+LIBRARIAN_EMAILS = env('LIBRARIAN_EMAILS')
 
 # Application definition
 
@@ -103,9 +115,9 @@ WSGI_APPLICATION = 'manuels_collection.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
+default_db_path = BASE_DIR / 'db.sqlite3'
 DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'), conn_max_age=600)
+    'default': env.db(default=f'sqlite:///{default_db_path}'),
 }
 
 # Password validation
@@ -171,13 +183,13 @@ LOGGING = {
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 LOGIN_REDIRECT_URL = 'rooms-list'
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": os.getenv('MAILGUN_ACCESS_KEY', ''),
-    "MAILGUN_SENDER_DOMAIN": os.getenv('MAILGUN_SERVER_NAME', ''),
+    "MAILGUN_API_KEY": env('MAILGUN_ACCESS_KEY'),
+    "MAILGUN_SENDER_DOMAIN": env('MAILGUN_SERVER_NAME'),
 }
 
 EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
