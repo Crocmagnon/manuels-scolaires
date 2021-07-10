@@ -1,8 +1,5 @@
 import logging
-import re
 
-import bs4
-import requests
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
@@ -12,7 +9,6 @@ from django.views.generic import CreateView, DeleteView, TemplateView, UpdateVie
 
 from manuels.forms import AddBookForm, AddSuppliesForm, EditBookForm, EditSuppliesForm
 from manuels.models import Book, CommonSupply, ISBNError, SuppliesRequirement, Teacher
-from manuels.utils import validate_isbn
 
 logger = logging.getLogger(__name__)
 
