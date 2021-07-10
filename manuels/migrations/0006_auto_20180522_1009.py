@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0005_suppliesrequirement'),
+        ("manuels", "0005_suppliesrequirement"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='previously_acquired',
-            field=models.BooleanField(choices=[(True, 'Oui'), (False, 'Non')], default=False, verbose_name="manuel acquis précédemment par l'élève"),
+            model_name="book",
+            name="previously_acquired",
+            field=models.BooleanField(
+                choices=[(True, "Oui"), (False, "Non")],
+                default=False,
+                verbose_name="manuel acquis précédemment par l'élève",
+            ),
         ),
     ]

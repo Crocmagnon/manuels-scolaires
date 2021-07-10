@@ -3,7 +3,7 @@ from django.core.management import BaseCommand
 
 
 class Command(BaseCommand):
-    help = 'Clears django cache'
+    help = "Clears django cache"
 
     def handle(self, *args, **options):
         cache.clear()

@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0024_book_other_editor'),
+        ("manuels", "0024_book_other_editor"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='comments',
-            field=models.TextField(blank=True, help_text='Ce message sera visible par la documentaliste.', verbose_name='commentaires'),
+            model_name="book",
+            name="comments",
+            field=models.TextField(
+                blank=True,
+                help_text="Ce message sera visible par la documentaliste.",
+                verbose_name="commentaires",
+            ),
         ),
     ]

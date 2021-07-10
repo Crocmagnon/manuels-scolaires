@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0028_auto_20190406_1901'),
+        ("manuels", "0028_auto_20190406_1901"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='consumable',
-            field=models.BooleanField(choices=[(None, '------------'), (False, 'Non'), (True, 'Oui')], default=None, help_text="Exemple : un cahier d'exercices est un consommable", verbose_name='consommable'),
+            model_name="book",
+            name="consumable",
+            field=models.BooleanField(
+                choices=[(None, "------------"), (False, "Non"), (True, "Oui")],
+                default=None,
+                help_text="Exemple : un cahier d'exercices est un consommable",
+                verbose_name="consommable",
+            ),
         ),
     ]

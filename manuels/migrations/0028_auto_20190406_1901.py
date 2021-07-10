@@ -6,23 +6,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0027_auto_20190401_2036'),
+        ("manuels", "0027_auto_20190401_2036"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='level',
-            options={'ordering': ['order', 'name'], 'verbose_name': 'classe', 'verbose_name_plural': 'classes'},
+            name="level",
+            options={
+                "ordering": ["order", "name"],
+                "verbose_name": "classe",
+                "verbose_name_plural": "classes",
+            },
         ),
         migrations.AddField(
-            model_name='book',
-            name='consumable',
-            field=models.BooleanField(default=False, help_text="Exemple : un cahier d'exercices est un consommable", verbose_name='consommable'),
+            model_name="book",
+            name="consumable",
+            field=models.BooleanField(
+                default=False,
+                help_text="Exemple : un cahier d'exercices est un consommable",
+                verbose_name="consommable",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='level',
-            name='order',
-            field=models.IntegerField(default=0, verbose_name='ordre'),
+            model_name="level",
+            name="order",
+            field=models.IntegerField(default=0, verbose_name="ordre"),
         ),
     ]

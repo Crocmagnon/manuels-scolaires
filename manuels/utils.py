@@ -2,7 +2,7 @@ def validate_isbn(isbn):
     _sum = 0
     if len(isbn) == 10:
         for i, digit in enumerate(isbn):
-            if digit == 'X':
+            if digit == "X":
                 digit = 10
             else:
                 digit = int(digit)

@@ -6,14 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0017_auto_20180530_1804'),
+        ("manuels", "0017_auto_20180530_1804"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='book',
-            name='comments',
-            field=models.TextField(default='', help_text="Ce message sera visible par la documentaliste. Vous pouvez l'utiliser par exemple si vous souhaitez saisir un éditeur qui n'est pas proposé.", verbose_name='commentaires'),
+            model_name="book",
+            name="comments",
+            field=models.TextField(
+                default="",
+                help_text="Ce message sera visible par la documentaliste. Vous pouvez l'utiliser par exemple si vous souhaitez saisir un éditeur qui n'est pas proposé.",
+                verbose_name="commentaires",
+            ),
             preserve_default=False,
         ),
     ]

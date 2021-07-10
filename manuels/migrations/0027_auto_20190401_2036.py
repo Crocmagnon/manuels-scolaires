@@ -6,28 +6,34 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0026_auto_20180616_0916'),
+        ("manuels", "0026_auto_20180616_0916"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='done',
-            field=models.BooleanField(blank=True, default=False, verbose_name='Traité'),
+            model_name="book",
+            name="done",
+            field=models.BooleanField(blank=True, default=False, verbose_name="Traité"),
         ),
         migrations.AlterField(
-            model_name='book',
-            name='previously_acquired',
-            field=models.BooleanField(choices=[(None, '------------'), (False, 'Non'), (True, 'Oui')], default=None, verbose_name="manuel acquis précédemment par l'élève"),
+            model_name="book",
+            name="previously_acquired",
+            field=models.BooleanField(
+                choices=[(None, "------------"), (False, "Non"), (True, "Oui")],
+                default=None,
+                verbose_name="manuel acquis précédemment par l'élève",
+            ),
         ),
         migrations.AlterField(
-            model_name='suppliesrequirement',
-            name='done',
-            field=models.BooleanField(blank=True, default=False, verbose_name='Traité'),
+            model_name="suppliesrequirement",
+            name="done",
+            field=models.BooleanField(blank=True, default=False, verbose_name="Traité"),
         ),
         migrations.AlterField(
-            model_name='teacher',
-            name='has_confirmed_list',
-            field=models.BooleanField(blank=True, default=False, verbose_name='a confirmé les listes'),
+            model_name="teacher",
+            name="has_confirmed_list",
+            field=models.BooleanField(
+                blank=True, default=False, verbose_name="a confirmé les listes"
+            ),
         ),
     ]

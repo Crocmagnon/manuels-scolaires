@@ -6,48 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0003_auto_20180522_0145'),
+        ("manuels", "0003_auto_20180522_0145"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='créé le'),
+            model_name="book",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, verbose_name="créé le"),
         ),
         migrations.AlterField(
-            model_name='book',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='mis à jour le'),
+            model_name="book",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="mis à jour le"),
         ),
         migrations.AlterField(
-            model_name='editor',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='créé le'),
+            model_name="editor",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, verbose_name="créé le"),
         ),
         migrations.AlterField(
-            model_name='editor',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='mis à jour le'),
+            model_name="editor",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="mis à jour le"),
         ),
         migrations.AlterField(
-            model_name='level',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='créé le'),
+            model_name="level",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, verbose_name="créé le"),
         ),
         migrations.AlterField(
-            model_name='level',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='mis à jour le'),
+            model_name="level",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="mis à jour le"),
         ),
         migrations.AlterField(
-            model_name='teacher',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='créé le'),
+            model_name="teacher",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, verbose_name="créé le"),
         ),
         migrations.AlterField(
-            model_name='teacher',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='mis à jour le'),
+            model_name="teacher",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="mis à jour le"),
         ),
     ]

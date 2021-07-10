@@ -6,16 +6,24 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0020_auto_20180602_1630'),
+        ("manuels", "0020_auto_20180602_1630"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='editor',
-            options={'ordering': ['name'], 'verbose_name': 'éditeur', 'verbose_name_plural': 'éditeurs'},
+            name="editor",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "éditeur",
+                "verbose_name_plural": "éditeurs",
+            },
         ),
         migrations.AlterModelOptions(
-            name='teacher',
-            options={'ordering': ['first_name'], 'verbose_name': 'coordonnateur', 'verbose_name_plural': 'coordonnateurs'},
+            name="teacher",
+            options={
+                "ordering": ["first_name"],
+                "verbose_name": "coordonnateur",
+                "verbose_name_plural": "coordonnateurs",
+            },
         ),
     ]

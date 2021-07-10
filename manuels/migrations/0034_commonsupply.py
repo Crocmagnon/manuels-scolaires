@@ -6,21 +6,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0033_auto_20190406_1919'),
+        ("manuels", "0033_auto_20190406_1919"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CommonSupply',
+            name="CommonSupply",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='créé le')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='mis à jour le')),
-                ('name', models.CharField(max_length=200, verbose_name='nom')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="créé le"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="mis à jour le"),
+                ),
+                ("name", models.CharField(max_length=200, verbose_name="nom")),
             ],
             options={
-                'verbose_name': 'fourniture commune',
-                'verbose_name_plural': 'fournitures communes',
+                "verbose_name": "fourniture commune",
+                "verbose_name_plural": "fournitures communes",
             },
         ),
     ]

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0021_auto_20180602_1638'),
+        ("manuels", "0021_auto_20180602_1638"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='teacher',
-            name='has_confirmed_list',
-            field=models.BooleanField(default=False, verbose_name='a confirmé les listes'),
+            model_name="teacher",
+            name="has_confirmed_list",
+            field=models.BooleanField(
+                default=False, verbose_name="a confirmé les listes"
+            ),
         ),
     ]

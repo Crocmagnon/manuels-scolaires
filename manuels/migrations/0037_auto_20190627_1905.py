@@ -8,18 +8,27 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manuels', '0036_auto_20190615_1114'),
+        ("manuels", "0036_auto_20190615_1114"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='commonsupply',
-            options={'ordering': ('order', 'name'), 'verbose_name': 'fourniture commune', 'verbose_name_plural': 'fournitures communes'},
+            name="commonsupply",
+            options={
+                "ordering": ("order", "name"),
+                "verbose_name": "fourniture commune",
+                "verbose_name_plural": "fournitures communes",
+            },
         ),
         CITextExtension(),
         migrations.AlterField(
-            model_name='teacher',
-            name='email',
-            field=django.contrib.postgres.fields.citext.CIEmailField(help_text='Utilisée pour vous transmettre votre lien personnel', max_length=254, unique=True, verbose_name='adresse email'),
+            model_name="teacher",
+            name="email",
+            field=django.contrib.postgres.fields.citext.CIEmailField(
+                help_text="Utilisée pour vous transmettre votre lien personnel",
+                max_length=254,
+                unique=True,
+                verbose_name="adresse email",
+            ),
         ),
     ]

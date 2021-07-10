@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 from pathlib import Path
 
+import environ
 from django.contrib.messages import constants as messages
 
-import environ
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 env = environ.Env(
@@ -27,8 +27,8 @@ env = environ.Env(
     SERVER_EMAIL=str,
     AUTHORIZED_EMAILS=(list, []),
     LIBRARIAN_EMAILS=(list, []),
-    MAILGUN_ACCESS_KEY=(str, ''),
-    MAILGUN_SERVER_NAME=(str, ''),
+    MAILGUN_ACCESS_KEY=(str, ""),
+    MAILGUN_SERVER_NAME=(str, ""),
 )
 env_file = os.getenv("ENV_FILE", None)
 if env_file:
@@ -39,36 +39,35 @@ if env_file:
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DJANGO_ENV') == 'dev'
+DEBUG = env("DJANGO_ENV") == "dev"
 
-ALLOWED_HOSTS = ['web', '127.0.0.1']
+ALLOWED_HOSTS = ["web", "127.0.0.1"]
 if DEBUG:
-    ALLOWED_HOSTS.extend([
-        'localhost',
-        env('CURRENT_IP')
-    ])
+    ALLOWED_HOSTS.extend(["localhost", env("CURRENT_IP")])
 ALLOWED_HOSTS.extend(env("HOST"))
 
-ADMINS = [('Gabriel', env('ADMIN_EMAIL')), ]
-SERVER_EMAIL = env('SERVER_EMAIL')
-EMAIL_SUBJECT_PREFIX = '[Manuels] '
+ADMINS = [
+    ("Gabriel", env("ADMIN_EMAIL")),
+]
+SERVER_EMAIL = env("SERVER_EMAIL")
+EMAIL_SUBJECT_PREFIX = "[Manuels] "
 
-AUTHORIZED_EMAILS = env('AUTHORIZED_EMAILS')
-LIBRARIAN_EMAILS = env('LIBRARIAN_EMAILS')
+AUTHORIZED_EMAILS = env("AUTHORIZED_EMAILS")
+LIBRARIAN_EMAILS = env("LIBRARIAN_EMAILS")
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'anymail',
-    'bootstrap4',
-    'manuels',
-    'import_export',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "anymail",
+    "bootstrap4",
+    "manuels",
+    "import_export",
 ]
 
 if DEBUG:
@@ -77,47 +76,47 @@ if DEBUG:
     ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 if DEBUG:
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-ROOT_URLCONF = 'manuels_collection.urls'
+ROOT_URLCONF = "manuels_collection.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'manuels.context_processors.authorized_mails'
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "manuels.context_processors.authorized_mails",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'manuels_collection.wsgi.application'
+WSGI_APPLICATION = "manuels_collection.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-default_db_path = BASE_DIR / 'db.sqlite3'
+default_db_path = BASE_DIR / "db.sqlite3"
 DATABASES = {
-    'default': env.db(default=f'sqlite:///{default_db_path}'),
+    "default": env.db(default=f"sqlite:///{default_db_path}"),
 }
 
 # Password validation
@@ -125,16 +124,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -145,9 +144,9 @@ INTERNAL_IPS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = "fr-fr"
 
-TIME_ZONE = 'Europe/Paris'
+TIME_ZONE = "Europe/Paris"
 
 USE_I18N = True
 
@@ -156,53 +155,47 @@ USE_L10N = True
 USE_TZ = True
 
 # Logging
-LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
+LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[%(asctime)s] [%(process)d] [%(levelname)s] %(module)s - %(message)s'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[%(asctime)s] [%(process)d] [%(levelname)s] %(module)s - %(message)s"
         },
     },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
     },
-    'loggers': {
-        'manuels': {
-            'handlers': ['console'],
-            'level': LOG_LEVEL
-        },
+    "loggers": {
+        "manuels": {"handlers": ["console"], "level": LOG_LEVEL},
     },
 }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-LOGIN_REDIRECT_URL = 'rooms-list'
+LOGIN_REDIRECT_URL = "rooms-list"
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": env('MAILGUN_ACCESS_KEY'),
-    "MAILGUN_SENDER_DOMAIN": env('MAILGUN_SERVER_NAME'),
+    "MAILGUN_API_KEY": env("MAILGUN_ACCESS_KEY"),
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SERVER_NAME"),
 }
 
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 MESSAGE_TAGS = {
-    messages.ERROR: 'danger',
+    messages.ERROR: "danger",
 }
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'manuels_cache',
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "manuels_cache",
     }
 }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
