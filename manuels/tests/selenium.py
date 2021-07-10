@@ -42,11 +42,7 @@ class SeleniumTestCase(LiveServerTestCase):
         return f"{self.live_server_url}{url}"
 
 
-class TeacherSeleniumTestCase(SeleniumTestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
+class TeacherTestMixin:
     def setUp(self) -> None:
         super().setUp()
         self.teacher = Teacher.objects.create(
@@ -56,6 +52,6 @@ class TeacherSeleniumTestCase(SeleniumTestCase):
             email="teacher@example.com",
         )
 
-    def go_to_teacher_url(self):
-        url = self.teacher.get_absolute_url()
-        self.get(url)
+
+class TeacherSeleniumTestCase(TeacherTestMixin, SeleniumTestCase):
+    pass

@@ -1,38 +1,47 @@
 from django.test import TestCase
+from model_bakery import baker
 
-from manuels.tests.selenium import TeacherSeleniumTestCase
+from manuels.tests.selenium import TeacherSeleniumTestCase, TeacherTestMixin
 
 
-class TeacherBaseViewTestCase(TestCase):
+class TeacherBaseViewTestCase(TeacherTestMixin, TestCase):
     def test_view_is_rendered(self):
-        # Go to url
-        # check response is 200
-        assert False
+        url = self.teacher.get_absolute_url()
+        res = self.client.get(url)
+        assert res.status_code == 200
 
-    def test_view_contains_books(self):
-        # Create books linked to teacher
-        # go to url
-        # check response is 200
-        # check books are in context
-        assert False
-
-    def test_view_contains_supplies(self):
-        # create supplies requirements linked to teacher
-        # go to url
-        # check response is 200
-        # check supplies are in context
-        assert False
+    def view_is_passed_teacher(self):
+        baker.make_recipe("manuels.tests.book", _quantity=5, teacher=self.teacher)
+        baker.make_recipe("manuels.tests.book", _quantity=5)
+        baker.make_recipe("manuels.tests.supply", _quantity=5, teacher=self.teacher)
+        baker.make_recipe("manuels.tests.supply", _quantity=5)
+        url = self.teacher.get_absolute_url()
+        res = self.client.get(url)
+        assert res.status_code == 200
+        assert res.context["teacher"] == self.teacher
 
 
 class TeacherBaseViewSeleniumTestCase(TeacherSeleniumTestCase):
     def test_books_are_displayed(self):
-        # Create books linked to teacher
-        # go to url
-        # check book title is displayed
-        assert False
+        teacher_books = baker.make_recipe(
+            "manuels.tests.book", _quantity=5, teacher=self.teacher
+        )
+        other_books = baker.make_recipe("manuels.tests.book", _quantity=5)
+        url = self.teacher.get_absolute_url()
+        self.get(url)
+        for book in teacher_books:
+            assert book.title in self.selenium.page_source
+        for book in other_books:
+            assert book.title not in self.selenium.page_source
 
     def test_supplies_are_displayed(self):
-        # Create books linked to teacher
-        # go to url
-        # check supplies name is displayed
-        assert False
+        teacher_supplies = baker.make_recipe(
+            "manuels.tests.supply", _quantity=5, teacher=self.teacher
+        )
+        other_supplies = baker.make_recipe("manuels.tests.supply", _quantity=5)
+        url = self.teacher.get_absolute_url()
+        self.get(url)
+        for supply in teacher_supplies:
+            assert supply.supplies in self.selenium.page_source
+        for supply in other_supplies:
+            assert supply.supplies not in self.selenium.page_source

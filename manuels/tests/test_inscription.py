@@ -6,8 +6,6 @@ from manuels.tests.selenium import SeleniumTestCase
 
 
 class InscriptionTestCase(SeleniumTestCase):
-    headless = False
-
     def setUp(self) -> None:
         super().setUp()
         url = reverse("home_page")
