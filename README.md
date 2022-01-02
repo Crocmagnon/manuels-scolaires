@@ -19,3 +19,6 @@ git push heroku master
 
 You may need to upgrade Python since Heroku tends to deprecate old patch versions rather quickly.
 In this case, edit `runtime.txt`.
+
+# Reuse
+If you do reuse my work, please consider linking back to this repository 🙂
