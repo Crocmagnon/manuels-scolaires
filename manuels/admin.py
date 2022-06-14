@@ -93,7 +93,7 @@ class LevelAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_queryset(self, request):
         return (
-            super(LevelAdmin, self)
+            super()
             .get_queryset(request)
             .prefetch_related(Prefetch("book_set", to_attr="prefetched_books"))
         )
@@ -230,9 +230,7 @@ class BookAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_queryset(self, request):
         return (
-            super(BookAdmin, self)
-            .get_queryset(request)
-            .select_related("editor", "level", "teacher")
+            super().get_queryset(request).select_related("editor", "level", "teacher")
         )
 
     def update_with_decitre(self, request, queryset):
@@ -298,8 +296,4 @@ class SuppliesRequirementAdmin(ExportMixin, admin.ModelAdmin):
     list_filter = ["done", "teacher", "level"]
 
     def get_queryset(self, request):
-        return (
-            super(SuppliesRequirementAdmin, self)
-            .get_queryset(request)
-            .select_related("level", "teacher")
-        )
+        return super().get_queryset(request).select_related("level", "teacher")

@@ -31,7 +31,7 @@
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="{{ form.see_later.auto_id }}">
                 <label class="custom-control-label"
-                       for="{{ form.see_later.auto_id }}">{{ form.see_later.label }}</label>
+                    for="{{ form.see_later.auto_id }}">{{ form.see_later.label }}</label>
                 <small class="form-text text-muted">
                     {{ form.see_later.help_text|safe }}
                 </small>
@@ -44,10 +44,10 @@
                 {% bootstrap_label content=form.isbn.label label_for=form.isbn.auto_id %}
                 <div class="input-group">
                     <input name="{{ form.isbn.name }}" maxlength="20"
-                           class="form-control"
-                           placeholder="{{ form.isbn.label }}"
-                           {% if form.isbn.value != None %} value="{{ form.isbn.value|stringformat:'s' }}"{% endif %}
-                           required="" id="{{ form.isbn.auto_id }}" type="text">
+                        class="form-control"
+                        placeholder="{{ form.isbn.label }}"
+                        {% if form.isbn.value != None %} value="{{ form.isbn.value|stringformat:'s' }}"{% endif %}
+                        required="" id="{{ form.isbn.auto_id }}" type="text">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="id_isbn_button" data-toggle="tooltip" data-placement="top" title="Chercher avec Decitre">
                             <i class="fas fa-search"></i> <i class="fas fa-spinner fa-spin" id="id_isbn_spinner" hidden></i>
@@ -95,11 +95,11 @@
             <div class="col-12">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input"
-                           {% if form.add_another.initial %}checked="checked"{% endif %}
-                           name="{{ form.add_another.name }}"
-                           id="{{ form.add_another.auto_id }}">
+                        {% if form.add_another.initial %}checked="checked"{% endif %}
+                        name="{{ form.add_another.name }}"
+                        id="{{ form.add_another.auto_id }}">
                     <label class="custom-control-label"
-                           for="{{ form.add_another.auto_id }}">{{ form.add_another.label }}</label>
+                        for="{{ form.add_another.auto_id }}">{{ form.add_another.label }}</label>
                     <small class="form-text text-muted">
                         {{ form.add_another.help_text|safe }}
                     </small>

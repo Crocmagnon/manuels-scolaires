@@ -2,87 +2,87 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Manuels - {% block title %}{% endblock %}</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Manuels - {% block title %}{% endblock %}</title>
 
-    <link rel="apple-touch-icon" sizes="180x180"
-          href="{% static 'icons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32"
-          href="{% static 'icons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16"
-          href="{% static 'icons/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'icons/site.webmanifest' %}">
-    <link rel="mask-icon" href="{% static 'icons/safari-pinned-tab.svg' %}"
-          color="#000000">
-    <link rel="shortcut icon" href="{% static 'icons/favicon.ico' %}">
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="msapplication-config"
-          content="{% static 'icons/browserconfig.xml' %}">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-          crossorigin="anonymous">
+        <link rel="apple-touch-icon" sizes="180x180"
+            href="{% static 'icons/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32"
+            href="{% static 'icons/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16"
+            href="{% static 'icons/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'icons/site.webmanifest' %}">
+        <link rel="mask-icon" href="{% static 'icons/safari-pinned-tab.svg' %}"
+            color="#000000">
+        <link rel="shortcut icon" href="{% static 'icons/favicon.ico' %}">
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="msapplication-config"
+            content="{% static 'icons/browserconfig.xml' %}">
+        <meta name="theme-color" content="#ffffff">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+            integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+            crossorigin="anonymous">
 
-</head>
-<body>
-<div class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'home_page' %}">Manuels scolaires</a>
-        {% if user.is_authenticated or teacher and teacher.email in authorized_mails %}
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">
-                            <i class="fas fa-door-open"></i>
-                            Administration
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        {% endif %}
-    </nav>
-    <main class="flex-fill">
-        <div class="container-fluid">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} fade show" role="alert">
-                    {{ message }}
+    </head>
+    <body>
+        <div class="d-flex flex-column min-vh-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{% url 'home_page' %}">Manuels scolaires</a>
+                {% if user.is_authenticated or teacher and teacher.email in authorized_mails %}
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admin:index' %}">
+                                    <i class="fas fa-door-open"></i>
+                                    Administration
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </nav>
+            <main class="flex-fill">
+                <div class="container-fluid">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} fade show" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% block content %}
+                    {% endblock %}
                 </div>
-            {% endfor %}
-            {% block content %}
-            {% endblock %}
+            </main>
+
+            <footer class="bg-light py-3">
+                <div class="container-fluid">
+                    <span class="text-muted">Ce service est un logiciel libre sous licence MIT réalisé par
+                        Gabriel Augendre d'après des besoins exprimés par Sandrine Augendre. Le code source est disponible
+                        <a href="https://git.augendre.info/gaugendre/manuels-scolaires">à cette adresse</a>.</span>
+                </div>
+            </footer>
         </div>
-    </main>
 
-    <footer class="bg-light py-3">
-        <div class="container-fluid">
-        <span class="text-muted">Ce service est un logiciel libre sous licence MIT réalisé par
-            Gabriel Augendre d'après des besoins exprimés par Sandrine Augendre. Le code source est disponible
-            <a href="https://git.augendre.info/gaugendre/manuels-scolaires">à cette adresse</a>.</span>
-        </div>
-    </footer>
-</div>
+        <script defer src="https://kit.fontawesome.com/350c07ee78.js"
+            integrity="sha384-IwFbZvLB3nqmwJikzn6JZAqNDTwjFfauT4djixzjaxmR030Fd2gx05kWWwBLwRYZ"
+            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+            crossorigin="anonymous"></script>
 
-<script defer src="https://kit.fontawesome.com/350c07ee78.js"
-        integrity="sha384-IwFbZvLB3nqmwJikzn6JZAqNDTwjFfauT4djixzjaxmR030Fd2gx05kWWwBLwRYZ"
-        crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
-
-{% block end_js %}
-{% endblock %}
-</body>
+        {% block end_js %}
+        {% endblock %}
+    </body>
 </html>
