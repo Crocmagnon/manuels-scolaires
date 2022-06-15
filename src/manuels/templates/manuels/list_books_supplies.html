@@ -31,6 +31,53 @@
     <div class="row">
         <div class="col-12">
             <h2>
+                Liste des fournitures demandées
+                {% if not teacher.has_confirmed_list %}
+                    <a href="{% url 'add_supplies' pk=teacher.pk %}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Ajouter des fournitures
+                    </a>
+                {% endif %}
+            </h2>
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            {% if not teacher.has_confirmed_list %}
+                                <th scope="col">Modifier</th>
+                            {% endif %}
+                            <th scope="col">Classe</th>
+                            <th scope="col">Discipline</th>
+                            <th scope="col">Liste de fournitures</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for supply in teacher.suppliesrequirement_set.all %}
+                            <tr>
+                                {% if not teacher.has_confirmed_list %}
+                                    <th scope="row">
+                                        <div class="btn-group">
+                                            <a title="Modifier"
+                                                href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
+                                                class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
+                                            <a title="Supprimer"
+                                                href="{% url 'delete_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
+                                                class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                        </div>
+                                    </th>
+                                {% endif %}
+                                <td>{{ supply.level }}</td>
+                                <td>{{ supply.field }}</td>
+                                <td>{{ supply.supplies|linebreaksbr }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>
                 Liste des livres demandés
                 {% if not teacher.has_confirmed_list %}
                     <a href="{% url 'add_book' pk=teacher.pk %}"
@@ -40,6 +87,9 @@
                     </a>
                 {% endif %}
             </h2>
+            <div class="alert alert-info" role="alert">
+                Autres que les manuels des matières générales (Français / Maths / Histoire / Géo / EMC / Physique-Chimie / PSE / Langues)
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover table-sm">
                     <thead>
@@ -92,53 +142,6 @@
                                     <i class="fas fa-{% if book.consumable %}check-circle{% else %}ban{% endif %}"></i>
                                     {{ book.consumable_text }}
                                 </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <h2>
-                Liste des fournitures demandées
-                {% if not teacher.has_confirmed_list %}
-                    <a href="{% url 'add_supplies' pk=teacher.pk %}" class="btn btn-primary">
-                        <i class="fas fa-plus-circle"></i> Ajouter des fournitures
-                    </a>
-                {% endif %}
-            </h2>
-            <div class="table-responsive">
-                <table class="table table-hover table-sm">
-                    <thead>
-                        <tr>
-                            {% if not teacher.has_confirmed_list %}
-                                <th scope="col">Modifier</th>
-                            {% endif %}
-                            <th scope="col">Classe</th>
-                            <th scope="col">Discipline</th>
-                            <th scope="col">Liste de fournitures</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for supply in teacher.suppliesrequirement_set.all %}
-                            <tr>
-                                {% if not teacher.has_confirmed_list %}
-                                    <th scope="row">
-                                        <div class="btn-group">
-                                            <a title="Modifier"
-                                                href="{% url 'edit_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
-                                                class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
-                                            <a title="Supprimer"
-                                                href="{% url 'delete_supplies' teacher_pk=supply.teacher.pk pk=supply.pk %}"
-                                                class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </th>
-                                {% endif %}
-                                <td>{{ supply.level }}</td>
-                                <td>{{ supply.field }}</td>
-                                <td>{{ supply.supplies|linebreaksbr }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

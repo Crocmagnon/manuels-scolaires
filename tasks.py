@@ -66,7 +66,7 @@ def publish(ctx: Context) -> None:
 
 @task
 def deploy(ctx: Context) -> None:
-    ctx.run("ssh ubuntu /home/gaugendre/checkout/update", pty=True, echo=True)
+    ctx.run("ssh ubuntu /home/gaugendre/manuels/update", pty=True, echo=True)
 
 
 @task

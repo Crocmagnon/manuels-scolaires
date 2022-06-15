@@ -240,7 +240,7 @@ class Book(BaseModel):
     other_editor = models.CharField(verbose_name="préciser", max_length=100, blank=True)
     publication_year = models.PositiveIntegerField("année de publication")
     isbn = models.CharField(
-        "ISBN/EAN du manuel élève (hors specimen)",
+        "ISBN/EAN du livre ou consommable demandé (hors specimen)",
         max_length=20,
         help_text="Format attendu : 10 ou 13 chiffres, éventuellement séparés par des tirets et éventuellement "
         "suivis de la lettre <code>X</code>. La recherche sur Decitre ne fonctionnera qu'avec un code ISBN à "
@@ -254,7 +254,7 @@ class Book(BaseModel):
         (True, "Oui"),
     )
     previously_acquired = models.BooleanField(
-        "manuel acquis précédemment par l'élève",
+        "Livre ou consommable déjà acquis par l'élève les années précédentes",
         choices=YES_NO_CHOICE,
         blank=False,
         default=None,

@@ -31,7 +31,7 @@
     <body>
         <div class="d-flex flex-column min-vh-100">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="{% url 'home_page' %}">Manuels scolaires</a>
+                <a class="navbar-brand" href="{% url 'home_page' %}">Fournitures, consommables ou livres supplémentaires</a>
                 {% if user.is_authenticated or teacher and teacher.email in authorized_mails %}
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent"

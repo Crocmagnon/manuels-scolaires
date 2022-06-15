@@ -124,6 +124,7 @@ class BookView:
 class AddBookView(BookView, AddItemView):
     form_class = AddBookForm
     template_name = "manuels/add_book.html"
+    message_template = "manuels/books_message.html"
 
     def form_valid(self, form: AddBookForm):
         for level in form.cleaned_data["levels"]:
