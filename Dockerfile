@@ -1,34 +1,63 @@
-FROM python:3.6-alpine
+## Build venv
+FROM python:3.10.4-bullseye AS venv
 
-RUN apk add --update postgresql-libs && \
-    apk add --udpate --virtual .build-deps gcc musl-dev postgresql-dev tzdata && \
-    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
-    echo "Europe/Paris" >  /etc/timezone
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gettext
+
+# https://python-poetry.org/docs/#installation
+ENV POETRY_VERSION=1.1.13
+RUN curl -sSL https://install.python-poetry.org | python3 -
+
+ENV PATH /root/.local/bin:$PATH
+ARG POETRY_OPTIONS
 
 WORKDIR /app
-EXPOSE 8000
-VOLUME /app/staticfiles
 
-RUN pip3 install pipenv
-COPY Pipfile Pipfile.lock ./
-RUN pipenv install --deploy
+COPY pyproject.toml poetry.lock ./
 
-RUN apk del .build-deps
+RUN python -m venv --copies /app/venv \
+    && . /app/venv/bin/activate \
+    && poetry install $POETRY_OPTIONS
 
-COPY . ./
+ENV PATH /app/venv/bin:$PATH
+COPY src ./src/
+ARG SECRET_KEY="somevalue"
+ARG DATABASE_URL="somevalue"
+RUN python ./src/manage.py collectstatic --no-input
+RUN python ./src/manage.py compilemessages -l fr -l en
 
-CMD ["sh", "bash/run-prod.sh"]
+## Get git versions
+FROM alpine/git AS git
+ADD . /app
+WORKDIR /app
+RUN git rev-parse HEAD | tee /version
 
-HEALTHCHECK --interval=10s --timeout=10s CMD ["pipenv", "run", "python", "healthcheck.py"]
 
-ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/manuels
-ENV SECRET_KEY ''
-ENV MAILGUN_ACCESS_KEY ''
-ENV MAILGUN_SERVER_NAME ''
-ENV DJANGO_ENV ''
-ENV ADMIN_EMAIL ''
-ENV SERVER_EMAIL ''
-ENV HOST ''
-ENV REPLY_TO ''
-ENV AUTHORIZED_EMAILS ''
-ENV LIBRARIAN_EMAILS ''
+## Beginning of runtime image
+FROM python:3.10.4-slim-bullseye as prod
+ENV TZ "Europe/Paris"
+RUN mkdir -p /app/db
+
+COPY --from=venv /app/venv /app/venv/
+ENV PATH /app/venv/bin:$PATH
+
+WORKDIR /app
+COPY LICENSE pyproject.toml ./
+COPY docker ./docker/
+COPY src ./src/
+COPY --from=git /version /app/.version
+COPY --from=venv /app/staticfiles /app/staticfiles/
+
+ENV SECRET_KEY "changeme"
+ENV DEBUG "false"
+ENV DB_BASE_DIR "/app/db"
+#ENV HOSTS="host1;host2"
+#ENV ADMINS='Full Name,email@example.com'
+#ENV MAILGUN_API_KEY='key-yourapikey'
+#ENV MAILGUN_SENDER_DOMAIN='mailgun.example.com'
+#ENV BLOG_BASE_URL='https://url-of-your-blog.example.com'
+
+HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000', timeout=2)"
+
+WORKDIR /app/src
+CMD ["/app/docker/run.sh"]

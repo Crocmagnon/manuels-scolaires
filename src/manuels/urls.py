@@ -48,10 +48,3 @@ urlpatterns = [
     path("clear", clear_teacher_view, name="clear_teacher"),
     path("isbn_api/<str:isbn>", isbn_api, name="isbn_api"),
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-
-    urlpatterns = [
-        path("__debug__/", include(debug_toolbar.urls)),
-    ] + urlpatterns

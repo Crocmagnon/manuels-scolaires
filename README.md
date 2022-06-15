@@ -4,21 +4,14 @@ Help librarian manage textbooks requests from colleagues
 ## Local development
 
 ```bash
-pipenv install
-pipenv run python manage.py migrate
-DJANGO_ENV=dev pipenv run python manage.py runserver
+pyenv virtualenv 3.10.4 manuels
+pyenv local manuels
+poetry install
+cp envs/local.env.dist envs/local.env
+echo 'export ENV_FILE=$(realpath "./envs/local.env")' > .envrc
+direnv allow
+inv test
 ```
-
-## Deploy on Heroku
-
-```bash
-heroku login
-heroku git:remote --app manuels-scolaires
-git push heroku master
-```
-
-You may need to upgrade Python since Heroku tends to deprecate old patch versions rather quickly.
-In this case, edit `runtime.txt`.
 
 # Reuse
 If you do reuse my work, please consider linking back to this repository 🙂

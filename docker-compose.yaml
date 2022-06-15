@@ -1,0 +1,34 @@
+version: '2.4'
+services:
+  django:
+    image: crocmagnon/manuels-scolaires:dev
+    platform: linux/amd64
+    build:
+      context: .
+      args:
+        POETRY_OPTIONS: "--no-dev"
+    env_file:
+      - envs/docker-local.env
+    volumes:
+      - staticfiles:/app/staticfiles
+      - media:/app/media
+    restart: on-failure
+    init: true
+    tty: true
+    ports:
+      - "8000:8000"
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_PASSWORD: "manuels"
+      POSTGRES_USER: "manuels"
+      POSTGRES_DB: "manuels"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  staticfiles: {}
+  media: {}
+  pg_data: {}
