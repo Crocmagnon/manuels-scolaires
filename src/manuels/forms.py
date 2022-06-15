@@ -11,8 +11,6 @@ class EditBookForm(forms.ModelForm):
             "teacher",
             "level",
             "field",
-            "no_book",
-            "see_later",
             "title",
             "authors",
             "editor",
@@ -24,16 +22,6 @@ class EditBookForm(forms.ModelForm):
             "comments",
             "consumable",
         ]
-
-    no_book = forms.BooleanField(
-        label="Pas de livre pour cette classe/matière", required=False, initial=False
-    )
-    see_later = forms.BooleanField(
-        label="Voir à la rentrée",
-        help_text="Notamment en cas de désaccord sur l'adoption ou non d'un manuel",
-        required=False,
-        initial=False,
-    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -82,8 +70,6 @@ class AddBookForm(EditBookForm):
             "teacher",
             "levels",
             "field",
-            "no_book",
-            "see_later",
             "title",
             "authors",
             "editor",
