@@ -28,6 +28,7 @@ selenium = "^3.141.0"
 vcrpy = "^4.1.1"
 invoke = "^1.7.1"
 poetry-deps-scanner = "^1.0.1"
+pytest-cov = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

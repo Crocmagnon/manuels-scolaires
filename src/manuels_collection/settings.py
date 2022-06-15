@@ -26,6 +26,7 @@ env = environ.Env(
     MAILGUN_API_KEY=(str, ""),
     MAILGUN_SENDER_DOMAIN=(str, ""),
     SERVER_EMAIL=(str, ""),
+    EMAIL_REPLY_TO=(list, []),
     AUTHORIZED_EMAILS=(list, []),
     LIBRARIAN_EMAILS=(list, []),
     HOSTS=(list, []),
@@ -61,6 +62,7 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 AUTHORIZED_EMAILS = env("AUTHORIZED_EMAILS")
 LIBRARIAN_EMAILS = env("LIBRARIAN_EMAILS")
+EMAIL_REPLY_TO = env("EMAIL_REPLY_TO")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")

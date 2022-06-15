@@ -87,7 +87,7 @@ class Teacher(BaseModel):
             from_email=settings.SERVER_EMAIL,
             to=[dest],
         )
-        reply_to = [os.getenv("REPLY_TO")]
+        reply_to = settings.EMAIL_REPLY_TO
         if reply_to:
             msg.reply_to = reply_to
         msg.attach_alternative(
@@ -107,7 +107,7 @@ class Teacher(BaseModel):
             from_email=settings.SERVER_EMAIL,
             to=dest,
         )
-        reply_to = [os.getenv("REPLY_TO")]
+        reply_to = settings.EMAIL_REPLY_TO
         if reply_to:
             msg.reply_to = reply_to
         msg.attach_alternative(
